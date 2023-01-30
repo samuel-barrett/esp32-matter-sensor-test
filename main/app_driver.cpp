@@ -20,7 +20,7 @@
 
 static const char *TAG = "app_driver";
 
-namespace relative_humidity_measurement {
+/*namespace relative_humidity_measurement {
     namespace attribute {
 
         attribute_t *create_relative_humidity_measured_value(cluster_t *cluster, nullable<int16_t> value)
@@ -41,7 +41,7 @@ namespace relative_humidity_measurement {
                                                 ATTRIBUTE_FLAG_NULLABLE, esp_matter_nullable_int16(value));
         }
 
-    } /* attribute */
+    } //attribute
 
 
     const function_generic_t *function_list = NULL;
@@ -65,10 +65,10 @@ namespace relative_humidity_measurement {
         }
 
         if (flags & CLUSTER_FLAG_SERVER) {
-            /* Attributes managed internally */
+            //Attributes managed internally
             global::attribute::create_feature_map(cluster, 0);
 
-            /* Attributes not managed internally */
+            //Attributes not managed internally
             if (config) {
                 global::attribute::create_cluster_revision(cluster, config->cluster_revision);
                 attribute::create_relative_humidity_measured_value(cluster, config->measured_value);
@@ -113,7 +113,7 @@ namespace relative_humidity_sensor {
 
         return endpoint;
     }
-} /* relative_humidity_sensor */
+} //relative_humidity_sensor */
 
 
 

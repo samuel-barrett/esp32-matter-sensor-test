@@ -11,11 +11,10 @@
 
 
 static const char *TAG = "app_main";
-uint16_t temp_temp_endpoint_id = 0;
 
 using namespace esp_matter;
 using namespace esp_matter::attribute;
-using namespace esp_matter::temp_endpoint;
+using namespace esp_matter::endpoint;
 using namespace esp_matter::cluster;
 
 static void app_event_cb(const ChipDeviceEvent *event, intptr_t arg)
@@ -71,6 +70,7 @@ extern "C" void app_main()
 {
     esp_err_t err = ESP_OK;
     bmp280_t bmp280_dev_descriptor;
+    uint16_t temp_endpoint_id = 0;
 
     bmp280_sensor_init(&bmp280_dev_descriptor);
 
@@ -86,21 +86,21 @@ extern "C" void app_main()
     }
 
     temperature_sensor::config_t temp_config;
-    temp_endpoint_t *temp_endpoint = temperature_sensor::create(node, &temp_config, CLUSTER_FLAG_SERVER, NULL);
+    endpoint_t *temp_endpoint = temperature_sensor::create(node, &temp_config, CLUSTER_FLAG_SERVER, NULL);
     
     /* These node and temp_endpoint handles can be used to create/add other endpoints and clusters. */
     if (!temp_endpoint) {
         ESP_LOGE(TAG, "Matter temp_endpoint creation failed");
     }
 
-    temp_temp_endpoint_id = temp_endpoint::get_id(temp_endpoint);
+    temp_endpoint_id = endpoint::get_id(temp_endpoint);
     ESP_LOGI(TAG, "Temp measure created with temp_endpoint_id %d", temp_endpoint_id);
 
-    relative_humidity_sensor::config_t
-    endpoint_t *humidity_endpoint = endpoint::create(node, CLUSTER_FLAG_SERVER);
-    if(!humidity_endpoint) {
-        ESP_LOGE(TAG, "Matter humidity_endpoint creation failed");
-    }
+    //relative_humidity_sensor::config_t
+    //endpoint_t *humidity_endpoint = endpoint::create(node, CLUSTER_FLAG_SERVER);
+    //if(!humidity_endpoint) {
+    //    ESP_LOGE(TAG, "Matter humidity_endpoint creation failed");
+    //}
 
     temperature_measurement::config_t temperature_measurement_config;
     cluster_t *cluster = temperature_measurement::create(temp_endpoint, &temperature_measurement_config, CLUSTER_FLAG_SERVER);
@@ -120,9 +120,9 @@ extern "C" void app_main()
     while(1) {
         temperature_reading = bmp280_sensor_update(&bmp280_dev_descriptor);
 
-        update(temp_temp_endpoint_id, cluster_id, chip::app::Clusters::TemperatureMeasurement::Attributes::MeasuredValue::Id, &temperature_reading);
+        update(temp_endpoint_id, cluster_id, chip::app::Clusters::TemperatureMeasurement::Attributes::MeasuredValue::Id, &temperature_reading);
         printf("%d degrees: ", temperature_reading.val); 
-        val_print(temp_temp_endpoint_id, cluster_id, chip::app::Clusters::TemperatureMeasurement::Attributes::MeasuredValue::Id, &temperature_reading);
+        val_print(temp_endpoint_id, cluster_id, chip::app::Clusters::TemperatureMeasurement::Attributes::MeasuredValue::Id, &temperature_reading);
 
         vTaskDelay(pdMS_TO_TICKS(60000));
     }

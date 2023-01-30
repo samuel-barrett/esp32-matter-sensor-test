@@ -1,8 +1,0 @@
-{
-    "idf.adapterTargetName": "esp32",
-    "idf.port": "/dev/cu.usbserial-0232A542",
-    "idf.openOcdConfigs": [
-        "board/esp32-wrover-kit-3.3v.cfg"
-    ],
-    "idf.flashType": "UART"
-}
