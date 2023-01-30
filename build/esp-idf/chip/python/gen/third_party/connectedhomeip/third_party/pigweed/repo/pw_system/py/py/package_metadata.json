@@ -1,0 +1,19 @@
+{
+  "gn_target_name": "//third_party/connectedhomeip/third_party/pigweed/repo/pw_system/py:py",
+  "inputs": [
+
+  ],
+  "setup_sources": [
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_system/py/pyproject.toml",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_system/py/setup.cfg",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_system/py/setup.py"
+  ],
+  "sources": [
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_system/py/pw_system/__init__.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_system/py/pw_system/console.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_system/py/pw_system/device.py"
+  ],
+  "tests": [
+
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "gn_target_name": "//third_party/connectedhomeip/third_party/pigweed/repo/pw_docgen/py:py",
+  "inputs": [
+
+  ],
+  "setup_sources": [
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_docgen/py/pyproject.toml",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_docgen/py/setup.cfg",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_docgen/py/setup.py"
+  ],
+  "sources": [
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_docgen/py/pw_docgen/__init__.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_docgen/py/pw_docgen/docgen.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_docgen/py/pw_docgen/sphinx/__init__.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_docgen/py/pw_docgen/sphinx/google_analytics.py"
+  ],
+  "tests": [
+
+  ]
+}

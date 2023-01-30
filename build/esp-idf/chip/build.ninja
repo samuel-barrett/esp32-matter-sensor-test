@@ -1,0 +1,544 @@
+ninja_required_version = 1.7.2
+
+rule gn
+  command = ../../../../esp-matter/connectedhomeip/connectedhomeip/.environment/cipd/packages/pigweed/gn --root=../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32 -q --check --fail-on-unused-args --regeneration gen .
+  pool = console
+  description = Regenerating ninja files
+
+# The 'gn' rule also writes build.ninja, unbeknownst to ninja. The
+# build.ninja edge is separate to prevent ninja from deleting it
+# (due to depfile usage) if interrupted. gn uses atomic writes to
+# ensure that build.ninja is always valid even if interrupted.
+build build.ninja.stamp: gn
+  generator = 1
+  depfile = build.ninja.d
+
+build build.ninja: phony build.ninja.stamp
+  generator = 1
+
+pool third_party_connectedhomeip_third_party_pigweed_repo_pw_build_pool_pip
+  depth = 1
+
+subninja toolchain.ninja
+subninja python/toolchain.ninja
+
+build esp32: phony obj/esp32.stamp
+build mbedtls: phony obj/mbedtls/mbedtls.stamp
+build ESP32: phony obj/third_party/connectedhomeip/src/platform/ESP32/lib/ESP32.a
+build access: phony obj/third_party/connectedhomeip/src/access/lib/libaccess.a
+build additional_data_payload: phony obj/third_party/connectedhomeip/src/setup_payload/additional_data_payload.stamp
+build additional_data_payload_buildconfig: phony obj/third_party/connectedhomeip/src/setup_payload/additional_data_payload_buildconfig.stamp
+build address_policy: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/address_policy.stamp
+build address_resolve: phony obj/third_party/connectedhomeip/src/lib/address_resolve/lib/address_resolve.a
+build app: phony obj/third_party/connectedhomeip/src/app/lib/libCHIPDataModel.a
+build app_buildconfig: phony obj/third_party/connectedhomeip/src/app/app_buildconfig.stamp
+build app_config: phony obj/third_party/connectedhomeip/src/app/app_config.stamp
+build asn1: phony obj/third_party/connectedhomeip/src/lib/asn1/lib/libASN1.a
+build asn1oid_header: phony obj/third_party/connectedhomeip/src/lib/asn1/asn1oid_header.stamp
+build attributes: phony obj/third_party/connectedhomeip/src/lib/support/attributes.stamp
+build bdx: phony obj/third_party/connectedhomeip/src/protocols/bdx/lib/libBdx.a
+build binding-test-srcs: phony obj/third_party/connectedhomeip/src/app/tests/binding-test-srcs.stamp
+build ble: phony obj/third_party/connectedhomeip/src/ble/lib/libBleLayer.a
+build ble_buildconfig: phony obj/third_party/connectedhomeip/src/ble/ble_buildconfig.stamp
+build ble_config_header: phony obj/third_party/connectedhomeip/src/ble/ble_config_header.stamp
+build cert_test_vectors: phony lib/libCertTestVectors.a
+build chip_buildconfig: phony obj/third_party/connectedhomeip/src/lib/core/chip_buildconfig.stamp
+build chip_config_header: phony obj/third_party/connectedhomeip/src/lib/core/chip_config_header.stamp
+build chip_version_header: phony obj/third_party/connectedhomeip/src/lib/support/chip_version_header.stamp
+build cluster-objects: phony obj/third_party/connectedhomeip/src/app/common/lib/libClusterObjects.a
+build commands: phony obj/third_party/connectedhomeip/src/lib/shell/commands/commands.stamp
+build controller: phony obj/third_party/connectedhomeip/src/controller/lib/libChipController.a
+build credentials: phony obj/third_party/connectedhomeip/src/credentials/lib/libCredentials.a
+build crypto: phony obj/third_party/connectedhomeip/src/crypto/lib/libChipCrypto.a
+build crypto_buildconfig: phony obj/third_party/connectedhomeip/src/crypto/crypto_buildconfig.stamp
+build crypto_tests: phony obj/third_party/connectedhomeip/src/crypto_tests.stamp
+build crypto_tests_lib: phony obj/third_party/connectedhomeip/src/crypto_tests_lib.stamp
+build crypto_tests_run: phony obj/third_party/connectedhomeip/src/crypto_tests_run.stamp
+build cryptopal_mbedtls: phony obj/third_party/connectedhomeip/src/crypto/cryptopal_mbedtls.stamp
+build dac_provider: phony obj/third_party/connectedhomeip/src/app/tests/suites/credentials/dac_provider.stamp
+build data_model_codegen: phony obj/third_party/connectedhomeip/src/controller/data_model/data_model_codegen.stamp
+build data_model_codegen_codegen: phony obj/third_party/connectedhomeip/src/controller/data_model/data_model_codegen_codegen.stamp
+build data_model_codegen_codegen._metadata_path_list.txt: phony obj/third_party/connectedhomeip/src/controller/data_model/data_model_codegen_codegen._metadata_path_list.txt.stamp
+build data_model_lib: phony lib/libDataModelTests.a
+build default_attestation_verifier: phony obj/third_party/connectedhomeip/src/credentials/lib/libDefaultAttestationVerifier.a
+build default_policy: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/lib/default_policy.a
+build dnssd: phony obj/third_party/connectedhomeip/src/lib/dnssd/lib/dnssd.a
+build docs: phony obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/docs.stamp
+build docs._metadata_path_list.txt: phony obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/docs._metadata_path_list.txt.stamp
+build empty: phony obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/empty.stamp
+build fake_platform_tests: phony obj/third_party/connectedhomeip/src/fake_platform_tests.stamp
+build fake_platform_tests_lib: phony obj/third_party/connectedhomeip/src/fake_platform_tests_lib.stamp
+build fake_platform_tests_run: phony obj/third_party/connectedhomeip/src/fake_platform_tests_run.stamp
+build file_attestation_trust_store: phony obj/third_party/connectedhomeip/src/credentials/lib/libFileAttestationTrustStore.a
+build force_stdio: phony obj/third_party/connectedhomeip/src/platform/logging/force_stdio.stamp
+build gen_additional_data_payload_buildconfig: phony obj/third_party/connectedhomeip/src/setup_payload/gen_additional_data_payload_buildconfig.stamp
+build gen_app_buildconfig: phony obj/third_party/connectedhomeip/src/app/gen_app_buildconfig.stamp
+build gen_asn1oid: phony obj/third_party/connectedhomeip/src/lib/asn1/gen_asn1oid.stamp
+build gen_ble_buildconfig: phony obj/third_party/connectedhomeip/src/ble/gen_ble_buildconfig.stamp
+build gen_chip_buildconfig: phony obj/third_party/connectedhomeip/src/lib/core/gen_chip_buildconfig.stamp
+build gen_chip_version: phony obj/third_party/connectedhomeip/src/lib/support/gen_chip_version.stamp
+build gen_crypto_buildconfig: phony obj/third_party/connectedhomeip/src/crypto/gen_crypto_buildconfig.stamp
+build gen_inet_buildconfig: phony obj/third_party/connectedhomeip/src/inet/gen_inet_buildconfig.stamp
+build gen_lwip_buildconfig: phony obj/third_party/connectedhomeip/src/lwip/gen_lwip_buildconfig.stamp
+build gen_platform_buildconfig: phony obj/third_party/connectedhomeip/src/platform/gen_platform_buildconfig.stamp
+build gen_system_buildconfig: phony obj/third_party/connectedhomeip/src/system/gen_system_buildconfig.stamp
+build headers: phony obj/third_party/connectedhomeip/src/platform/logging/headers.stamp
+build im_status: phony obj/third_party/connectedhomeip/src/protocols/lib/im_status.a
+build inet: phony obj/third_party/connectedhomeip/src/inet/lib/libInetLayer.a
+build inet_buildconfig: phony obj/third_party/connectedhomeip/src/inet/inet_buildconfig.stamp
+build inet_config_header: phony obj/third_party/connectedhomeip/src/inet/inet_config_header.stamp
+build jsoncpp: phony obj/third_party/connectedhomeip/third_party/jsoncpp/jsoncpp.stamp
+build jsontlv: phony obj/third_party/connectedhomeip/src/lib/support/jsontlv/lib/jsontlv.a
+build lib: phony lib/libCHIP.a
+build link_deps: phony obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/link_deps.stamp
+build logging_constants: phony obj/third_party/connectedhomeip/src/lib/support/logging_constants.stamp
+build lwip: phony obj/third_party/connectedhomeip/src/lwip/lwip.stamp
+build lwip_buildconfig: phony obj/third_party/connectedhomeip/src/lwip/lwip_buildconfig.stamp
+build messaging: phony obj/third_party/connectedhomeip/src/messaging/lib/libMessagingLayer.a
+build messaging_mrp_config: phony obj/third_party/connectedhomeip/src/messaging/messaging_mrp_config.stamp
+build minimal_mdns: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/lib/minimal_mdns.a
+build mock_ember: phony obj/third_party/connectedhomeip/src/app/util/mock/mock_ember.stamp
+build nlassert: phony obj/third_party/connectedhomeip/third_party/nlassert/nlassert.stamp
+build nlfaultinjection: phony lib/libnlfaultinjection.a
+build nlio: phony obj/third_party/connectedhomeip/third_party/nlio/nlio.stamp
+build nlunit-test: phony lib/libnlunit-test.a
+build ota-requestor-test-srcs: phony obj/third_party/connectedhomeip/src/app/tests/ota-requestor-test-srcs.stamp
+build platform: phony obj/third_party/connectedhomeip/src/platform/lib/libDeviceLayer.a
+build platform_base: phony obj/third_party/connectedhomeip/src/platform/platform_base.stamp
+build platform_buildconfig: phony obj/third_party/connectedhomeip/src/platform/platform_buildconfig.stamp
+build platform_header: phony obj/third_party/connectedhomeip/src/lib/dnssd/platform_header.stamp
+build protocols: phony obj/third_party/connectedhomeip/src/protocols/lib/libChipProtocols.a
+build public_headers: phony obj/third_party/connectedhomeip/src/crypto/public_headers.stamp
+build raw: phony obj/third_party/connectedhomeip/src/transport/raw/lib/libRawTransport.a
+build records: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records/lib/records.a
+build responders: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders/lib/responders.a
+build retransmit: phony obj/third_party/connectedhomeip/src/transport/retransmit/retransmit.stamp
+build secure_channel: phony obj/third_party/connectedhomeip/src/protocols/secure_channel/lib/libSecureChannel.a
+build server: phony obj/third_party/connectedhomeip/src/app/server/lib/libCHIPAppServer.a
+build setup_payload: phony obj/third_party/connectedhomeip/src/setup_payload/lib/libSetupPayload.a
+build shell: phony lib/libCHIPShell.a
+build shell_core: phony obj/third_party/connectedhomeip/src/lib/shell/shell_core.stamp
+build stdio: phony ./liblogging-stdio.a
+build system: phony obj/third_party/connectedhomeip/src/system/lib/libSystemLayer.a
+build system_buildconfig: phony obj/third_party/connectedhomeip/src/system/system_buildconfig.stamp
+build system_config_header: phony obj/third_party/connectedhomeip/src/system/system_config_header.stamp
+build testing: phony lib/libSupportTesting.a
+build tests_run: phony obj/third_party/connectedhomeip/src/tests_run.stamp
+build trace: phony obj/third_party/connectedhomeip/src/trace/trace.stamp
+build transport: phony obj/third_party/connectedhomeip/src/transport/lib/libTransportLayer.a
+build $:esp32: phony obj/esp32.stamp
+build mbedtls$:mbedtls: phony obj/mbedtls/mbedtls.stamp
+build third_party/connectedhomeip/src$:crypto_tests: phony obj/third_party/connectedhomeip/src/crypto_tests.stamp
+build third_party/connectedhomeip/src$:crypto_tests_lib: phony obj/third_party/connectedhomeip/src/crypto_tests_lib.stamp
+build third_party/connectedhomeip/src$:crypto_tests_run: phony obj/third_party/connectedhomeip/src/crypto_tests_run.stamp
+build third_party/connectedhomeip/src$:fake_platform_tests: phony obj/third_party/connectedhomeip/src/fake_platform_tests.stamp
+build third_party/connectedhomeip/src$:fake_platform_tests_lib: phony obj/third_party/connectedhomeip/src/fake_platform_tests_lib.stamp
+build third_party/connectedhomeip/src$:fake_platform_tests_run: phony obj/third_party/connectedhomeip/src/fake_platform_tests_run.stamp
+build third_party/connectedhomeip/src$:tests: phony obj/third_party/connectedhomeip/src/tests.stamp
+build third_party/connectedhomeip/src$:tests_lib: phony obj/third_party/connectedhomeip/src/tests_lib.stamp
+build third_party/connectedhomeip/src$:tests_run: phony obj/third_party/connectedhomeip/src/tests_run.stamp
+build third_party/connectedhomeip/src/access$:access: phony obj/third_party/connectedhomeip/src/access/lib/libaccess.a
+build third_party/connectedhomeip/src/access: phony obj/third_party/connectedhomeip/src/access/lib/libaccess.a
+build third_party/connectedhomeip/src/access/tests$:tests: phony obj/third_party/connectedhomeip/src/access/tests/tests.stamp
+build third_party/connectedhomeip/src/access/tests: phony obj/third_party/connectedhomeip/src/access/tests/tests.stamp
+build third_party/connectedhomeip/src/access/tests$:tests_lib: phony lib/libaccesstest.a
+build third_party/connectedhomeip/src/app$:app: phony obj/third_party/connectedhomeip/src/app/lib/libCHIPDataModel.a
+build third_party/connectedhomeip/src/app: phony obj/third_party/connectedhomeip/src/app/lib/libCHIPDataModel.a
+build third_party/connectedhomeip/src/app$:app_buildconfig: phony obj/third_party/connectedhomeip/src/app/app_buildconfig.stamp
+build third_party/connectedhomeip/src/app$:app_config: phony obj/third_party/connectedhomeip/src/app/app_config.stamp
+build third_party/connectedhomeip/src/app$:gen_app_buildconfig: phony obj/third_party/connectedhomeip/src/app/gen_app_buildconfig.stamp
+build third_party/connectedhomeip/src/app/common$:cluster-objects: phony obj/third_party/connectedhomeip/src/app/common/lib/libClusterObjects.a
+build third_party/connectedhomeip/src/app/server$:server: phony obj/third_party/connectedhomeip/src/app/server/lib/libCHIPAppServer.a
+build third_party/connectedhomeip/src/app/server: phony obj/third_party/connectedhomeip/src/app/server/lib/libCHIPAppServer.a
+build third_party/connectedhomeip/src/app/tests$:binding-test-srcs: phony obj/third_party/connectedhomeip/src/app/tests/binding-test-srcs.stamp
+build third_party/connectedhomeip/src/app/tests$:helpers: phony lib/libAppTestHelpers.a
+build third_party/connectedhomeip/src/app/tests$:ota-requestor-test-srcs: phony obj/third_party/connectedhomeip/src/app/tests/ota-requestor-test-srcs.stamp
+build third_party/connectedhomeip/src/app/tests$:tests: phony obj/third_party/connectedhomeip/src/app/tests/tests.stamp
+build third_party/connectedhomeip/src/app/tests: phony obj/third_party/connectedhomeip/src/app/tests/tests.stamp
+build third_party/connectedhomeip/src/app/tests$:tests_lib: phony lib/libAppTests.a
+build third_party/connectedhomeip/src/app/tests/suites/credentials$:dac_provider: phony obj/third_party/connectedhomeip/src/app/tests/suites/credentials/dac_provider.stamp
+build third_party/connectedhomeip/src/app/util/mock$:mock_ember: phony obj/third_party/connectedhomeip/src/app/util/mock/mock_ember.stamp
+build third_party/connectedhomeip/src/ble$:ble: phony obj/third_party/connectedhomeip/src/ble/lib/libBleLayer.a
+build third_party/connectedhomeip/src/ble: phony obj/third_party/connectedhomeip/src/ble/lib/libBleLayer.a
+build third_party/connectedhomeip/src/ble$:ble_buildconfig: phony obj/third_party/connectedhomeip/src/ble/ble_buildconfig.stamp
+build third_party/connectedhomeip/src/ble$:ble_config_header: phony obj/third_party/connectedhomeip/src/ble/ble_config_header.stamp
+build third_party/connectedhomeip/src/ble$:gen_ble_buildconfig: phony obj/third_party/connectedhomeip/src/ble/gen_ble_buildconfig.stamp
+build third_party/connectedhomeip/src/ble/tests$:tests: phony obj/third_party/connectedhomeip/src/ble/tests/tests.stamp
+build third_party/connectedhomeip/src/ble/tests: phony obj/third_party/connectedhomeip/src/ble/tests/tests.stamp
+build third_party/connectedhomeip/src/ble/tests$:tests_lib: phony lib/libBleLayerTests.a
+build third_party/connectedhomeip/src/controller$:controller: phony obj/third_party/connectedhomeip/src/controller/lib/libChipController.a
+build third_party/connectedhomeip/src/controller: phony obj/third_party/connectedhomeip/src/controller/lib/libChipController.a
+build third_party/connectedhomeip/src/controller/data_model$:data_model: phony obj/third_party/connectedhomeip/src/controller/data_model/data_model.stamp
+build third_party/connectedhomeip/src/controller/data_model: phony obj/third_party/connectedhomeip/src/controller/data_model/data_model.stamp
+build third_party/connectedhomeip/src/controller/data_model$:data_model_codegen: phony obj/third_party/connectedhomeip/src/controller/data_model/data_model_codegen.stamp
+build third_party/connectedhomeip/src/controller/data_model$:data_model_codegen_codegen: phony obj/third_party/connectedhomeip/src/controller/data_model/data_model_codegen_codegen.stamp
+build third_party/connectedhomeip/src/controller/data_model$:data_model_codegen_codegen._metadata_path_list.txt: phony obj/third_party/connectedhomeip/src/controller/data_model/data_model_codegen_codegen._metadata_path_list.txt.stamp
+build third_party/connectedhomeip/src/controller/tests$:tests: phony obj/third_party/connectedhomeip/src/controller/tests/tests.stamp
+build third_party/connectedhomeip/src/controller/tests: phony obj/third_party/connectedhomeip/src/controller/tests/tests.stamp
+build third_party/connectedhomeip/src/controller/tests$:tests_lib: phony lib/libControllerTests.a
+build third_party/connectedhomeip/src/controller/tests/data_model$:data_model: phony obj/third_party/connectedhomeip/src/controller/tests/data_model/data_model.stamp
+build third_party/connectedhomeip/src/controller/tests/data_model: phony obj/third_party/connectedhomeip/src/controller/tests/data_model/data_model.stamp
+build third_party/connectedhomeip/src/controller/tests/data_model$:data_model_lib: phony lib/libDataModelTests.a
+build third_party/connectedhomeip/src/credentials$:credentials: phony obj/third_party/connectedhomeip/src/credentials/lib/libCredentials.a
+build third_party/connectedhomeip/src/credentials: phony obj/third_party/connectedhomeip/src/credentials/lib/libCredentials.a
+build third_party/connectedhomeip/src/credentials$:default_attestation_verifier: phony obj/third_party/connectedhomeip/src/credentials/lib/libDefaultAttestationVerifier.a
+build third_party/connectedhomeip/src/credentials$:file_attestation_trust_store: phony obj/third_party/connectedhomeip/src/credentials/lib/libFileAttestationTrustStore.a
+build third_party/connectedhomeip/src/credentials/tests$:cert_test_vectors: phony lib/libCertTestVectors.a
+build third_party/connectedhomeip/src/credentials/tests$:tests: phony obj/third_party/connectedhomeip/src/credentials/tests/tests.stamp
+build third_party/connectedhomeip/src/credentials/tests: phony obj/third_party/connectedhomeip/src/credentials/tests/tests.stamp
+build third_party/connectedhomeip/src/credentials/tests$:tests_lib: phony lib/libCredentialsTest.a
+build third_party/connectedhomeip/src/crypto$:crypto: phony obj/third_party/connectedhomeip/src/crypto/lib/libChipCrypto.a
+build third_party/connectedhomeip/src/crypto: phony obj/third_party/connectedhomeip/src/crypto/lib/libChipCrypto.a
+build third_party/connectedhomeip/src/crypto$:crypto_buildconfig: phony obj/third_party/connectedhomeip/src/crypto/crypto_buildconfig.stamp
+build third_party/connectedhomeip/src/crypto$:cryptopal_mbedtls: phony obj/third_party/connectedhomeip/src/crypto/cryptopal_mbedtls.stamp
+build third_party/connectedhomeip/src/crypto$:gen_crypto_buildconfig: phony obj/third_party/connectedhomeip/src/crypto/gen_crypto_buildconfig.stamp
+build third_party/connectedhomeip/src/crypto$:public_headers: phony obj/third_party/connectedhomeip/src/crypto/public_headers.stamp
+build third_party/connectedhomeip/src/crypto/tests$:tests: phony obj/third_party/connectedhomeip/src/crypto/tests/tests.stamp
+build third_party/connectedhomeip/src/crypto/tests: phony obj/third_party/connectedhomeip/src/crypto/tests/tests.stamp
+build third_party/connectedhomeip/src/crypto/tests$:tests_lib: phony lib/libChipCryptoTests.a
+build third_party/connectedhomeip/src/inet$:gen_inet_buildconfig: phony obj/third_party/connectedhomeip/src/inet/gen_inet_buildconfig.stamp
+build third_party/connectedhomeip/src/inet$:inet: phony obj/third_party/connectedhomeip/src/inet/lib/libInetLayer.a
+build third_party/connectedhomeip/src/inet: phony obj/third_party/connectedhomeip/src/inet/lib/libInetLayer.a
+build third_party/connectedhomeip/src/inet$:inet_buildconfig: phony obj/third_party/connectedhomeip/src/inet/inet_buildconfig.stamp
+build third_party/connectedhomeip/src/inet$:inet_config_header: phony obj/third_party/connectedhomeip/src/inet/inet_config_header.stamp
+build third_party/connectedhomeip/src/inet/tests$:helpers: phony lib/libInetTestHelpers.a
+build third_party/connectedhomeip/src/inet/tests$:tests: phony obj/third_party/connectedhomeip/src/inet/tests/tests.stamp
+build third_party/connectedhomeip/src/inet/tests: phony obj/third_party/connectedhomeip/src/inet/tests/tests.stamp
+build third_party/connectedhomeip/src/inet/tests$:tests_lib: phony lib/libInetLayerTests.a
+build third_party/connectedhomeip/src/lib$:lib: phony lib/libCHIP.a
+build third_party/connectedhomeip/src/lib: phony lib/libCHIP.a
+build third_party/connectedhomeip/src/lib/address_resolve$:address-resolve-tool: phony ./address-resolve-tool
+build third_party/connectedhomeip/src/lib/address_resolve$:address_resolve: phony obj/third_party/connectedhomeip/src/lib/address_resolve/lib/address_resolve.a
+build third_party/connectedhomeip/src/lib/address_resolve: phony obj/third_party/connectedhomeip/src/lib/address_resolve/lib/address_resolve.a
+build third_party/connectedhomeip/src/lib/address_resolve/tests$:tests: phony obj/third_party/connectedhomeip/src/lib/address_resolve/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/address_resolve/tests: phony obj/third_party/connectedhomeip/src/lib/address_resolve/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/address_resolve/tests$:tests_lib: phony lib/libAddressResolveTests.a
+build third_party/connectedhomeip/src/lib/asn1$:asn1: phony obj/third_party/connectedhomeip/src/lib/asn1/lib/libASN1.a
+build third_party/connectedhomeip/src/lib/asn1: phony obj/third_party/connectedhomeip/src/lib/asn1/lib/libASN1.a
+build third_party/connectedhomeip/src/lib/asn1$:asn1oid_header: phony obj/third_party/connectedhomeip/src/lib/asn1/asn1oid_header.stamp
+build third_party/connectedhomeip/src/lib/asn1$:gen_asn1oid: phony obj/third_party/connectedhomeip/src/lib/asn1/gen_asn1oid.stamp
+build third_party/connectedhomeip/src/lib/asn1/tests$:tests: phony obj/third_party/connectedhomeip/src/lib/asn1/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/asn1/tests: phony obj/third_party/connectedhomeip/src/lib/asn1/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/asn1/tests$:tests_lib: phony lib/libASN1Tests.a
+build third_party/connectedhomeip/src/lib/core$:chip_buildconfig: phony obj/third_party/connectedhomeip/src/lib/core/chip_buildconfig.stamp
+build third_party/connectedhomeip/src/lib/core$:chip_config_header: phony obj/third_party/connectedhomeip/src/lib/core/chip_config_header.stamp
+build third_party/connectedhomeip/src/lib/core$:core: phony obj/third_party/connectedhomeip/src/lib/core/lib/libChipCore.a
+build third_party/connectedhomeip/src/lib/core: phony obj/third_party/connectedhomeip/src/lib/core/lib/libChipCore.a
+build third_party/connectedhomeip/src/lib/core$:gen_chip_buildconfig: phony obj/third_party/connectedhomeip/src/lib/core/gen_chip_buildconfig.stamp
+build third_party/connectedhomeip/src/lib/core/tests$:tests: phony obj/third_party/connectedhomeip/src/lib/core/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/core/tests: phony obj/third_party/connectedhomeip/src/lib/core/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/core/tests$:tests_lib: phony lib/libCoreTests.a
+build third_party/connectedhomeip/src/lib/dnssd$:dnssd: phony obj/third_party/connectedhomeip/src/lib/dnssd/lib/dnssd.a
+build third_party/connectedhomeip/src/lib/dnssd: phony obj/third_party/connectedhomeip/src/lib/dnssd/lib/dnssd.a
+build third_party/connectedhomeip/src/lib/dnssd$:platform_header: phony obj/third_party/connectedhomeip/src/lib/dnssd/platform_header.stamp
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns$:address_policy: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/address_policy.stamp
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns$:default_policy: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/lib/default_policy.a
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns$:minimal_mdns: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/lib/minimal_mdns.a
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/lib/minimal_mdns.a
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core$:core: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/lib/core.a
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/lib/core.a
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/tests$:support: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/tests/support.stamp
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/tests$:tests: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/tests: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/tests$:tests_lib: phony lib/libMinimalMdnsCoreTests.a
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records$:records: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records/lib/records.a
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records/lib/records.a
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records/tests$:tests: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records/tests: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records/tests$:tests_lib: phony lib/libMinimalMdnsRecordsTests.a
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders$:responders: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders/lib/responders.a
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders/lib/responders.a
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders/tests$:tests: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders/tests: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders/tests$:tests_lib: phony lib/libMinimalMdnsRespondersTests.a
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/tests$:tests: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/tests: phony obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/tests$:tests_lib: phony lib/libMinimalMdnstests.a
+build third_party/connectedhomeip/src/lib/dnssd/platform/tests$:tests: phony obj/third_party/connectedhomeip/src/lib/dnssd/platform/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/dnssd/platform/tests: phony obj/third_party/connectedhomeip/src/lib/dnssd/platform/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/dnssd/platform/tests$:tests_lib: phony lib/libMdnsFakePlatformTests.a
+build third_party/connectedhomeip/src/lib/dnssd/tests$:tests: phony obj/third_party/connectedhomeip/src/lib/dnssd/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/dnssd/tests: phony obj/third_party/connectedhomeip/src/lib/dnssd/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/dnssd/tests$:tests_lib: phony lib/libMdnsTests.a
+build third_party/connectedhomeip/src/lib/shell$:shell: phony lib/libCHIPShell.a
+build third_party/connectedhomeip/src/lib/shell: phony lib/libCHIPShell.a
+build third_party/connectedhomeip/src/lib/shell$:shell_core: phony obj/third_party/connectedhomeip/src/lib/shell/shell_core.stamp
+build third_party/connectedhomeip/src/lib/shell/commands$:commands: phony obj/third_party/connectedhomeip/src/lib/shell/commands/commands.stamp
+build third_party/connectedhomeip/src/lib/shell/commands: phony obj/third_party/connectedhomeip/src/lib/shell/commands/commands.stamp
+build third_party/connectedhomeip/src/lib/support$:attributes: phony obj/third_party/connectedhomeip/src/lib/support/attributes.stamp
+build third_party/connectedhomeip/src/lib/support$:chip_version_header: phony obj/third_party/connectedhomeip/src/lib/support/chip_version_header.stamp
+build third_party/connectedhomeip/src/lib/support$:gen_chip_version: phony obj/third_party/connectedhomeip/src/lib/support/gen_chip_version.stamp
+build third_party/connectedhomeip/src/lib/support$:logging_constants: phony obj/third_party/connectedhomeip/src/lib/support/logging_constants.stamp
+build third_party/connectedhomeip/src/lib/support$:support: phony obj/third_party/connectedhomeip/src/lib/support/lib/libSupportLayer.a
+build third_party/connectedhomeip/src/lib/support: phony obj/third_party/connectedhomeip/src/lib/support/lib/libSupportLayer.a
+build third_party/connectedhomeip/src/lib/support$:testing: phony lib/libSupportTesting.a
+build third_party/connectedhomeip/src/lib/support/jsontlv$:jsontlv: phony obj/third_party/connectedhomeip/src/lib/support/jsontlv/lib/jsontlv.a
+build third_party/connectedhomeip/src/lib/support/jsontlv: phony obj/third_party/connectedhomeip/src/lib/support/jsontlv/lib/jsontlv.a
+build third_party/connectedhomeip/src/lib/support/tests$:tests: phony obj/third_party/connectedhomeip/src/lib/support/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/support/tests: phony obj/third_party/connectedhomeip/src/lib/support/tests/tests.stamp
+build third_party/connectedhomeip/src/lib/support/tests$:tests_lib: phony lib/libSupportTests.a
+build third_party/connectedhomeip/src/lwip$:all: phony obj/third_party/connectedhomeip/src/lwip/all.stamp
+build third_party/connectedhomeip/src/lwip$:gen_lwip_buildconfig: phony obj/third_party/connectedhomeip/src/lwip/gen_lwip_buildconfig.stamp
+build third_party/connectedhomeip/src/lwip$:lwip: phony obj/third_party/connectedhomeip/src/lwip/lwip.stamp
+build third_party/connectedhomeip/src/lwip: phony obj/third_party/connectedhomeip/src/lwip/lwip.stamp
+build third_party/connectedhomeip/src/lwip$:lwip_buildconfig: phony obj/third_party/connectedhomeip/src/lwip/lwip_buildconfig.stamp
+build third_party/connectedhomeip/src/messaging$:messaging: phony obj/third_party/connectedhomeip/src/messaging/lib/libMessagingLayer.a
+build third_party/connectedhomeip/src/messaging: phony obj/third_party/connectedhomeip/src/messaging/lib/libMessagingLayer.a
+build third_party/connectedhomeip/src/messaging$:messaging_mrp_config: phony obj/third_party/connectedhomeip/src/messaging/messaging_mrp_config.stamp
+build third_party/connectedhomeip/src/messaging/tests$:helpers: phony lib/libMessagingTestHelpers.a
+build third_party/connectedhomeip/src/messaging/tests$:tests: phony obj/third_party/connectedhomeip/src/messaging/tests/tests.stamp
+build third_party/connectedhomeip/src/messaging/tests: phony obj/third_party/connectedhomeip/src/messaging/tests/tests.stamp
+build third_party/connectedhomeip/src/messaging/tests$:tests_lib: phony lib/libMessagingLayerTests.a
+build third_party/connectedhomeip/src/platform$:gen_platform_buildconfig: phony obj/third_party/connectedhomeip/src/platform/gen_platform_buildconfig.stamp
+build third_party/connectedhomeip/src/platform$:platform: phony obj/third_party/connectedhomeip/src/platform/lib/libDeviceLayer.a
+build third_party/connectedhomeip/src/platform: phony obj/third_party/connectedhomeip/src/platform/lib/libDeviceLayer.a
+build third_party/connectedhomeip/src/platform$:platform_base: phony obj/third_party/connectedhomeip/src/platform/platform_base.stamp
+build third_party/connectedhomeip/src/platform$:platform_buildconfig: phony obj/third_party/connectedhomeip/src/platform/platform_buildconfig.stamp
+build third_party/connectedhomeip/src/platform/ESP32$:ESP32: phony obj/third_party/connectedhomeip/src/platform/ESP32/lib/ESP32.a
+build third_party/connectedhomeip/src/platform/ESP32: phony obj/third_party/connectedhomeip/src/platform/ESP32/lib/ESP32.a
+build third_party/connectedhomeip/src/platform/logging$:force_stdio: phony obj/third_party/connectedhomeip/src/platform/logging/force_stdio.stamp
+build third_party/connectedhomeip/src/platform/logging$:headers: phony obj/third_party/connectedhomeip/src/platform/logging/headers.stamp
+build third_party/connectedhomeip/src/platform/logging$:stdio: phony ./liblogging-stdio.a
+build third_party/connectedhomeip/src/protocols$:im_status: phony obj/third_party/connectedhomeip/src/protocols/lib/im_status.a
+build third_party/connectedhomeip/src/protocols$:protocols: phony obj/third_party/connectedhomeip/src/protocols/lib/libChipProtocols.a
+build third_party/connectedhomeip/src/protocols: phony obj/third_party/connectedhomeip/src/protocols/lib/libChipProtocols.a
+build third_party/connectedhomeip/src/protocols/bdx$:bdx: phony obj/third_party/connectedhomeip/src/protocols/bdx/lib/libBdx.a
+build third_party/connectedhomeip/src/protocols/bdx: phony obj/third_party/connectedhomeip/src/protocols/bdx/lib/libBdx.a
+build third_party/connectedhomeip/src/protocols/bdx/tests$:tests: phony obj/third_party/connectedhomeip/src/protocols/bdx/tests/tests.stamp
+build third_party/connectedhomeip/src/protocols/bdx/tests: phony obj/third_party/connectedhomeip/src/protocols/bdx/tests/tests.stamp
+build third_party/connectedhomeip/src/protocols/bdx/tests$:tests_lib: phony lib/libBDXTests.a
+build third_party/connectedhomeip/src/protocols/secure_channel$:secure_channel: phony obj/third_party/connectedhomeip/src/protocols/secure_channel/lib/libSecureChannel.a
+build third_party/connectedhomeip/src/protocols/secure_channel: phony obj/third_party/connectedhomeip/src/protocols/secure_channel/lib/libSecureChannel.a
+build third_party/connectedhomeip/src/protocols/secure_channel/tests$:tests: phony obj/third_party/connectedhomeip/src/protocols/secure_channel/tests/tests.stamp
+build third_party/connectedhomeip/src/protocols/secure_channel/tests: phony obj/third_party/connectedhomeip/src/protocols/secure_channel/tests/tests.stamp
+build third_party/connectedhomeip/src/protocols/secure_channel/tests$:tests_lib: phony lib/libSecureChannelTests.a
+build third_party/connectedhomeip/src/protocols/user_directed_commissioning/tests$:tests: phony obj/third_party/connectedhomeip/src/protocols/user_directed_commissioning/tests/tests.stamp
+build third_party/connectedhomeip/src/protocols/user_directed_commissioning/tests: phony obj/third_party/connectedhomeip/src/protocols/user_directed_commissioning/tests/tests.stamp
+build third_party/connectedhomeip/src/protocols/user_directed_commissioning/tests$:tests_lib: phony lib/libUserDirectedCommissioningTests.a
+build third_party/connectedhomeip/src/setup_payload$:additional_data_payload: phony obj/third_party/connectedhomeip/src/setup_payload/additional_data_payload.stamp
+build third_party/connectedhomeip/src/setup_payload$:additional_data_payload_buildconfig: phony obj/third_party/connectedhomeip/src/setup_payload/additional_data_payload_buildconfig.stamp
+build third_party/connectedhomeip/src/setup_payload$:gen_additional_data_payload_buildconfig: phony obj/third_party/connectedhomeip/src/setup_payload/gen_additional_data_payload_buildconfig.stamp
+build third_party/connectedhomeip/src/setup_payload$:setup_payload: phony obj/third_party/connectedhomeip/src/setup_payload/lib/libSetupPayload.a
+build third_party/connectedhomeip/src/setup_payload: phony obj/third_party/connectedhomeip/src/setup_payload/lib/libSetupPayload.a
+build third_party/connectedhomeip/src/setup_payload/tests$:tests: phony obj/third_party/connectedhomeip/src/setup_payload/tests/tests.stamp
+build third_party/connectedhomeip/src/setup_payload/tests: phony obj/third_party/connectedhomeip/src/setup_payload/tests/tests.stamp
+build third_party/connectedhomeip/src/setup_payload/tests$:tests_lib: phony lib/libSetupPayloadTests.a
+build third_party/connectedhomeip/src/system$:gen_system_buildconfig: phony obj/third_party/connectedhomeip/src/system/gen_system_buildconfig.stamp
+build third_party/connectedhomeip/src/system$:system: phony obj/third_party/connectedhomeip/src/system/lib/libSystemLayer.a
+build third_party/connectedhomeip/src/system: phony obj/third_party/connectedhomeip/src/system/lib/libSystemLayer.a
+build third_party/connectedhomeip/src/system$:system_buildconfig: phony obj/third_party/connectedhomeip/src/system/system_buildconfig.stamp
+build third_party/connectedhomeip/src/system$:system_config_header: phony obj/third_party/connectedhomeip/src/system/system_config_header.stamp
+build third_party/connectedhomeip/src/system/tests$:tests: phony obj/third_party/connectedhomeip/src/system/tests/tests.stamp
+build third_party/connectedhomeip/src/system/tests: phony obj/third_party/connectedhomeip/src/system/tests/tests.stamp
+build third_party/connectedhomeip/src/system/tests$:tests_lib: phony lib/libSystemLayerTests.a
+build third_party/connectedhomeip/src/trace$:trace: phony obj/third_party/connectedhomeip/src/trace/trace.stamp
+build third_party/connectedhomeip/src/trace: phony obj/third_party/connectedhomeip/src/trace/trace.stamp
+build third_party/connectedhomeip/src/transport$:transport: phony obj/third_party/connectedhomeip/src/transport/lib/libTransportLayer.a
+build third_party/connectedhomeip/src/transport: phony obj/third_party/connectedhomeip/src/transport/lib/libTransportLayer.a
+build third_party/connectedhomeip/src/transport/raw$:raw: phony obj/third_party/connectedhomeip/src/transport/raw/lib/libRawTransport.a
+build third_party/connectedhomeip/src/transport/raw: phony obj/third_party/connectedhomeip/src/transport/raw/lib/libRawTransport.a
+build third_party/connectedhomeip/src/transport/raw/tests$:helpers: phony lib/libNetworkTestHelpers.a
+build third_party/connectedhomeip/src/transport/raw/tests$:tests: phony obj/third_party/connectedhomeip/src/transport/raw/tests/tests.stamp
+build third_party/connectedhomeip/src/transport/raw/tests: phony obj/third_party/connectedhomeip/src/transport/raw/tests/tests.stamp
+build third_party/connectedhomeip/src/transport/raw/tests$:tests_lib: phony lib/libRawTransportTests.a
+build third_party/connectedhomeip/src/transport/retransmit$:retransmit: phony obj/third_party/connectedhomeip/src/transport/retransmit/retransmit.stamp
+build third_party/connectedhomeip/src/transport/retransmit: phony obj/third_party/connectedhomeip/src/transport/retransmit/retransmit.stamp
+build third_party/connectedhomeip/src/transport/retransmit/tests$:tests: phony obj/third_party/connectedhomeip/src/transport/retransmit/tests/tests.stamp
+build third_party/connectedhomeip/src/transport/retransmit/tests: phony obj/third_party/connectedhomeip/src/transport/retransmit/tests/tests.stamp
+build third_party/connectedhomeip/src/transport/retransmit/tests$:tests_lib: phony lib/libRetransmitTests.a
+build third_party/connectedhomeip/src/transport/tests$:helpers: phony obj/third_party/connectedhomeip/src/transport/tests/helpers.stamp
+build third_party/connectedhomeip/src/transport/tests$:tests: phony obj/third_party/connectedhomeip/src/transport/tests/tests.stamp
+build third_party/connectedhomeip/src/transport/tests: phony obj/third_party/connectedhomeip/src/transport/tests/tests.stamp
+build third_party/connectedhomeip/src/transport/tests$:tests_lib: phony lib/libTransportLayerTests.a
+build third_party/connectedhomeip/third_party/jsoncpp$:jsoncpp: phony obj/third_party/connectedhomeip/third_party/jsoncpp/jsoncpp.stamp
+build third_party/connectedhomeip/third_party/jsoncpp: phony obj/third_party/connectedhomeip/third_party/jsoncpp/jsoncpp.stamp
+build third_party/connectedhomeip/third_party/mbedtls$:mbedtls: phony obj/third_party/connectedhomeip/third_party/mbedtls/mbedtls.stamp
+build third_party/connectedhomeip/third_party/mbedtls: phony obj/third_party/connectedhomeip/third_party/mbedtls/mbedtls.stamp
+build third_party/connectedhomeip/third_party/nlassert$:nlassert: phony obj/third_party/connectedhomeip/third_party/nlassert/nlassert.stamp
+build third_party/connectedhomeip/third_party/nlassert: phony obj/third_party/connectedhomeip/third_party/nlassert/nlassert.stamp
+build third_party/connectedhomeip/third_party/nlfaultinjection$:nlfaultinjection: phony lib/libnlfaultinjection.a
+build third_party/connectedhomeip/third_party/nlfaultinjection: phony lib/libnlfaultinjection.a
+build third_party/connectedhomeip/third_party/nlio$:nlio: phony obj/third_party/connectedhomeip/third_party/nlio/nlio.stamp
+build third_party/connectedhomeip/third_party/nlio: phony obj/third_party/connectedhomeip/third_party/nlio/nlio.stamp
+build third_party/connectedhomeip/third_party/nlunit-test$:nlunit-test: phony lib/libnlunit-test.a
+build third_party/connectedhomeip/third_party/nlunit-test: phony lib/libnlunit-test.a
+build third_party/connectedhomeip/third_party/pigweed/repo/pw_build$:docs: phony obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/docs.stamp
+build third_party/connectedhomeip/third_party/pigweed/repo/pw_build$:docs._metadata_path_list.txt: phony obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/docs._metadata_path_list.txt.stamp
+build third_party/connectedhomeip/third_party/pigweed/repo/pw_build$:empty: phony obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/empty.stamp
+build third_party/connectedhomeip/third_party/pigweed/repo/pw_build$:link_deps: phony obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/link_deps.stamp
+
+build all: phony $
+    obj/esp32.stamp $
+    obj/mbedtls/mbedtls.stamp $
+    obj/third_party/connectedhomeip/src/crypto_tests.stamp $
+    obj/third_party/connectedhomeip/src/crypto_tests_lib.stamp $
+    obj/third_party/connectedhomeip/src/crypto_tests_run.stamp $
+    obj/third_party/connectedhomeip/src/fake_platform_tests.stamp $
+    obj/third_party/connectedhomeip/src/fake_platform_tests_lib.stamp $
+    obj/third_party/connectedhomeip/src/fake_platform_tests_run.stamp $
+    obj/third_party/connectedhomeip/src/tests.stamp $
+    obj/third_party/connectedhomeip/src/tests_lib.stamp $
+    obj/third_party/connectedhomeip/src/tests_run.stamp $
+    obj/third_party/connectedhomeip/src/access/lib/libaccess.a $
+    obj/third_party/connectedhomeip/src/access/tests/tests.stamp $
+    lib/libaccesstest.a $
+    obj/third_party/connectedhomeip/src/app/lib/libCHIPDataModel.a $
+    obj/third_party/connectedhomeip/src/app/app_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/app/app_config.stamp $
+    obj/third_party/connectedhomeip/src/app/gen_app_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/app/common/lib/libClusterObjects.a $
+    obj/third_party/connectedhomeip/src/app/server/lib/libCHIPAppServer.a $
+    obj/third_party/connectedhomeip/src/app/tests/binding-test-srcs.stamp $
+    lib/libAppTestHelpers.a $
+    obj/third_party/connectedhomeip/src/app/tests/ota-requestor-test-srcs.stamp $
+    obj/third_party/connectedhomeip/src/app/tests/tests.stamp $
+    lib/libAppTests.a $
+    obj/third_party/connectedhomeip/src/app/tests/suites/credentials/dac_provider.stamp $
+    obj/third_party/connectedhomeip/src/app/util/mock/mock_ember.stamp $
+    obj/third_party/connectedhomeip/src/ble/lib/libBleLayer.a $
+    obj/third_party/connectedhomeip/src/ble/ble_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/ble/ble_config_header.stamp $
+    obj/third_party/connectedhomeip/src/ble/gen_ble_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/ble/tests/tests.stamp $
+    lib/libBleLayerTests.a $
+    obj/third_party/connectedhomeip/src/controller/lib/libChipController.a $
+    obj/third_party/connectedhomeip/src/controller/data_model/data_model.stamp $
+    obj/third_party/connectedhomeip/src/controller/data_model/data_model_codegen.stamp $
+    obj/third_party/connectedhomeip/src/controller/data_model/data_model_codegen_codegen.stamp $
+    obj/third_party/connectedhomeip/src/controller/data_model/data_model_codegen_codegen._metadata_path_list.txt.stamp $
+    obj/third_party/connectedhomeip/src/controller/tests/tests.stamp $
+    lib/libControllerTests.a $
+    obj/third_party/connectedhomeip/src/controller/tests/data_model/data_model.stamp $
+    lib/libDataModelTests.a $
+    obj/third_party/connectedhomeip/src/credentials/lib/libCredentials.a $
+    obj/third_party/connectedhomeip/src/credentials/lib/libDefaultAttestationVerifier.a $
+    obj/third_party/connectedhomeip/src/credentials/lib/libFileAttestationTrustStore.a $
+    lib/libCertTestVectors.a $
+    obj/third_party/connectedhomeip/src/credentials/tests/tests.stamp $
+    lib/libCredentialsTest.a $
+    obj/third_party/connectedhomeip/src/crypto/lib/libChipCrypto.a $
+    obj/third_party/connectedhomeip/src/crypto/crypto_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/crypto/cryptopal_mbedtls.stamp $
+    obj/third_party/connectedhomeip/src/crypto/gen_crypto_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/crypto/public_headers.stamp $
+    obj/third_party/connectedhomeip/src/crypto/tests/tests.stamp $
+    lib/libChipCryptoTests.a $
+    obj/third_party/connectedhomeip/src/inet/gen_inet_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/inet/lib/libInetLayer.a $
+    obj/third_party/connectedhomeip/src/inet/inet_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/inet/inet_config_header.stamp $
+    lib/libInetTestHelpers.a $
+    obj/third_party/connectedhomeip/src/inet/tests/tests.stamp $
+    lib/libInetLayerTests.a $
+    lib/libCHIP.a $
+    ./address-resolve-tool $
+    obj/third_party/connectedhomeip/src/lib/address_resolve/lib/address_resolve.a $
+    obj/third_party/connectedhomeip/src/lib/address_resolve/tests/tests.stamp $
+    lib/libAddressResolveTests.a $
+    obj/third_party/connectedhomeip/src/lib/asn1/lib/libASN1.a $
+    obj/third_party/connectedhomeip/src/lib/asn1/asn1oid_header.stamp $
+    obj/third_party/connectedhomeip/src/lib/asn1/gen_asn1oid.stamp $
+    obj/third_party/connectedhomeip/src/lib/asn1/tests/tests.stamp $
+    lib/libASN1Tests.a $
+    obj/third_party/connectedhomeip/src/lib/core/chip_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/lib/core/chip_config_header.stamp $
+    obj/third_party/connectedhomeip/src/lib/core/lib/libChipCore.a $
+    obj/third_party/connectedhomeip/src/lib/core/gen_chip_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/lib/core/tests/tests.stamp $
+    lib/libCoreTests.a $
+    obj/third_party/connectedhomeip/src/lib/dnssd/lib/dnssd.a $
+    obj/third_party/connectedhomeip/src/lib/dnssd/platform_header.stamp $
+    obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/address_policy.stamp $
+    obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/lib/default_policy.a $
+    obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/lib/minimal_mdns.a $
+    obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/lib/core.a $
+    obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/tests/support.stamp $
+    obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/tests/tests.stamp $
+    lib/libMinimalMdnsCoreTests.a $
+    obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records/lib/records.a $
+    obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records/tests/tests.stamp $
+    lib/libMinimalMdnsRecordsTests.a $
+    obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders/lib/responders.a $
+    obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders/tests/tests.stamp $
+    lib/libMinimalMdnsRespondersTests.a $
+    obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/tests/tests.stamp $
+    lib/libMinimalMdnstests.a $
+    obj/third_party/connectedhomeip/src/lib/dnssd/platform/tests/tests.stamp $
+    lib/libMdnsFakePlatformTests.a $
+    obj/third_party/connectedhomeip/src/lib/dnssd/tests/tests.stamp $
+    lib/libMdnsTests.a $
+    lib/libCHIPShell.a $
+    obj/third_party/connectedhomeip/src/lib/shell/shell_core.stamp $
+    obj/third_party/connectedhomeip/src/lib/shell/commands/commands.stamp $
+    obj/third_party/connectedhomeip/src/lib/support/attributes.stamp $
+    obj/third_party/connectedhomeip/src/lib/support/chip_version_header.stamp $
+    obj/third_party/connectedhomeip/src/lib/support/gen_chip_version.stamp $
+    obj/third_party/connectedhomeip/src/lib/support/logging_constants.stamp $
+    obj/third_party/connectedhomeip/src/lib/support/lib/libSupportLayer.a $
+    lib/libSupportTesting.a $
+    obj/third_party/connectedhomeip/src/lib/support/jsontlv/lib/jsontlv.a $
+    obj/third_party/connectedhomeip/src/lib/support/tests/tests.stamp $
+    lib/libSupportTests.a $
+    obj/third_party/connectedhomeip/src/lwip/all.stamp $
+    obj/third_party/connectedhomeip/src/lwip/gen_lwip_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/lwip/lwip.stamp $
+    obj/third_party/connectedhomeip/src/lwip/lwip_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/messaging/lib/libMessagingLayer.a $
+    obj/third_party/connectedhomeip/src/messaging/messaging_mrp_config.stamp $
+    lib/libMessagingTestHelpers.a $
+    obj/third_party/connectedhomeip/src/messaging/tests/tests.stamp $
+    lib/libMessagingLayerTests.a $
+    obj/third_party/connectedhomeip/src/platform/gen_platform_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/platform/lib/libDeviceLayer.a $
+    obj/third_party/connectedhomeip/src/platform/platform_base.stamp $
+    obj/third_party/connectedhomeip/src/platform/platform_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/platform/ESP32/lib/ESP32.a $
+    obj/third_party/connectedhomeip/src/platform/logging/force_stdio.stamp $
+    obj/third_party/connectedhomeip/src/platform/logging/headers.stamp $
+    ./liblogging-stdio.a $
+    obj/third_party/connectedhomeip/src/protocols/lib/im_status.a $
+    obj/third_party/connectedhomeip/src/protocols/lib/libChipProtocols.a $
+    obj/third_party/connectedhomeip/src/protocols/bdx/lib/libBdx.a $
+    obj/third_party/connectedhomeip/src/protocols/bdx/tests/tests.stamp $
+    lib/libBDXTests.a $
+    obj/third_party/connectedhomeip/src/protocols/secure_channel/lib/libSecureChannel.a $
+    obj/third_party/connectedhomeip/src/protocols/secure_channel/tests/tests.stamp $
+    lib/libSecureChannelTests.a $
+    obj/third_party/connectedhomeip/src/protocols/user_directed_commissioning/tests/tests.stamp $
+    lib/libUserDirectedCommissioningTests.a $
+    obj/third_party/connectedhomeip/src/setup_payload/additional_data_payload.stamp $
+    obj/third_party/connectedhomeip/src/setup_payload/additional_data_payload_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/setup_payload/gen_additional_data_payload_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/setup_payload/lib/libSetupPayload.a $
+    obj/third_party/connectedhomeip/src/setup_payload/tests/tests.stamp $
+    lib/libSetupPayloadTests.a $
+    obj/third_party/connectedhomeip/src/system/gen_system_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/system/lib/libSystemLayer.a $
+    obj/third_party/connectedhomeip/src/system/system_buildconfig.stamp $
+    obj/third_party/connectedhomeip/src/system/system_config_header.stamp $
+    obj/third_party/connectedhomeip/src/system/tests/tests.stamp $
+    lib/libSystemLayerTests.a $
+    obj/third_party/connectedhomeip/src/trace/trace.stamp $
+    obj/third_party/connectedhomeip/src/transport/lib/libTransportLayer.a $
+    obj/third_party/connectedhomeip/src/transport/raw/lib/libRawTransport.a $
+    lib/libNetworkTestHelpers.a $
+    obj/third_party/connectedhomeip/src/transport/raw/tests/tests.stamp $
+    lib/libRawTransportTests.a $
+    obj/third_party/connectedhomeip/src/transport/retransmit/retransmit.stamp $
+    obj/third_party/connectedhomeip/src/transport/retransmit/tests/tests.stamp $
+    lib/libRetransmitTests.a $
+    obj/third_party/connectedhomeip/src/transport/tests/helpers.stamp $
+    obj/third_party/connectedhomeip/src/transport/tests/tests.stamp $
+    lib/libTransportLayerTests.a $
+    obj/third_party/connectedhomeip/third_party/jsoncpp/jsoncpp.stamp $
+    obj/third_party/connectedhomeip/third_party/mbedtls/mbedtls.stamp $
+    obj/third_party/connectedhomeip/third_party/nlassert/nlassert.stamp $
+    lib/libnlfaultinjection.a $
+    obj/third_party/connectedhomeip/third_party/nlio/nlio.stamp $
+    lib/libnlunit-test.a $
+    obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/docs.stamp $
+    obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/docs._metadata_path_list.txt.stamp $
+    obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/empty.stamp $
+    obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/link_deps.stamp
+
+default all

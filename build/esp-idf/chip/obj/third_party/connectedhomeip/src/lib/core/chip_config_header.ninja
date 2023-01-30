@@ -1,0 +1,8 @@
+defines = -DCHIP_HAVE_CONFIG_H=1
+framework_dirs =
+include_dirs = -I../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/src/include -I../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/src -Igen/include -I../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/zzz_generated/app-common
+target_output_name = chip_config_header
+
+build obj/third_party/connectedhomeip/src/lib/core/chip_config_header.inputdeps.stamp: stamp obj/third_party/connectedhomeip/src/ble/gen_ble_buildconfig.stamp obj/third_party/connectedhomeip/src/lib/core/gen_chip_buildconfig.stamp obj/third_party/connectedhomeip/src/platform/gen_platform_buildconfig.stamp obj/third_party/connectedhomeip/src/system/gen_system_buildconfig.stamp
+
+build obj/third_party/connectedhomeip/src/lib/core/chip_config_header.stamp: stamp || obj/third_party/connectedhomeip/src/lib/core/chip_buildconfig.stamp obj/third_party/connectedhomeip/src/ble/ble_config_header.stamp obj/third_party/connectedhomeip/src/system/system_config_header.stamp obj/third_party/connectedhomeip/src/ble/ble_buildconfig.stamp obj/third_party/connectedhomeip/src/platform/platform_buildconfig.stamp obj/third_party/connectedhomeip/src/system/system_buildconfig.stamp

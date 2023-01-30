@@ -1,0 +1,326 @@
+rule copy
+  command = ln -f ${in} ${out} 2>/dev/null || (rm -rf ${out} && cp -af ${in} ${out})
+  description = cp ${in} ${out}
+rule objc
+  command = /Users/esp-test/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc -MMD -MF ${out}.d ${cflags} ${cflags_objc} ${defines} ${include_dirs} ${framework_dirs} -c ${in} -o ${out}
+  description = objc ${out}
+  depfile = ${out}.d
+  deps = gcc
+rule objcxx
+  command = /Users/esp-test/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-g++ -MMD -MF ${out}.d ${cflags} ${cflags_objcc} ${defines} ${include_dirs} ${framework_dirs} -c ${in} -o ${out}
+  description = objc++ ${out}
+  depfile = ${out}.d
+  deps = gcc
+rule asm
+  command = /Users/esp-test/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc -MMD -MF ${out}.d ${asmflags} ${cflags} ${defines} ${include_dirs} -c ${in} -o ${out}
+  description = as ${out}
+  depfile = ${out}.d
+  deps = gcc
+rule alink
+  command = rm -f ${out} && /Users/esp-test/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ar ${arflags} rcs ${out} ${in}
+  description = ar ${target_output_name}${output_extension}
+rule solink
+  command = /Users/esp-test/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-g++ ${ldflags} -Wl,-Map,${output_dir}/${target_output_name}.map @${output_dir}/${target_output_name}${output_extension}.rsp -o ${output_dir}/${target_output_name}${output_extension} -shared
+  description = ld -shared ${output_dir}/${target_output_name}${output_extension}
+  rspfile = ${output_dir}/${target_output_name}${output_extension}.rsp
+  rspfile_content = -Wl,--start-group ${in} ${frameworks} ${libs} -Wl,--end-group
+rule link
+  command = /Users/esp-test/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-g++ ${ldflags} -Wl,-Map,${output_dir}/${target_output_name}.map @${output_dir}/${target_output_name}${output_extension}.rsp -o ${output_dir}/${target_output_name}${output_extension}
+  description = ld ${output_dir}/${target_output_name}${output_extension}
+  rspfile = ${output_dir}/${target_output_name}${output_extension}.rsp
+  rspfile_content = -Wl,--start-group ${in} ${frameworks} ${libs} -Wl,--end-group
+rule stamp
+  command = touch ${out}
+  description = stamp ${out}
+rule cc
+  command = /Users/esp-test/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc -MMD -MF ${out}.d ${cflags} ${cflags_c} ${defines} ${include_dirs} -c ${in} -o ${out}
+  description = cc ${out}
+  depfile = ${out}.d
+  deps = gcc
+rule cxx
+  command = /Users/esp-test/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-g++ -MMD -MF ${out}.d ${cflags} ${cflags_cc} ${defines} ${include_dirs} -c ${in} -o ${out}
+  description = c++ ${out}
+  depfile = ${out}.d
+  deps = gcc
+
+build obj/esp32.stamp: stamp lib/libCHIP.a obj/third_party/connectedhomeip/src/tests.stamp
+build obj/mbedtls/mbedtls.stamp: stamp
+build obj/third_party/connectedhomeip/src/crypto_tests.stamp: stamp || obj/third_party/connectedhomeip/src/credentials/tests/tests.stamp obj/third_party/connectedhomeip/src/crypto/tests/tests.stamp
+build obj/third_party/connectedhomeip/src/crypto_tests_lib.stamp: stamp lib/libCredentialsTest.a lib/libChipCryptoTests.a
+build obj/third_party/connectedhomeip/src/crypto_tests_run.stamp: stamp
+build obj/third_party/connectedhomeip/src/fake_platform_tests.stamp: stamp || obj/third_party/connectedhomeip/src/lib/dnssd/platform/tests/tests.stamp
+build obj/third_party/connectedhomeip/src/fake_platform_tests_lib.stamp: stamp lib/libMdnsFakePlatformTests.a
+build obj/third_party/connectedhomeip/src/fake_platform_tests_run.stamp: stamp
+build obj/third_party/connectedhomeip/src/tests.stamp: stamp || obj/third_party/connectedhomeip/src/access/tests/tests.stamp obj/third_party/connectedhomeip/src/crypto/tests/tests.stamp obj/third_party/connectedhomeip/src/inet/tests/tests.stamp obj/third_party/connectedhomeip/src/lib/address_resolve/tests/tests.stamp obj/third_party/connectedhomeip/src/lib/asn1/tests/tests.stamp obj/third_party/connectedhomeip/src/lib/core/tests/tests.stamp obj/third_party/connectedhomeip/src/messaging/tests/tests.stamp obj/third_party/connectedhomeip/src/protocols/bdx/tests/tests.stamp obj/third_party/connectedhomeip/src/protocols/user_directed_commissioning/tests/tests.stamp obj/third_party/connectedhomeip/src/transport/retransmit/tests/tests.stamp obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/tests/tests.stamp obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders/tests/tests.stamp obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/tests/tests.stamp obj/third_party/connectedhomeip/src/lib/dnssd/tests/tests.stamp obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records/tests/tests.stamp obj/third_party/connectedhomeip/src/setup_payload/tests/tests.stamp obj/third_party/connectedhomeip/src/transport/raw/tests/tests.stamp obj/third_party/connectedhomeip/src/app/tests/tests.stamp obj/third_party/connectedhomeip/src/credentials/tests/tests.stamp obj/third_party/connectedhomeip/src/lib/support/tests/tests.stamp obj/third_party/connectedhomeip/src/protocols/secure_channel/tests/tests.stamp obj/third_party/connectedhomeip/src/system/tests/tests.stamp obj/third_party/connectedhomeip/src/transport/tests/tests.stamp obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/tests/tests.stamp obj/third_party/connectedhomeip/src/ble/tests/tests.stamp obj/third_party/connectedhomeip/src/controller/tests/data_model/data_model.stamp obj/third_party/connectedhomeip/src/controller/tests/tests.stamp
+build obj/third_party/connectedhomeip/src/tests_lib.stamp: stamp lib/libaccesstest.a lib/libChipCryptoTests.a lib/libInetLayerTests.a lib/libAddressResolveTests.a lib/libASN1Tests.a lib/libCoreTests.a lib/libMessagingLayerTests.a lib/libBDXTests.a lib/libUserDirectedCommissioningTests.a lib/libRetransmitTests.a lib/libMinimalMdnsCoreTests.a lib/libMinimalMdnsRespondersTests.a lib/libMinimalMdnstests.a lib/libMdnsTests.a lib/libMinimalMdnsRecordsTests.a lib/libSetupPayloadTests.a lib/libRawTransportTests.a lib/libAppTests.a lib/libCredentialsTest.a lib/libSupportTests.a lib/libSecureChannelTests.a lib/libSystemLayerTests.a lib/libTransportLayerTests.a lib/libMinimalMdnstests.a lib/libBleLayerTests.a lib/libDataModelTests.a lib/libControllerTests.a
+build obj/third_party/connectedhomeip/src/tests_run.stamp: stamp
+subninja obj/third_party/connectedhomeip/src/access/access.ninja
+build obj/third_party/connectedhomeip/src/access/tests/tests.stamp: stamp lib/libaccesstest.a
+subninja obj/third_party/connectedhomeip/src/access/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/app/app.ninja
+subninja obj/third_party/connectedhomeip/src/app/app_buildconfig.ninja
+subninja obj/third_party/connectedhomeip/src/app/app_config.ninja
+rule __third_party_connectedhomeip_src_app_gen_app_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule
+  rspfile = __third_party_connectedhomeip_src_app_gen_app_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule.rsp
+  rspfile_content = --defines CHIP_CONFIG_IM_PRETTY_PRINT=false CHIP_CONFIG_IM_FORCE_FABRIC_QUOTA_CHECK=false CHIP_CONFIG_ENABLE_SESSION_RESUMPTION=true CHIP_CONFIG_ACCESS_CONTROL_POLICY_LOGGING_VERBOSITY=0
+  command = python ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py --output app/AppBuildConfig.h --rulename //third_party/connectedhomeip/src/app$:gen_app_buildconfig --gen-dir gen/include --definitions ${rspfile}
+  description = ACTION //third_party/connectedhomeip/src/app:gen_app_buildconfig(//third_party/connectedhomeip/config/esp32/toolchain:esp32)
+  restat = 1
+
+build gen/include/app/AppBuildConfig.h: __third_party_connectedhomeip_src_app_gen_app_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule | ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py
+
+build obj/third_party/connectedhomeip/src/app/gen_app_buildconfig.stamp: stamp gen/include/app/AppBuildConfig.h
+subninja obj/third_party/connectedhomeip/src/app/common/cluster-objects.ninja
+subninja obj/third_party/connectedhomeip/src/app/server/server.ninja
+subninja obj/third_party/connectedhomeip/src/app/tests/binding-test-srcs.ninja
+subninja obj/third_party/connectedhomeip/src/app/tests/helpers.ninja
+subninja obj/third_party/connectedhomeip/src/app/tests/ota-requestor-test-srcs.ninja
+build obj/third_party/connectedhomeip/src/app/tests/tests.stamp: stamp lib/libAppTests.a
+subninja obj/third_party/connectedhomeip/src/app/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/app/tests/suites/credentials/dac_provider.ninja
+subninja obj/third_party/connectedhomeip/src/app/util/mock/mock_ember.ninja
+subninja obj/third_party/connectedhomeip/src/ble/ble.ninja
+subninja obj/third_party/connectedhomeip/src/ble/ble_buildconfig.ninja
+subninja obj/third_party/connectedhomeip/src/ble/ble_config_header.ninja
+rule __third_party_connectedhomeip_src_ble_gen_ble_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule
+  rspfile = __third_party_connectedhomeip_src_ble_gen_ble_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule.rsp
+  rspfile_content = --defines CONFIG_NETWORK_LAYER_BLE=true CHIP_ENABLE_CHIPOBLE_TEST=false BLE_PLATFORM_CONFIG_INCLUDE=\<platform/ESP32/BlePlatformConfig.h\>
+  command = python ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py --output ble/BleBuildConfig.h --rulename //third_party/connectedhomeip/src/ble$:gen_ble_buildconfig --gen-dir gen/include --definitions ${rspfile}
+  description = ACTION //third_party/connectedhomeip/src/ble:gen_ble_buildconfig(//third_party/connectedhomeip/config/esp32/toolchain:esp32)
+  restat = 1
+
+build gen/include/ble/BleBuildConfig.h: __third_party_connectedhomeip_src_ble_gen_ble_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule | ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py
+
+build obj/third_party/connectedhomeip/src/ble/gen_ble_buildconfig.stamp: stamp gen/include/ble/BleBuildConfig.h
+build obj/third_party/connectedhomeip/src/ble/tests/tests.stamp: stamp lib/libBleLayerTests.a
+subninja obj/third_party/connectedhomeip/src/ble/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/controller/controller.ninja
+subninja obj/third_party/connectedhomeip/src/controller/data_model/data_model.ninja
+subninja obj/third_party/connectedhomeip/src/controller/data_model/data_model_codegen.ninja
+rule __third_party_connectedhomeip_src_controller_data_model_data_model_codegen_codegen___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule
+  command = python ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/py/pw_build/python_runner.py --gn-root ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/ --current-path ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/src/controller/data_model --default-toolchain=//third_party/connectedhomeip/config/esp32/toolchain$:esp32 --current-toolchain=//third_party/connectedhomeip/config/esp32/toolchain$:esp32 --capture-output --python-dep-list-files gen/third_party/connectedhomeip/src/controller/data_model/data_model_codegen_codegen_metadata_path_list.txt -- ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/codegen.py --generator cpp-app --output-dir gen/third_party/connectedhomeip/src/controller/data_model --expected-outputs gen/third_party/connectedhomeip/src/controller/data_model/data_model_codegen.expected.outputs ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/src/controller/data_model/controller-clusters.matter
+  description = ACTION //third_party/connectedhomeip/src/controller/data_model:data_model_codegen_codegen(//third_party/connectedhomeip/config/esp32/toolchain:esp32)
+  restat = 1
+
+build gen/third_party/connectedhomeip/src/controller/data_model/app/PluginApplicationCallbacks.h gen/third_party/connectedhomeip/src/controller/data_model/app/callback-stub.cpp: __third_party_connectedhomeip_src_controller_data_model_data_model_codegen_codegen___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule | ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/py/pw_build/python_runner.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/src/controller/data_model/controller-clusters.matter gen/third_party/connectedhomeip/src/controller/data_model/data_model_codegen.expected.outputs ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/generators/bridge/BridgeClustersCpp.jinja ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/generators/bridge/BridgeClustersCommon.jinja ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/generators/bridge/BridgeClustersGlobalStructs.jinja ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/generators/java/ChipClustersCpp.jinja ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/generators/java/ChipClustersRead.jinja ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/generators/cpp/application/CallbackStubSource.jinja ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/generators/cpp/application/PluginApplicationCallbacksHeader.jinja ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/__init__.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/generators/__init__.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/generators/bridge/__init__.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/generators/cpp/__init__.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/generators/cpp/application/__init__.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/generators/filters.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/generators/java/__init__.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/generators/types.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/matter_idl_parser.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/matter_idl_types.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/xml_parser.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/zapxml/__init__.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/zapxml/handlers/__init__.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/zapxml/handlers/base.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/zapxml/handlers/context.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/zapxml/handlers/handlers.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/idl/zapxml/handlers/parsing.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/codegen.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/src/controller/data_model/controller-clusters.matter obj/third_party/connectedhomeip/src/controller/data_model/data_model_codegen_codegen._metadata_path_list.txt.stamp
+
+build obj/third_party/connectedhomeip/src/controller/data_model/data_model_codegen_codegen.stamp: stamp gen/third_party/connectedhomeip/src/controller/data_model/app/PluginApplicationCallbacks.h gen/third_party/connectedhomeip/src/controller/data_model/app/callback-stub.cpp
+build obj/third_party/connectedhomeip/src/controller/data_model/data_model_codegen_codegen._metadata_path_list.txt.stamp: stamp
+build obj/third_party/connectedhomeip/src/controller/tests/tests.stamp: stamp lib/libControllerTests.a
+subninja obj/third_party/connectedhomeip/src/controller/tests/tests_lib.ninja
+build obj/third_party/connectedhomeip/src/controller/tests/data_model/data_model.stamp: stamp lib/libDataModelTests.a
+subninja obj/third_party/connectedhomeip/src/controller/tests/data_model/data_model_lib.ninja
+subninja obj/third_party/connectedhomeip/src/credentials/credentials.ninja
+subninja obj/third_party/connectedhomeip/src/credentials/default_attestation_verifier.ninja
+subninja obj/third_party/connectedhomeip/src/credentials/file_attestation_trust_store.ninja
+subninja obj/third_party/connectedhomeip/src/credentials/tests/cert_test_vectors.ninja
+build obj/third_party/connectedhomeip/src/credentials/tests/tests.stamp: stamp lib/libCredentialsTest.a
+subninja obj/third_party/connectedhomeip/src/credentials/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/crypto/crypto.ninja
+subninja obj/third_party/connectedhomeip/src/crypto/crypto_buildconfig.ninja
+subninja obj/third_party/connectedhomeip/src/crypto/cryptopal_mbedtls.ninja
+rule __third_party_connectedhomeip_src_crypto_gen_crypto_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule
+  rspfile = __third_party_connectedhomeip_src_crypto_gen_crypto_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule.rsp
+  rspfile_content = --defines CHIP_CRYPTO_MBEDTLS=true CHIP_CRYPTO_PSA=false CHIP_CRYPTO_OPENSSL=false CHIP_CRYPTO_BORINGSSL=false CHIP_CRYPTO_PLATFORM=false CHIP_CRYPTO_HSM=0 CHIP_CRYPTO_HSM_NXP=0
+  command = python ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py --output crypto/CryptoBuildConfig.h --rulename //third_party/connectedhomeip/src/crypto$:gen_crypto_buildconfig --gen-dir gen/include --definitions ${rspfile}
+  description = ACTION //third_party/connectedhomeip/src/crypto:gen_crypto_buildconfig(//third_party/connectedhomeip/config/esp32/toolchain:esp32)
+  restat = 1
+
+build gen/include/crypto/CryptoBuildConfig.h: __third_party_connectedhomeip_src_crypto_gen_crypto_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule | ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py
+
+build obj/third_party/connectedhomeip/src/crypto/gen_crypto_buildconfig.stamp: stamp gen/include/crypto/CryptoBuildConfig.h
+subninja obj/third_party/connectedhomeip/src/crypto/public_headers.ninja
+build obj/third_party/connectedhomeip/src/crypto/tests/tests.stamp: stamp lib/libChipCryptoTests.a
+subninja obj/third_party/connectedhomeip/src/crypto/tests/tests_lib.ninja
+rule __third_party_connectedhomeip_src_inet_gen_inet_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule
+  rspfile = __third_party_connectedhomeip_src_inet_gen_inet_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule.rsp
+  rspfile_content = --defines INET_CONFIG_TEST=true INET_CONFIG_ENABLE_IPV4=true INET_CONFIG_ENABLE_TCP_ENDPOINT=true INET_CONFIG_ENABLE_UDP_ENDPOINT=true HAVE_LWIP_RAW_BIND_NETIF=true INET_PLATFORM_CONFIG_INCLUDE=\<platform/ESP32/InetPlatformConfig.h\> INET_TCP_END_POINT_IMPL_CONFIG_FILE=\<inet/TCPEndPointImplLwIP.h\> INET_UDP_END_POINT_IMPL_CONFIG_FILE=\<inet/UDPEndPointImplLwIP.h\>
+  command = python ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py --output inet/InetBuildConfig.h --rulename //third_party/connectedhomeip/src/inet$:gen_inet_buildconfig --gen-dir gen/include --definitions ${rspfile}
+  description = ACTION //third_party/connectedhomeip/src/inet:gen_inet_buildconfig(//third_party/connectedhomeip/config/esp32/toolchain:esp32)
+  restat = 1
+
+build gen/include/inet/InetBuildConfig.h: __third_party_connectedhomeip_src_inet_gen_inet_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule | ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py
+
+build obj/third_party/connectedhomeip/src/inet/gen_inet_buildconfig.stamp: stamp gen/include/inet/InetBuildConfig.h
+subninja obj/third_party/connectedhomeip/src/inet/inet.ninja
+subninja obj/third_party/connectedhomeip/src/inet/inet_buildconfig.ninja
+subninja obj/third_party/connectedhomeip/src/inet/inet_config_header.ninja
+subninja obj/third_party/connectedhomeip/src/inet/tests/helpers.ninja
+build obj/third_party/connectedhomeip/src/inet/tests/tests.stamp: stamp lib/libInetLayerTests.a
+subninja obj/third_party/connectedhomeip/src/inet/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/lib/lib.ninja
+subninja obj/third_party/connectedhomeip/src/lib/address_resolve/address-resolve-tool.ninja
+subninja obj/third_party/connectedhomeip/src/lib/address_resolve/address_resolve.ninja
+build obj/third_party/connectedhomeip/src/lib/address_resolve/tests/tests.stamp: stamp lib/libAddressResolveTests.a
+subninja obj/third_party/connectedhomeip/src/lib/address_resolve/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/lib/asn1/asn1.ninja
+subninja obj/third_party/connectedhomeip/src/lib/asn1/asn1oid_header.ninja
+rule __third_party_connectedhomeip_src_lib_asn1_gen_asn1oid___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule
+  command = python ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/src/lib/asn1/gen_asn1oid.py --output_file=gen/include/asn1/ASN1OID.h
+  description = ACTION //third_party/connectedhomeip/src/lib/asn1:gen_asn1oid(//third_party/connectedhomeip/config/esp32/toolchain:esp32)
+  restat = 1
+
+build gen/include/asn1/ASN1OID.h: __third_party_connectedhomeip_src_lib_asn1_gen_asn1oid___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule | ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/src/lib/asn1/gen_asn1oid.py
+
+build obj/third_party/connectedhomeip/src/lib/asn1/gen_asn1oid.stamp: stamp gen/include/asn1/ASN1OID.h
+build obj/third_party/connectedhomeip/src/lib/asn1/tests/tests.stamp: stamp lib/libASN1Tests.a
+subninja obj/third_party/connectedhomeip/src/lib/asn1/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/lib/core/chip_buildconfig.ninja
+subninja obj/third_party/connectedhomeip/src/lib/core/chip_config_header.ninja
+subninja obj/third_party/connectedhomeip/src/lib/core/core.ninja
+rule __third_party_connectedhomeip_src_lib_core_gen_chip_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule
+  rspfile = __third_party_connectedhomeip_src_lib_core_gen_chip_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule.rsp
+  rspfile_content = --defines CHIP_FUZZING_ENABLED=false CHIP_CONFIG_TEST=true CHIP_ERROR_LOGGING=true CHIP_PROGRESS_LOGGING=true CHIP_DETAIL_LOGGING=true CHIP_CONFIG_LOG_MESSAGE_MAX_SIZE=256 CHIP_AUTOMATION_LOGGING=true CHIP_PW_TOKENIZER_LOGGING=false CHIP_USE_PW_LOGGING=false CHIP_CONFIG_SHORT_ERROR_STR=true CHIP_CONFIG_ENABLE_ARG_PARSER=true CHIP_TARGET_STYLE_UNIX=false CHIP_TARGET_STYLE_EMBEDDED=true CHIP_CONFIG_MEMORY_MGMT_MALLOC=true HAVE_MALLOC=true HAVE_FREE=true HAVE_NEW=false CHIP_CONFIG_MEMORY_MGMT_PLATFORM=false CHIP_CONFIG_MEMORY_DEBUG_CHECKS=false CHIP_CONFIG_MEMORY_DEBUG_DMALLOC=false CHIP_CONFIG_PROVIDE_OBSOLESCENT_INTERFACES=false CHIP_CONFIG_TRANSPORT_TRACE_ENABLED=false CHIP_CONFIG_TRANSPORT_PW_TRACE_ENABLED=false CHIP_CONFIG_MINMDNS_DYNAMIC_OPERATIONAL_RESPONDER_LIST=false CHIP_CONFIG_MINMDNS_MAX_PARALLEL_RESOLVES=2
+  command = python ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py --output core/CHIPBuildConfig.h --rulename //third_party/connectedhomeip/src/lib/core$:gen_chip_buildconfig --gen-dir gen/include --definitions ${rspfile}
+  description = ACTION //third_party/connectedhomeip/src/lib/core:gen_chip_buildconfig(//third_party/connectedhomeip/config/esp32/toolchain:esp32)
+  restat = 1
+
+build gen/include/core/CHIPBuildConfig.h: __third_party_connectedhomeip_src_lib_core_gen_chip_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule | ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py
+
+build obj/third_party/connectedhomeip/src/lib/core/gen_chip_buildconfig.stamp: stamp gen/include/core/CHIPBuildConfig.h
+build obj/third_party/connectedhomeip/src/lib/core/tests/tests.stamp: stamp lib/libCoreTests.a
+subninja obj/third_party/connectedhomeip/src/lib/core/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/dnssd.ninja
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/platform_header.ninja
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/address_policy.ninja
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/default_policy.ninja
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/minimal_mdns.ninja
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/core.ninja
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/tests/support.ninja
+build obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/tests/tests.stamp: stamp lib/libMinimalMdnsCoreTests.a
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/core/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records/records.ninja
+build obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records/tests/tests.stamp: stamp lib/libMinimalMdnsRecordsTests.a
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/records/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders/responders.ninja
+build obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders/tests/tests.stamp: stamp lib/libMinimalMdnsRespondersTests.a
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/responders/tests/tests_lib.ninja
+build obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/tests/tests.stamp: stamp lib/libMinimalMdnstests.a
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/minimal_mdns/tests/tests_lib.ninja
+build obj/third_party/connectedhomeip/src/lib/dnssd/platform/tests/tests.stamp: stamp lib/libMdnsFakePlatformTests.a
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/platform/tests/tests_lib.ninja
+build obj/third_party/connectedhomeip/src/lib/dnssd/tests/tests.stamp: stamp lib/libMdnsTests.a
+subninja obj/third_party/connectedhomeip/src/lib/dnssd/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/lib/shell/shell.ninja
+subninja obj/third_party/connectedhomeip/src/lib/shell/shell_core.ninja
+subninja obj/third_party/connectedhomeip/src/lib/shell/commands/commands.ninja
+subninja obj/third_party/connectedhomeip/src/lib/support/attributes.ninja
+subninja obj/third_party/connectedhomeip/src/lib/support/chip_version_header.ninja
+rule __third_party_connectedhomeip_src_lib_support_gen_chip_version___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule
+  command = python ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/gen_chip_version.py --output_file=gen/include/CHIPVersion.h --chip_major=0 --chip_minor=0 --chip_patch=0 --chip_extra=
+  description = ACTION //third_party/connectedhomeip/src/lib/support:gen_chip_version(//third_party/connectedhomeip/config/esp32/toolchain:esp32)
+  restat = 1
+
+build gen/include/CHIPVersion.h: __third_party_connectedhomeip_src_lib_support_gen_chip_version___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule | ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/scripts/gen_chip_version.py
+
+build obj/third_party/connectedhomeip/src/lib/support/gen_chip_version.stamp: stamp gen/include/CHIPVersion.h
+subninja obj/third_party/connectedhomeip/src/lib/support/logging_constants.ninja
+subninja obj/third_party/connectedhomeip/src/lib/support/support.ninja
+subninja obj/third_party/connectedhomeip/src/lib/support/testing.ninja
+subninja obj/third_party/connectedhomeip/src/lib/support/jsontlv/jsontlv.ninja
+build obj/third_party/connectedhomeip/src/lib/support/tests/tests.stamp: stamp lib/libSupportTests.a
+subninja obj/third_party/connectedhomeip/src/lib/support/tests/tests_lib.ninja
+build obj/third_party/connectedhomeip/src/lwip/all.stamp: stamp obj/third_party/connectedhomeip/src/lwip/lwip.stamp
+rule __third_party_connectedhomeip_src_lwip_gen_lwip_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule
+  rspfile = __third_party_connectedhomeip_src_lwip_gen_lwip_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule.rsp
+  rspfile_content = --defines HAVE_LWIP_UDP_BIND_NETIF=1
+  command = python ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py --output lwip/lwip_buildconfig.h --rulename //third_party/connectedhomeip/src/lwip$:gen_lwip_buildconfig --gen-dir gen/include --definitions ${rspfile}
+  description = ACTION //third_party/connectedhomeip/src/lwip:gen_lwip_buildconfig(//third_party/connectedhomeip/config/esp32/toolchain:esp32)
+  restat = 1
+
+build gen/include/lwip/lwip_buildconfig.h: __third_party_connectedhomeip_src_lwip_gen_lwip_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule | ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py
+
+build obj/third_party/connectedhomeip/src/lwip/gen_lwip_buildconfig.stamp: stamp gen/include/lwip/lwip_buildconfig.h
+build obj/third_party/connectedhomeip/src/lwip/lwip.stamp: stamp obj/third_party/connectedhomeip/src/lwip/lwip_buildconfig.stamp
+subninja obj/third_party/connectedhomeip/src/lwip/lwip_buildconfig.ninja
+subninja obj/third_party/connectedhomeip/src/messaging/messaging.ninja
+subninja obj/third_party/connectedhomeip/src/messaging/messaging_mrp_config.ninja
+subninja obj/third_party/connectedhomeip/src/messaging/tests/helpers.ninja
+build obj/third_party/connectedhomeip/src/messaging/tests/tests.stamp: stamp lib/libMessagingLayerTests.a
+subninja obj/third_party/connectedhomeip/src/messaging/tests/tests_lib.ninja
+rule __third_party_connectedhomeip_src_platform_gen_platform_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule
+  rspfile = __third_party_connectedhomeip_src_platform_gen_platform_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule.rsp
+  rspfile_content = --defines CHIP_DEVICE_CONFIG_ENABLE_WPA=true CHIP_ENABLE_OPENTHREAD=false CHIP_DEVICE_CONFIG_THREAD_FTD=false CHIP_STACK_LOCK_TRACKING_ENABLED=true CHIP_STACK_LOCK_TRACKING_ERROR_FATAL=true CHIP_ENABLE_ADDITIONAL_DATA_ADVERTISING=false CHIP_DEVICE_CONFIG_RUN_AS_ROOT=true CHIP_DISABLE_PLATFORM_KVS=false CHIP_DEVICE_PLATFORM_CONFIG_INCLUDE=\<platform/ESP32/CHIPDevicePlatformConfig.h\> CHIP_USE_TRANSITIONAL_COMMISSIONABLE_DATA_PROVIDER=1 CHIP_DEVICE_LAYER_TARGET_ESP32=1 CHIP_DEVICE_LAYER_TARGET=ESP32
+  command = python ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py --output platform/CHIPDeviceBuildConfig.h --rulename //third_party/connectedhomeip/src/platform$:gen_platform_buildconfig --gen-dir gen/include --definitions ${rspfile}
+  description = ACTION //third_party/connectedhomeip/src/platform:gen_platform_buildconfig(//third_party/connectedhomeip/config/esp32/toolchain:esp32)
+  restat = 1
+
+build gen/include/platform/CHIPDeviceBuildConfig.h: __third_party_connectedhomeip_src_platform_gen_platform_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule | ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py
+
+build obj/third_party/connectedhomeip/src/platform/gen_platform_buildconfig.stamp: stamp gen/include/platform/CHIPDeviceBuildConfig.h
+subninja obj/third_party/connectedhomeip/src/platform/platform.ninja
+build obj/third_party/connectedhomeip/src/platform/platform_base.stamp: stamp obj/third_party/connectedhomeip/src/platform/platform_buildconfig.stamp obj/third_party/connectedhomeip/src/ble/lib/libBleLayer.a obj/third_party/connectedhomeip/src/inet/lib/libInetLayer.a obj/third_party/connectedhomeip/src/lib/core/lib/libChipCore.a obj/third_party/connectedhomeip/src/lib/support/lib/libSupportLayer.a obj/third_party/connectedhomeip/src/setup_payload/additional_data_payload.stamp obj/third_party/connectedhomeip/src/system/lib/libSystemLayer.a
+subninja obj/third_party/connectedhomeip/src/platform/platform_buildconfig.ninja
+subninja obj/third_party/connectedhomeip/src/platform/ESP32/ESP32.ninja
+build obj/third_party/connectedhomeip/src/platform/logging/force_stdio.stamp: stamp ./liblogging-stdio.a
+subninja obj/third_party/connectedhomeip/src/platform/logging/headers.ninja
+subninja obj/third_party/connectedhomeip/src/platform/logging/stdio.ninja
+subninja obj/third_party/connectedhomeip/src/protocols/im_status.ninja
+subninja obj/third_party/connectedhomeip/src/protocols/protocols.ninja
+subninja obj/third_party/connectedhomeip/src/protocols/bdx/bdx.ninja
+build obj/third_party/connectedhomeip/src/protocols/bdx/tests/tests.stamp: stamp lib/libBDXTests.a
+subninja obj/third_party/connectedhomeip/src/protocols/bdx/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/protocols/secure_channel/secure_channel.ninja
+build obj/third_party/connectedhomeip/src/protocols/secure_channel/tests/tests.stamp: stamp lib/libSecureChannelTests.a
+subninja obj/third_party/connectedhomeip/src/protocols/secure_channel/tests/tests_lib.ninja
+build obj/third_party/connectedhomeip/src/protocols/user_directed_commissioning/tests/tests.stamp: stamp lib/libUserDirectedCommissioningTests.a
+subninja obj/third_party/connectedhomeip/src/protocols/user_directed_commissioning/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/setup_payload/additional_data_payload.ninja
+subninja obj/third_party/connectedhomeip/src/setup_payload/additional_data_payload_buildconfig.ninja
+rule __third_party_connectedhomeip_src_setup_payload_gen_additional_data_payload_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule
+  rspfile = __third_party_connectedhomeip_src_setup_payload_gen_additional_data_payload_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule.rsp
+  rspfile_content = --defines CHIP_ENABLE_ROTATING_DEVICE_ID=false
+  command = python ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py --output setup_payload/CHIPAdditionalDataPayloadBuildConfig.h --rulename //third_party/connectedhomeip/src/setup_payload$:gen_additional_data_payload_buildconfig --gen-dir gen/include --definitions ${rspfile}
+  description = ACTION //third_party/connectedhomeip/src/setup_payload:gen_additional_data_payload_buildconfig(//third_party/connectedhomeip/config/esp32/toolchain:esp32)
+  restat = 1
+
+build gen/include/setup_payload/CHIPAdditionalDataPayloadBuildConfig.h: __third_party_connectedhomeip_src_setup_payload_gen_additional_data_payload_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule | ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py
+
+build obj/third_party/connectedhomeip/src/setup_payload/gen_additional_data_payload_buildconfig.stamp: stamp gen/include/setup_payload/CHIPAdditionalDataPayloadBuildConfig.h
+subninja obj/third_party/connectedhomeip/src/setup_payload/setup_payload.ninja
+build obj/third_party/connectedhomeip/src/setup_payload/tests/tests.stamp: stamp lib/libSetupPayloadTests.a
+subninja obj/third_party/connectedhomeip/src/setup_payload/tests/tests_lib.ninja
+rule __third_party_connectedhomeip_src_system_gen_system_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule
+  rspfile = __third_party_connectedhomeip_src_system_gen_system_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule.rsp
+  rspfile_content = --defines CONFIG_DEVICE_LAYER=true CHIP_SYSTEM_CONFIG_TEST=true CHIP_WITH_NLFAULTINJECTION=true CHIP_SYSTEM_CONFIG_USE_DISPATCH=false CHIP_SYSTEM_CONFIG_USE_LWIP=true CHIP_SYSTEM_CONFIG_USE_OPEN_THREAD_ENDPOINT=false CHIP_SYSTEM_CONFIG_USE_SOCKETS=false CHIP_SYSTEM_CONFIG_USE_NETWORK_FRAMEWORK=false CHIP_SYSTEM_CONFIG_POSIX_LOCKING=false CHIP_SYSTEM_CONFIG_FREERTOS_LOCKING=true CHIP_SYSTEM_CONFIG_MBED_LOCKING=false CHIP_SYSTEM_CONFIG_CMSIS_RTOS_LOCKING=false CHIP_SYSTEM_CONFIG_NO_LOCKING=false CHIP_SYSTEM_CONFIG_PROVIDE_STATISTICS=true HAVE_CLOCK_GETTIME=true HAVE_CLOCK_SETTIME=true HAVE_GETTIMEOFDAY=false HAVE_SYS_TIME_H=true HAVE_NETINET_ICMP6_H=true HAVE_ICMP6_FILTER=true CONFIG_HAVE_VCBPRINTF=false CONFIG_HAVE_VSNPRINTF_EX=false HAVE_SYS_SOCKET_H=false CHIP_PLATFORM_CONFIG_INCLUDE=\<platform/ESP32/CHIPPlatformConfig.h\> SYSTEM_PLATFORM_CONFIG_INCLUDE=\<platform/ESP32/SystemPlatformConfig.h\> CHIP_SYSTEM_LAYER_IMPL_CONFIG_FILE=\<system/SystemLayerImplFreeRTOS.h\> CHIP_SYSTEM_CONFIG_MULTICAST_HOMING=0\$ 
+  command = python ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py --output system/SystemBuildConfig.h --rulename //third_party/connectedhomeip/src/system$:gen_system_buildconfig --gen-dir gen/include --definitions ${rspfile}
+  description = ACTION //third_party/connectedhomeip/src/system:gen_system_buildconfig(//third_party/connectedhomeip/config/esp32/toolchain:esp32)
+  restat = 1
+
+build gen/include/system/SystemBuildConfig.h: __third_party_connectedhomeip_src_system_gen_system_buildconfig___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule | ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/build/chip/write_buildconfig_header.py
+
+build obj/third_party/connectedhomeip/src/system/gen_system_buildconfig.stamp: stamp gen/include/system/SystemBuildConfig.h
+subninja obj/third_party/connectedhomeip/src/system/system.ninja
+subninja obj/third_party/connectedhomeip/src/system/system_buildconfig.ninja
+subninja obj/third_party/connectedhomeip/src/system/system_config_header.ninja
+build obj/third_party/connectedhomeip/src/system/tests/tests.stamp: stamp lib/libSystemLayerTests.a
+subninja obj/third_party/connectedhomeip/src/system/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/trace/trace.ninja
+subninja obj/third_party/connectedhomeip/src/transport/transport.ninja
+subninja obj/third_party/connectedhomeip/src/transport/raw/raw.ninja
+subninja obj/third_party/connectedhomeip/src/transport/raw/tests/helpers.ninja
+build obj/third_party/connectedhomeip/src/transport/raw/tests/tests.stamp: stamp lib/libRawTransportTests.a
+subninja obj/third_party/connectedhomeip/src/transport/raw/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/transport/retransmit/retransmit.ninja
+build obj/third_party/connectedhomeip/src/transport/retransmit/tests/tests.stamp: stamp lib/libRetransmitTests.a
+subninja obj/third_party/connectedhomeip/src/transport/retransmit/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/src/transport/tests/helpers.ninja
+build obj/third_party/connectedhomeip/src/transport/tests/tests.stamp: stamp lib/libTransportLayerTests.a
+subninja obj/third_party/connectedhomeip/src/transport/tests/tests_lib.ninja
+subninja obj/third_party/connectedhomeip/third_party/jsoncpp/jsoncpp.ninja
+build obj/third_party/connectedhomeip/third_party/mbedtls/mbedtls.stamp: stamp obj/mbedtls/mbedtls.stamp
+subninja obj/third_party/connectedhomeip/third_party/nlassert/nlassert.ninja
+subninja obj/third_party/connectedhomeip/third_party/nlfaultinjection/nlfaultinjection.ninja
+subninja obj/third_party/connectedhomeip/third_party/nlio/nlio.ninja
+subninja obj/third_party/connectedhomeip/third_party/nlunit-test/nlunit-test.ninja
+rule __third_party_connectedhomeip_third_party_pigweed_repo_pw_build_docs___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule
+  command = python ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/py/pw_build/python_runner.py --gn-root ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/ --current-path ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_build --default-toolchain=//third_party/connectedhomeip/config/esp32/toolchain$:esp32 --current-toolchain=//third_party/connectedhomeip/config/esp32/toolchain$:esp32 --touch gen/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/docs.pw_pystamp --capture-output --python-virtualenv-config python/gen/third_party/connectedhomeip/third_party/pigweed/repo/pw_env_setup/pigweed_build_venv/venv_metadata.json --python-dep-list-files gen/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/docs_metadata_path_list.txt -- ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/py/pw_build/nop.py
+  description = ACTION //third_party/connectedhomeip/third_party/pigweed/repo/pw_build:docs(//third_party/connectedhomeip/config/esp32/toolchain:esp32)
+  restat = 1
+
+build gen/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/docs.pw_pystamp: __third_party_connectedhomeip_third_party_pigweed_repo_pw_build_docs___third_party_connectedhomeip_config_esp32_toolchain_esp32__rule | ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/py/pw_build/python_runner.py ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/docs.rst ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/python.rst ../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/py/pw_build/nop.py obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/docs._metadata_path_list.txt.stamp python/obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_env_setup/pigweed_build_venv._install_3p_deps.stamp
+
+build obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/docs.stamp: stamp gen/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/docs.pw_pystamp
+build obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/docs._metadata_path_list.txt.stamp: stamp
+build obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/empty.stamp: stamp
+build obj/third_party/connectedhomeip/third_party/pigweed/repo/pw_build/link_deps.stamp: stamp

@@ -1,0 +1,32 @@
+{
+  "gn_target_name": "//third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py:py",
+  "inputs": [
+
+  ],
+  "setup_sources": [
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pyproject.toml",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/setup.cfg",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/setup.py"
+  ],
+  "sources": [
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/__init__.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/__main__.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/argument_types.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/arguments.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/branding.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/color.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/env.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/envparse.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/log.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/plugins.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/process.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/pw_command_plugins.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/requires.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/toml_config_loader_mixin.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/pw_cli/yaml_config_loader_mixin.py"
+  ],
+  "tests": [
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/envparse_test.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_cli/py/plugins_test.py"
+  ]
+}

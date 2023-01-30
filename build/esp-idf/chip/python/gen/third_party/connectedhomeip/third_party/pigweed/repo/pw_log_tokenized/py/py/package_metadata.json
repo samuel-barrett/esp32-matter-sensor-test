@@ -1,0 +1,18 @@
+{
+  "gn_target_name": "//third_party/connectedhomeip/third_party/pigweed/repo/pw_log_tokenized/py:py",
+  "inputs": [
+
+  ],
+  "setup_sources": [
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_log_tokenized/py/pyproject.toml",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_log_tokenized/py/setup.cfg",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_log_tokenized/py/setup.py"
+  ],
+  "sources": [
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_log_tokenized/py/pw_log_tokenized/__init__.py"
+  ],
+  "tests": [
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_log_tokenized/py/format_string_test.py",
+    "../../../../esp-matter/connectedhomeip/connectedhomeip/config/esp32/third_party/connectedhomeip/third_party/pigweed/repo/pw_log_tokenized/py/metadata_test.py"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/esp-test/matter_temp_measure_esp32/build/CMakeFiles/bootloader"
+		},
+		{
+			"file" : "/Users/esp-test/matter_temp_measure_esp32/build/CMakeFiles/bootloader.rule"
+		},
+		{
+			"file" : "/Users/esp-test/matter_temp_measure_esp32/build/CMakeFiles/bootloader-complete.rule"
+		},
+		{
+			"file" : "/Users/esp-test/matter_temp_measure_esp32/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+		},
+		{
+			"file" : "/Users/esp-test/matter_temp_measure_esp32/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+		},
+		{
+			"file" : "/Users/esp-test/matter_temp_measure_esp32/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+		},
+		{
+			"file" : "/Users/esp-test/matter_temp_measure_esp32/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+		},
+		{
+			"file" : "/Users/esp-test/matter_temp_measure_esp32/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+		},
+		{
+			"file" : "/Users/esp-test/matter_temp_measure_esp32/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+		},
+		{
+			"file" : "/Users/esp-test/matter_temp_measure_esp32/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"bootloader"
+		],
+		"name" : "bootloader"
+	}
+}
