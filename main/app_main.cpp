@@ -70,8 +70,15 @@ extern "C" void app_main()
 {
     esp_err_t err = ESP_OK;
     bmp280_t bmp280_dev_descriptor;
-    uint16_t temp_endpoint_id = 0;
+    i2c_dev_t bh1750_dev_descriptor;
 
+    uint16_t temp_endpoint_id = 0;
+    uint16_t illuminance_endpoint_id = 0;
+
+    ESP_ERROR_CHECK(i2cdev_init()); // Init library
+
+    bh1750_sensor_init(&bh1750_dev_descriptor);
+    vTaskDelay(pdMS_TO_TICKS(5000));
     bmp280_sensor_init(&bmp280_dev_descriptor);
 
     /* Initialize the ESP NVS layer */
@@ -96,17 +103,28 @@ extern "C" void app_main()
     temp_endpoint_id = endpoint::get_id(temp_endpoint);
     ESP_LOGI(TAG, "Temp measure created with temp_endpoint_id %d", temp_endpoint_id);
 
-    //relative_humidity_sensor::config_t
-    //endpoint_t *humidity_endpoint = endpoint::create(node, CLUSTER_FLAG_SERVER);
-    //if(!humidity_endpoint) {
-    //    ESP_LOGE(TAG, "Matter humidity_endpoint creation failed");
-    //}
+    illuminance_sensor::config_t illuminance_config;
+    endpoint_t *illuminance_endpoint = illuminance_sensor::create(node, &illuminance_config, CLUSTER_FLAG_SERVER, NULL);
+    if(!illuminance_endpoint) {
+        ESP_LOGE(TAG, "Matter illuminance_endpoint creation failed");
+    }
+
+    illuminance_endpoint_id = endpoint::get_id(illuminance_endpoint);
+    ESP_LOGI(TAG, "Relative illuminance measure created with illuminance_endpoint_id %d", illuminance_endpoint_id);
+
 
     temperature_measurement::config_t temperature_measurement_config;
     cluster_t *cluster = temperature_measurement::create(temp_endpoint, &temperature_measurement_config, CLUSTER_FLAG_SERVER);
 
     uint16_t cluster_id = cluster::get_id(cluster);
-    ESP_LOGI(TAG, "Temp measurement cluster created with temp_endpoint_id %d", temp_endpoint_id);
+    ESP_LOGI(TAG, "Temp measurement cluster created with cluster_id %d", cluster_id);
+
+
+    illuminance_measurement::config_t illuminance_measurement_config;
+    cluster_t *illuminance_cluster = illuminance_measurement::create(illuminance_endpoint, &illuminance_measurement_config, CLUSTER_FLAG_SERVER);
+
+    uint16_t illuminance_cluster_id = cluster::get_id(illuminance_cluster);
+    ESP_LOGI(TAG, "Illuminance measurement cluster created with cluster_id %d", illuminance_cluster_id);
 
     /* Matter start */
     err = esp_matter::start(app_event_cb);
@@ -115,15 +133,23 @@ extern "C" void app_main()
     }
 
 
-    esp_matter_attr_val_t temperature_reading;
+    matter_attr_val_bmp280_reading_t bmp280_reading;
+    esp_matter_attr_val_t bh1750_reading;
 
     while(1) {
-        temperature_reading = bmp280_sensor_update(&bmp280_dev_descriptor);
+        bmp280_reading = bmp280_sensor_update(&bmp280_dev_descriptor);
+        //vTaskDelay(pdMS_TO_TICKS(1000));
+        bh1750_reading = bh1750_sensor_update(&bh1750_dev_descriptor);
 
-        update(temp_endpoint_id, cluster_id, chip::app::Clusters::TemperatureMeasurement::Attributes::MeasuredValue::Id, &temperature_reading);
-        printf("%d degrees: ", temperature_reading.val); 
-        val_print(temp_endpoint_id, cluster_id, chip::app::Clusters::TemperatureMeasurement::Attributes::MeasuredValue::Id, &temperature_reading);
+        update(temp_endpoint_id, cluster_id, chip::app::Clusters::TemperatureMeasurement::Attributes::MeasuredValue::Id, &(bmp280_reading.temperature_reading));
+        printf("Temperature: "); 
+        val_print(temp_endpoint_id, cluster_id, chip::app::Clusters::TemperatureMeasurement::Attributes::MeasuredValue::Id, &(bmp280_reading.temperature_reading));
 
-        vTaskDelay(pdMS_TO_TICKS(60000));
+        update(illuminance_endpoint_id, illuminance_cluster_id, chip::app::Clusters::IlluminanceMeasurement::Attributes::MeasuredValue::Id, &bh1750_reading);
+        printf("Lux: "); 
+        val_print(illuminance_endpoint_id, illuminance_cluster_id, chip::app::Clusters::IlluminanceMeasurement::Attributes::MeasuredValue::Id, &bh1750_reading);
+
+        //vTaskDelay(pdMS_TO_TICKS(60000));
+        vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
