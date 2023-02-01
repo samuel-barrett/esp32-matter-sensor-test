@@ -33,7 +33,9 @@ The purpose of this code is to provide a sample implementation of a temperature 
 
 * Clone this repository, using the following command:
 
-* 
+* Install git lfs, on mac:
+
+      brew install git-lfs   
 
 * Install the ESP-IDF framework, following the instructions provided at https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html
 
@@ -46,7 +48,7 @@ The purpose of this code is to provide a sample implementation of a temperature 
 
 * Connect the BMP280, and BH1750 sensors to the microcontroller according to the i2C protocol (See photo below).
 
-* 
+* Install ESP-IDF VSCode extension
 
 * Build and flash the code to the ESP32 microcontroller using the ESP-IDF tools.
 
