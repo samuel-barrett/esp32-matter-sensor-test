@@ -1,10 +1,7 @@
 build
 managed_components
-
 dependencies.lock
-
-# OS generated files #
-######################
+.vscode
 .DS_Store
 .DS_Store?
 ._*
