@@ -1,0 +1,3 @@
+[submodule "esp-matter"]
+	path = esp-matter
+	url = https://github.com/samuel-barrett/esp-matter.git
