@@ -15,7 +15,6 @@
 #include <string>
 
 #include <i2cdev.h>
-//#include <bmp280.h>
 #include <bh1750.h>
 #include <scd30.h>
 
@@ -35,7 +34,15 @@ using namespace esp_matter::cluster;
 static const char *TAG = "app_main";
 uint16_t light_endpoint_id = 0;
 
-static void app_event_cb(const ChipDeviceEvent *event, intptr_t arg)
+/**
+ * @brief App Event Callback Function. Currently logs any events that occur
+ * 
+ * @param[in] event (const ChipDeviceEvent *) Chip Device event
+ * @param[in] arg (intptr_t) Any arguments (not used)
+ * 
+ * @return (static void)
+*/
+static void app_event_cb(const ChipDeviceEvent * event, intptr_t arg)
 {
     switch (event->Type) {
     case chip::DeviceLayer::DeviceEventType::kInterfaceIpAddressChanged:
@@ -74,7 +81,6 @@ static void app_event_cb(const ChipDeviceEvent *event, intptr_t arg)
 static esp_err_t app_identification_cb(identification::callback_type_t type, uint16_t temp_endpoint_id, uint8_t effect_id,
                                        void *priv_data)
 {
-    ESP_LOGI(TAG, "Identification callback: type: %d, effect: %d\n", type, effect_id);
     return ESP_OK;
 }
 
@@ -82,7 +88,6 @@ static esp_err_t app_attribute_update_cb(callback_type_t type, uint16_t endpoint
                                          uint32_t attribute_id, esp_matter_attr_val_t *val, void *priv_data)
 {
     esp_err_t err = ESP_OK;
-    ESP_LOGI(TAG, "Attribute update callback: type: %d, cluster: %d, attribute %d, value %d\n", type, cluster_id, attribute_id, &val);
 
     if (type == PRE_UPDATE) {
         /* Driver update */
@@ -93,8 +98,8 @@ static esp_err_t app_attribute_update_cb(callback_type_t type, uint16_t endpoint
     return err;
 }
 
-matter_sensor_config_t create_temp_sensor(node_t * node) {
-    matter_sensor_config_t matter_sensor;
+matter_config_t create_temp_sensor(node_t * node) {
+    matter_config_t matter_sensor;
     temperature_sensor::config_t endpoint_config;
     temperature_measurement::config_t cluster_config;
 
@@ -118,8 +123,8 @@ matter_sensor_config_t create_temp_sensor(node_t * node) {
 }
 
 
-matter_sensor_config_t create_illumination_sensor(node_t * node) {
-    matter_sensor_config_t matter_sensor;
+matter_config_t create_illumination_sensor(node_t * node) {
+    matter_config_t matter_sensor;
     illuminance_sensor::config_t endpoint_config;
     illuminance_measurement::config_t cluster_config;
 
@@ -142,8 +147,8 @@ matter_sensor_config_t create_illumination_sensor(node_t * node) {
     return matter_sensor;
 }
 
-matter_sensor_config_t create_humidity_sensor(node_t * node) {
-    matter_sensor_config_t matter_sensor;
+matter_config_t create_humidity_sensor(node_t * node) {
+    matter_config_t matter_sensor;
     relative_humidity_sensor::config_t endpoint_config;
     relative_humidity_measurement::config_t cluster_config;
 
@@ -166,8 +171,8 @@ matter_sensor_config_t create_humidity_sensor(node_t * node) {
     return matter_sensor;
 }
 
-matter_sensor_config_t create_on_off_light(node_t * node) {
-    matter_sensor_config_t matter_on_off_light;
+matter_config_t create_on_off_light(node_t * node) {
+    matter_config_t matter_on_off_light;
     on_off_light::config_t endpoint_config;
     on_off::config_t cluster_config;
 
@@ -183,32 +188,31 @@ matter_sensor_config_t create_on_off_light(node_t * node) {
     ESP_LOGI(TAG, "Matter on/off light endpoint created with id %d", matter_on_off_light.endpoint_id);
 
     //Create a cluster for the humidity endpoint
-    matter_on_off_light.cluster_p = on_off::create(matter_on_off_light.endpoint_p, &cluster_config, ENDPOINT_FLAG_NONE, NULL);
+    matter_on_off_light.cluster_p = on_off::create(matter_on_off_light.endpoint_p, &cluster_config, ENDPOINT_FLAG_NONE, 0);
     matter_on_off_light.cluster_id = cluster::get_id(matter_on_off_light.cluster_p);
     ESP_LOGI(TAG, "Matter on/off light cluster created with cluster_id %d", matter_on_off_light.cluster_id);
 
     return matter_on_off_light;
 }
 
-void update_matter_sensor(matter_sensor_config_t sensor_config, esp_matter_attr_val_t * val) {
-    update(sensor_config.endpoint_id, sensor_config.cluster_id, sensor_config.measured_attribute_id, val);
-    //ESP_LOGI(TAG, "Sensor %s value: ", sensor_config.name.c_str());
-    //val_print(sensor_config.endpoint_id, sensor_config.cluster_id, sensor_config.measured_attribute_id, val);
+void update_matter_sensor(matter_config_t matter_config, esp_matter_attr_val_t * val) {
+    update(matter_config.endpoint_id, matter_config.cluster_id, matter_config.measured_attribute_id, val);
+    
+    if (val->type == ESP_MATTER_VAL_TYPE_BOOLEAN) {
+        ESP_LOGI(TAG, "%s updated with value: %d", matter_config.name.c_str(), val->val.b);
+    } else if (val->type == ESP_MATTER_VAL_TYPE_NULLABLE_INT16) {
+        ESP_LOGI(TAG, "%s updated with value: %d", matter_config.name.c_str(), val->val.i16);
+    }
 }
 
 extern "C" void app_main()
 {
     esp_err_t err = ESP_OK;
 
-    matter_sensor_config_t temp_sensor_config;
-    matter_sensor_config_t illumination_sensor_config;
-    matter_sensor_config_t humidity_sensor_config;
-    matter_sensor_config_t on_off_light_config;
-
-    configure_led();
-
-    //bmp280_t bmp280_dev_descriptor;
-    //matter_attr_val_bmp280_reading_t bmp280_reading;
+    matter_config_t temp_sensor_config;
+    matter_config_t illumination_sensor_config;
+    matter_config_t humidity_sensor_config;
+    matter_config_t on_off_light_config;
 
     matter_attr_val_scd30_reading_t scd30_reading;
     i2c_dev_t scd30_dev_descriptor = {0};
@@ -216,14 +220,15 @@ extern "C" void app_main()
     i2c_dev_t bh1750_dev_descriptor;
     esp_matter_attr_val_t bh1750_reading;
 
-    ESP_ERROR_CHECK(i2cdev_init()); // Init i2c library
+    //Initialize I2C library
+    ESP_ERROR_CHECK(i2cdev_init());
 
-    //Initialize Sensors
+    //Initialize Peripherals
     bh1750_sensor_init(&bh1750_dev_descriptor);
-    //bmp280_sensor_init(&bmp280_dev_descriptor);
     scd30_sensor_init(&scd30_dev_descriptor);
+    test_led_init();
 
-    // Initialize the ESP NVS layer
+    //Initialize the ESP NVS layer
     nvs_flash_init();
 
     // Create a Matter node and add the mandatory Root Node device type on endpoint 0
@@ -247,27 +252,29 @@ extern "C" void app_main()
         ESP_LOGE(TAG, "Matter start failed: %d", err);
     }
 
-    while(1) {
-        //bmp280_reading = bmp280_sensor_update(&bmp280_dev_descriptor);
+    while(true) {
         bh1750_reading = bh1750_sensor_update(&bh1750_dev_descriptor);
         scd30_reading = scd30_sensor_update(&scd30_dev_descriptor);
 
 
-        //If RED Test LED is low, the lux value will actually show a CO2 reading
-        //(Matter does not natively support CO2 readings)
-        //If it is high, the lux value will be read in.
-        if(gpio_get_level(TEST_LED_GPIO)) {
-            printf("Reading lux value: %d\n", bh1750_reading);
+        //If RED Test LED is on, the lux value will actually show a CO2 reading
+        //(Matter does not support CO2 readings).
+        //If it is low, the lux value will be shown.
+        if(led_on()) {
+            if(scd30_reading.data_ready) {
+                update_matter_sensor(illumination_sensor_config, &scd30_reading.co2_reading);
+            }
+        } else if (bh1750_reading.type != ESP_MATTER_VAL_TYPE_INVALID) {
             update_matter_sensor(illumination_sensor_config, &bh1750_reading);
-        } else if (scd30_reading.data_ready) {
-            printf("Reading co2 ppm value: %d\n", scd30_reading.co2_reading.val);
-            update_matter_sensor(illumination_sensor_config, &scd30_reading.co2_reading);
         }
 
         if(scd30_reading.data_ready) {
             update_matter_sensor(temp_sensor_config, &(scd30_reading.temperature_reading));
             update_matter_sensor(humidity_sensor_config, &scd30_reading.humidity_reading);
         }
+
+        printf("\n");
+
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
