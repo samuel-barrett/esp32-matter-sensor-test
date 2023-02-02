@@ -29,13 +29,17 @@ This code demonstrates an IoT sensor setup for measuring temperature and illumin
 
 The purpose of this code is to provide a sample implementation of a temperature and illumination IoT sensor setup using the Matter standard. The code can be used as a starting point for building similar IoT sensor applications.
 
-## Installation
+## Installation (on M1 Mac)
 
-* Clone this repository, using the following command:
+### Clone repository
 
-* Install git lfs, on mac:
+1 Install git lf
 
-      brew install git-lfs   
+      brew install git-lfs  
+
+* 
+
+* Clone this repository, using the following command: 
 
 * Install the ESP-IDF framework, following the instructions provided at https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html
 

@@ -1,14 +1,30 @@
-#include <esp_err.h>
-#include <esp_log.h>
+
+/*
+   This example code is in the Public Domain (or CC0 licensed, at your option.)
+
+   Unless required by applicable law or agreed to in writing, this
+   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND, either express or implied.
+*/
+
 #include <nvs_flash.h>
 
 #include <esp_matter.h>
-#include <esp_matter_console.h>
-#include <esp_matter_ota.h>
+#include <esp_matter_core.h>
+
+#include <string>
+
+#include <i2cdev.h>
+#include <bmp280.h>
+#include <bh1750.h>
+#include <scd30.h>
+
+#include <freertos/task.h>
+
+#include <esp_log.h>
+#include <esp_err.h>
 
 #include <app_priv.h>
-#include <app_reset.h>
-
 
 static const char *TAG = "app_main";
 
@@ -56,100 +72,151 @@ static void app_event_cb(const ChipDeviceEvent *event, intptr_t arg)
 static esp_err_t app_identification_cb(identification::callback_type_t type, uint16_t temp_endpoint_id, uint8_t effect_id,
                                        void *priv_data)
 {
-    ESP_LOGI(TAG, "Identification callback: type: %d, effect: %d", type, effect_id);
+    printf("Identification callback: type: %d, effect: %d\n", type, effect_id);
     return ESP_OK;
 }
 
 static esp_err_t app_attribute_update_cb(callback_type_t type, uint16_t temp_endpoint_id, uint32_t cluster_id,
                                          uint32_t attribute_id, esp_matter_attr_val_t *val, void *priv_data)
 {
+    printf("Attribute update callback: type: %d, cluster: %d, attribute %d, value %d\n", type, cluster_id, attribute_id, &val);
     return ESP_OK;
+}
+
+matter_sensor_config_t create_temp_sensor(node_t * node) {
+    matter_sensor_config_t matter_sensor;
+    temperature_sensor::config_t sensor_config;
+    temperature_measurement::config_t measurement_config;
+
+    matter_sensor.name = "Temperature Sensor";
+    matter_sensor.measured_attribute_id = chip::app::Clusters::TemperatureMeasurement::Attributes::MeasuredValue::Id;
+
+    //Create a temperature sensor endpoint
+    matter_sensor.endpoint_p = temperature_sensor::create(node, &sensor_config, CLUSTER_FLAG_SERVER, NULL);
+    if (!matter_sensor.endpoint_p) {
+        ESP_LOGE(TAG, "Matter temperature endpoint creation failed");
+    }
+    matter_sensor.endpoint_id = endpoint::get_id(matter_sensor.endpoint_p);
+    ESP_LOGI(TAG, "Temp measure endpoint created with id %d", matter_sensor.endpoint_id);
+
+    //Create a cluster for the temperature endpoint
+    matter_sensor.cluster_p = temperature_measurement::create(matter_sensor.endpoint_p, &measurement_config, CLUSTER_FLAG_SERVER);
+    matter_sensor.cluster_id = cluster::get_id(matter_sensor.cluster_p);
+    ESP_LOGI(TAG, "Temp measurement cluster created with cluster_id %d", matter_sensor.cluster_id);
+
+    return matter_sensor;
+}
+
+
+matter_sensor_config_t create_illumination_sensor(node_t * node) {
+    matter_sensor_config_t matter_sensor;
+    illuminance_sensor::config_t sensor_config;
+    illuminance_measurement::config_t measurement_config;
+
+    matter_sensor.name = "Illumination Sensor";
+    matter_sensor.measured_attribute_id = chip::app::Clusters::IlluminanceMeasurement::Attributes::MeasuredValue::Id;
+
+    //Create an illumination sensor endpoint
+    matter_sensor.endpoint_p = illuminance_sensor::create(node, &sensor_config, CLUSTER_FLAG_SERVER, NULL);
+    if (!matter_sensor.endpoint_p) {
+        ESP_LOGE(TAG, "Matter illuminance endpoint creation failed");
+    }
+    matter_sensor.endpoint_id = endpoint::get_id(matter_sensor.endpoint_p);
+    ESP_LOGI(TAG, "Illuminance measure endpoint created with id %d", matter_sensor.endpoint_id);
+
+    //Create a cluster for the illumination endpoint
+    matter_sensor.cluster_p = illuminance_measurement::create(matter_sensor.endpoint_p, &measurement_config, CLUSTER_FLAG_SERVER);
+    matter_sensor.cluster_id = cluster::get_id(matter_sensor.cluster_p);
+    ESP_LOGI(TAG, "Illuminance measurement cluster created with cluster_id %d", matter_sensor.cluster_id);
+
+    return matter_sensor;
+}
+
+matter_sensor_config_t create_humidity_sensor(node_t * node) {
+    matter_sensor_config_t matter_sensor;
+    relative_humidity_sensor::config_t sensor_config;
+    relative_humidity_measurement::config_t measurement_config;
+
+    matter_sensor.name = "Humidity Sensor";
+    matter_sensor.measured_attribute_id = chip::app::Clusters::RelativeHumidityMeasurement::Attributes::MeasuredValue::Id;
+
+    //Create an humidity sensor endpoint
+    matter_sensor.endpoint_p = relative_humidity_sensor::create(node, &sensor_config, CLUSTER_FLAG_SERVER, NULL);
+    if (!matter_sensor.endpoint_p) {
+        ESP_LOGE(TAG, "Matter illuminance endpoint creation failed");
+    }
+    matter_sensor.endpoint_id = endpoint::get_id(matter_sensor.endpoint_p);
+    ESP_LOGI(TAG, "Humidity measure endpoint created with id %d", matter_sensor.endpoint_id);
+
+    //Create a cluster for the humidity endpoint
+    matter_sensor.cluster_p = relative_humidity_measurement::create(matter_sensor.endpoint_p, &measurement_config, CLUSTER_FLAG_SERVER);
+    matter_sensor.cluster_id = cluster::get_id(matter_sensor.cluster_p);
+    ESP_LOGI(TAG, "Humidity measurement cluster created with cluster_id %d", matter_sensor.cluster_id);
+
+    return matter_sensor;
+}
+
+void update_sensor(matter_sensor_config_t sensor_config, esp_matter_attr_val_t * val) {
+    update(sensor_config.endpoint_id, sensor_config.cluster_id, sensor_config.measured_attribute_id, val);
+    ESP_LOGI(TAG, "Sensor %s value: ", sensor_config.name.c_str());
+    val_print(sensor_config.endpoint_id, sensor_config.cluster_id, sensor_config.measured_attribute_id, val);
 }
 
 extern "C" void app_main()
 {
     esp_err_t err = ESP_OK;
+
+    matter_sensor_config_t temp_sensor_config;
+    matter_sensor_config_t illumination_sensor_config;
+    matter_sensor_config_t humidity_sensor_config;
+
     bmp280_t bmp280_dev_descriptor;
+    matter_attr_val_bmp280_reading_t bmp280_reading;
+
+    matter_attr_val_scd30_reading_t scd30_reading;
+    i2c_dev_t scd30_dev_descriptor = {0};
+
     i2c_dev_t bh1750_dev_descriptor;
+    esp_matter_attr_val_t bh1750_reading;
 
-    uint16_t temp_endpoint_id = 0;
-    uint16_t illuminance_endpoint_id = 0;
+    ESP_ERROR_CHECK(i2cdev_init()); // Init i2c library
 
-    ESP_ERROR_CHECK(i2cdev_init()); // Init library
-
+    //Initialize Sensors
     bh1750_sensor_init(&bh1750_dev_descriptor);
-    vTaskDelay(pdMS_TO_TICKS(5000));
     bmp280_sensor_init(&bmp280_dev_descriptor);
+    scd30_sensor_init(&scd30_dev_descriptor);
 
-    /* Initialize the ESP NVS layer */
+    // Initialize the ESP NVS layer
     nvs_flash_init();
 
-    /* Create a Matter node and add the mandatory Root Node device type on endpoint 0 */
+    // Create a Matter node and add the mandatory Root Node device type on endpoint 0
     node::config_t node_config;
-    node_t *node = node::create(&node_config, app_attribute_update_cb, app_identification_cb);
-
+    node_t * node = node::create(&node_config, app_attribute_update_cb, app_identification_cb);
     if(!node) {
         ESP_LOGE(TAG, "Matter node creation failed");
     }
 
-    temperature_sensor::config_t temp_config;
-    endpoint_t *temp_endpoint = temperature_sensor::create(node, &temp_config, CLUSTER_FLAG_SERVER, NULL);
-    
-    /* These node and temp_endpoint handles can be used to create/add other endpoints and clusters. */
-    if (!temp_endpoint) {
-        ESP_LOGE(TAG, "Matter temp_endpoint creation failed");
-    }
+    //Create endpoints and cluster for sensors. 
+    temp_sensor_config = create_temp_sensor(node);
+    illumination_sensor_config = create_illumination_sensor(node);
+    humidity_sensor_config = create_humidity_sensor(node);
 
-    temp_endpoint_id = endpoint::get_id(temp_endpoint);
-    ESP_LOGI(TAG, "Temp measure created with temp_endpoint_id %d", temp_endpoint_id);
-
-    illuminance_sensor::config_t illuminance_config;
-    endpoint_t *illuminance_endpoint = illuminance_sensor::create(node, &illuminance_config, CLUSTER_FLAG_SERVER, NULL);
-    if(!illuminance_endpoint) {
-        ESP_LOGE(TAG, "Matter illuminance_endpoint creation failed");
-    }
-
-    illuminance_endpoint_id = endpoint::get_id(illuminance_endpoint);
-    ESP_LOGI(TAG, "Relative illuminance measure created with illuminance_endpoint_id %d", illuminance_endpoint_id);
-
-
-    temperature_measurement::config_t temperature_measurement_config;
-    cluster_t *cluster = temperature_measurement::create(temp_endpoint, &temperature_measurement_config, CLUSTER_FLAG_SERVER);
-
-    uint16_t cluster_id = cluster::get_id(cluster);
-    ESP_LOGI(TAG, "Temp measurement cluster created with cluster_id %d", cluster_id);
-
-
-    illuminance_measurement::config_t illuminance_measurement_config;
-    cluster_t *illuminance_cluster = illuminance_measurement::create(illuminance_endpoint, &illuminance_measurement_config, CLUSTER_FLAG_SERVER);
-
-    uint16_t illuminance_cluster_id = cluster::get_id(illuminance_cluster);
-    ESP_LOGI(TAG, "Illuminance measurement cluster created with cluster_id %d", illuminance_cluster_id);
-
-    /* Matter start */
+    /* Start Matter */
     err = esp_matter::start(app_event_cb);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "Matter start failed: %d", err);
     }
 
-
-    matter_attr_val_bmp280_reading_t bmp280_reading;
-    esp_matter_attr_val_t bh1750_reading;
-
     while(1) {
         bmp280_reading = bmp280_sensor_update(&bmp280_dev_descriptor);
-        //vTaskDelay(pdMS_TO_TICKS(1000));
         bh1750_reading = bh1750_sensor_update(&bh1750_dev_descriptor);
+        scd30_reading = scd30_sensor_update(&scd30_dev_descriptor);
 
-        update(temp_endpoint_id, cluster_id, chip::app::Clusters::TemperatureMeasurement::Attributes::MeasuredValue::Id, &(bmp280_reading.temperature_reading));
-        printf("Temperature: "); 
-        val_print(temp_endpoint_id, cluster_id, chip::app::Clusters::TemperatureMeasurement::Attributes::MeasuredValue::Id, &(bmp280_reading.temperature_reading));
-
-        update(illuminance_endpoint_id, illuminance_cluster_id, chip::app::Clusters::IlluminanceMeasurement::Attributes::MeasuredValue::Id, &bh1750_reading);
-        printf("Lux: "); 
-        val_print(illuminance_endpoint_id, illuminance_cluster_id, chip::app::Clusters::IlluminanceMeasurement::Attributes::MeasuredValue::Id, &bh1750_reading);
-
-        //vTaskDelay(pdMS_TO_TICKS(60000));
+        if(scd30_reading.data_ready) {
+            update_sensor(temp_sensor_config, &(bmp280_reading.temperature_reading));
+            update_sensor(illumination_sensor_config, &bh1750_reading);
+            update_sensor(humidity_sensor_config, &scd30_reading.humidity_reading);
+        }
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }

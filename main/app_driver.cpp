@@ -6,15 +6,15 @@
    CONDITIONS OF ANY KIND, either express or implied.
 */
 
-#include <esp_log.h>
-#include <stdlib.h>
-#include <string.h>
-
+#include <i2cdev.h>
+#include <bmp280.h>
+#include <bh1750.h>
+#include <scd30.h>
 
 #include <app_priv.h>
-#include <app_reset.h>
 
 static const char *TAG = "app_driver";
+
 
 void bh1750_sensor_init(i2c_dev_t * bh1750_dev_descriptor) {
     memset(bh1750_dev_descriptor, 0, sizeof(i2c_dev_t)); // Zero descriptor
@@ -35,8 +35,6 @@ esp_matter_attr_val_t bh1750_sensor_update(i2c_dev_t * bh1750_dev_descriptor) {
         printf("BH1750 Read error, returning null\n");
         return esp_matter_nullable_int16(nullable<int16_t>());
     }
-
-    printf("Lux: %d\n", lux);
     return esp_matter_nullable_int16(nullable<int16_t>(lux));
 }
 
@@ -72,13 +70,58 @@ matter_attr_val_bmp280_reading_t bmp280_sensor_update(bmp280_t * bmp280_dev_desc
         return bmp280_reading;
     }
     
-    printf("Temperature: %f, Pressure: %f\n", temp, pressure);
+    ESP_LOGI(TAG, "Temperature: %f, Pressure: %f\n", temp, pressure);
 
     bmp280_reading = { 
-        esp_matter_nullable_int16((nullable<int16_t>) (temp*100)), 
-        esp_matter_nullable_int16((nullable<int16_t>) (pressure ))
+        esp_matter_nullable_int16(nullable<int16_t>(temp*100)), 
+        esp_matter_nullable_int16(nullable<int16_t>(pressure))
     };
 
     return bmp280_reading;
 }
 
+void scd30_sensor_init(i2c_dev_t * scd30_dev_descriptor) {
+
+    ESP_ERROR_CHECK(scd30_init_desc(scd30_dev_descriptor, 0, (gpio_num_t)CONFIG_EXAMPLE_I2C_MASTER_SDA, (gpio_num_t)CONFIG_EXAMPLE_I2C_MASTER_SCL));
+    
+    uint16_t version, major_ver, minor_ver;
+    ESP_ERROR_CHECK(scd30_read_firmware_version(scd30_dev_descriptor, &version));
+
+    major_ver = (version >> 8) & 0xf;
+    minor_ver = version & 0xf;
+
+    ESP_LOGI(TAG, "SCD30 Firmware Version: %d.%d", major_ver, minor_ver);
+
+    ESP_LOGI(TAG, "Starting continuous measurement");
+    ESP_ERROR_CHECK(scd30_trigger_continuous_measurement(scd30_dev_descriptor, 0));
+}
+
+matter_attr_val_scd30_reading_t scd30_sensor_update(i2c_dev_t * scd30_dev_descriptor) {
+    float co2, temperature, humidity;
+    bool data_ready;
+
+    matter_attr_val_scd30_reading_t scd30_reading = { 
+        false,
+        esp_matter_nullable_int16(nullable<int16_t>()), 
+        esp_matter_nullable_int16(nullable<int16_t>()),
+        esp_matter_nullable_int16(nullable<int16_t>())
+    };
+
+    scd30_get_data_ready_status(scd30_dev_descriptor, &data_ready);
+
+    if(scd30_read_measurement(scd30_dev_descriptor, &co2, &temperature, &humidity) == ESP_OK && data_ready) {
+
+        ESP_LOGI(TAG, "SCD30 CO2: %.0f ppm, Temperature: %.2f °C, Humidity: %.2f %%\n", co2, temperature, humidity);
+
+        scd30_reading = {
+            true,
+            esp_matter_nullable_int16(nullable<int16_t>(co2)), 
+            esp_matter_nullable_int16(nullable<int16_t>(temperature*100)),
+            esp_matter_nullable_int16(nullable<int16_t>(humidity*100))
+        };
+    }else{
+        ESP_LOGI(TAG, "SCD30 data not ready");
+    }
+
+    return scd30_reading;
+}
