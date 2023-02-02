@@ -7,13 +7,16 @@
 */
 
 #include <i2cdev.h>
-#include <bmp280.h>
+//#include <bmp280.h>
 #include <bh1750.h>
 #include <scd30.h>
+
+#include <driver/gpio.h>
 
 #include <app_priv.h>
 
 static const char *TAG = "app_driver";
+extern uint16_t light_endpoint_id;
 
 
 void bh1750_sensor_init(i2c_dev_t * bh1750_dev_descriptor) {
@@ -39,7 +42,7 @@ esp_matter_attr_val_t bh1750_sensor_update(i2c_dev_t * bh1750_dev_descriptor) {
 }
 
 
-void bmp280_sensor_init(bmp280_t * bmp280_dev_descriptor) {
+/*void bmp280_sensor_init(bmp280_t * bmp280_dev_descriptor) {
 
     //Initialize temp sensor params
     bmp280_params_t params;
@@ -78,7 +81,7 @@ matter_attr_val_bmp280_reading_t bmp280_sensor_update(bmp280_t * bmp280_dev_desc
     };
 
     return bmp280_reading;
-}
+}*/
 
 void scd30_sensor_init(i2c_dev_t * scd30_dev_descriptor) {
 
@@ -124,4 +127,29 @@ matter_attr_val_scd30_reading_t scd30_sensor_update(i2c_dev_t * scd30_dev_descri
     }
 
     return scd30_reading;
+}
+
+esp_err_t configure_led() {
+    ESP_LOGI(TAG, "Example configured to blink GPIO LED!");
+    gpio_reset_pin(TEST_LED_GPIO);
+    /* Set the GPIO as a push/pull output */
+    return gpio_set_direction(TEST_LED_GPIO, GPIO_MODE_INPUT_OUTPUT);
+}
+
+/* Do any conversions/remapping for the actual value here */
+esp_err_t app_driver_light_set_power(bool s_led_state) {
+    return gpio_set_level(TEST_LED_GPIO, (uint8_t)s_led_state == true);
+}
+
+
+esp_err_t app_driver_attribute_update(app_driver_handle_t driver_handle, uint16_t endpoint_id, 
+    uint32_t cluster_id, uint32_t attribute_id, esp_matter_attr_val_t *val) {
+    if(
+        endpoint_id == light_endpoint_id 
+        && cluster_id == chip::app::Clusters::OnOff::Id
+        && attribute_id == chip::app::Clusters::OnOff::Attributes::OnOff::Id
+    ) {
+        return app_driver_light_set_power(val->val.b);
+    }
+    return ESP_OK;
 }
