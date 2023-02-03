@@ -1,6 +1,0 @@
-[submodule "esp-matter"]
-	path = esp-matter
-	url = https://github.com/samuel-barrett/esp-matter.git
-[submodule "esp-idf"]
-	path = esp-idf
-	url = https://github.com/espressif/esp-idf.git
