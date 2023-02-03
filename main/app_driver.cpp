@@ -16,7 +16,7 @@
 #include <bh1750.h>
 #include <scd30.h>
 
-#include <driver/gpio.h>
+#include "driver/gpio.h"
 
 #include <app_priv.h>
 
