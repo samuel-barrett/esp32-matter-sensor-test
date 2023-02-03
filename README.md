@@ -14,14 +14,17 @@ This code demonstrates a proof of concept for an IoT sensor setup to measure tem
 
 ## Resources
 
-* [ESP-IDF: Espressif's official IoT Development Framework](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html)
+* [ESP-IDF: Espressif's official IoT Development Framework](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html)
+
+* [Documentation for setting up Matter](https://github.com/espressif/connectedhomeip/blob/4088a77f557e8571a39338fad51a1d8eb0131d79/docs/guides/BUILDING.md)
+
+* [Matter Building and Comissioning Guide](https://github.com/espressif/connectedhomeip/blob/4088a77f557e8571a39338fad51a1d8eb0131d79/docs/guides/esp32/build_app_and_commission.md)
 
 * [ESP-MATTER: Espressif's official SDK for Matter applications](https://github.com/samuel-barrett/esp-matter)
   * Link to a forked repository which includes functions for light and pressure readings
 
 * [ESP-IDF-LIB: Library containing drivers for sensor readings](https://esp-idf-lib.readthedocs.io/en/latest)
 
-* [Documentation for setting up Matter](https://github.com/espressif/connectedhomeip/blob/4088a77f557e8571a39338fad51a1d8eb0131d79/docs/guides/BUILDING.md)
 
 
 ## Purpose
@@ -61,14 +64,55 @@ This setup procedure was test with an Apple Silicon Mac, but could likely be mod
 
 ### Step 3: Install and Configure the ESP-IDF and VSCode Extension
 
+* Install prerequisites:
+
+      # Install prerequisites
+      brew install cmake cmake-docs ninja dfu-util ccache
+      xcode-select --install
+
+      # Install esp32
+      cd ~/esp32-matter-sensor-test/esp-idf
+      ./install.sh esp32
+      . ./export.sh
+
+      # Set target 
+      idf.py set-target esp32
+
+      # Add mdns dependency
+      idf.py add-dependency "espressif/mdns^1.0.7"
+
+      # Make sure you are using a python version from .espressif
+      which python
+      or
+      
+      # Install lark
+      python -m pip install lark stringcase
+      # or
+      python3 -m pip install lark
+
 * Install Visual Studio Code if not installed
 
 * Install and configure the extension named "Espressif IDF" by following the instructions provided [here](https://github.com/espressif/vscode-esp-idf-extension/blob/master/docs/tutorial/install.md)
 
-  * Note: If you have done a recursive clone then, the esp-idf repository is already downloaded, and you can select it during setup
+  * Note: If you have done a recursive clone then, the esp-idf repository is already downloaded, and you can select it during setup at esp32-matter-sensor-test/esp-idf
 
 
-### Step 4: Configure VS Extension to for project repository
+### Step 4: Setup Matter
+
+* Install Prerequisite software (See: [here](https://github.com/espressif/connectedhomeip/blob/4088a77f557e8571a39338fad51a1d8eb0131d79/docs/guides/BUILDING.md))
+
+      brew install openssl pkg-config
+      export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"/opt/homebrew/opt/openssl@3/lib/pkgconfig"
+
+      echo "export LDFLAGS=\"-L/opt/homebrew/opt/openssl@3/lib\"" >> ~/.zshrc
+      echo "export CPPFLAGS=\"-I/opt/homebrew/opt/openssl@3/include\"" >> ~/.zshrc
+
+* You may need to install [ZAP](https://github.com/project-chip/zap/releases)
+
+* Setup
+      
+      cd esp-matter/connectedhomeip/connectedhomeip/
+      source scripts/activate.sh
 
 * Open the esp32-matter-sensor-test folder in visual studio code
 
@@ -93,6 +137,8 @@ This setup procedure was test with an Apple Silicon Mac, but could likely be mod
   * First install the [Arduino ID ESP32 addon](https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/)
 
 ### Step 6: Build flash and monitor
+
+* Select the correct Serial port and flash method (tested using UART), and then 
 
 * Build and flash the code to the ESP32 microcontroller using the ESP-IDF tools. Type [CMD]+[SHIFT]+[P], then
 
