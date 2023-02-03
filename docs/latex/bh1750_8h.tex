@@ -1,0 +1,41 @@
+\hypertarget{bh1750_8h}{}\doxysection{main/bh1750/bh1750.h File Reference}
+\label{bh1750_8h}\index{main/bh1750/bh1750.h@{main/bh1750/bh1750.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$i2cdev.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+err.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries BH1750\+\_\+\+ADDR\+\_\+\+LO}~0x23
+\begin{DoxyCompactList}\small\item\em I2C address when ADDR pin floating/low. \end{DoxyCompactList}\item 
+\#define {\bfseries BH1750\+\_\+\+ADDR\+\_\+\+HI}~0x5c
+\begin{DoxyCompactList}\small\item\em I2C address when ADDR pin high. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{group__bh1750_ga3bef7cf84fabf6a5e586456ee901628c}{bh1750\+\_\+mode\+\_\+t}} \{ \mbox{\hyperlink{group__bh1750_gga3bef7cf84fabf6a5e586456ee901628cabb301bd6d64905b2748b3d501186173a}{BH1750\+\_\+\+MODE\+\_\+\+ONE\+\_\+\+TIME}} = 0
+, \mbox{\hyperlink{group__bh1750_gga3bef7cf84fabf6a5e586456ee901628ca085a4926d1cfc7ef5a795eafda7eb9a0}{BH1750\+\_\+\+MODE\+\_\+\+CONTINUOUS}}
+ \}
+\item 
+enum \mbox{\hyperlink{group__bh1750_ga4940ff6723505fe772e1f691d3217b6e}{bh1750\+\_\+resolution\+\_\+t}} \{ \mbox{\hyperlink{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea16693ba593ba46782145cfeb12625259}{BH1750\+\_\+\+RES\+\_\+\+LOW}} = 0
+, \mbox{\hyperlink{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea68d515f3f1fe7dca6f73ae6d958d029d}{BH1750\+\_\+\+RES\+\_\+\+HIGH}}
+, \mbox{\hyperlink{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea04a5cea828ef9e31cfeae8ec4f858297}{BH1750\+\_\+\+RES\+\_\+\+HIGH2}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga416ff994f802dae3aff5fd008b510778}{bh1750\+\_\+init\+\_\+desc}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint8\+\_\+t addr, i2c\+\_\+port\+\_\+t port, gpio\+\_\+num\+\_\+t sda\+\_\+gpio, gpio\+\_\+num\+\_\+t scl\+\_\+gpio)
+\begin{DoxyCompactList}\small\item\em Initialize device descriptor. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga9d1711228bd254f70d0284dbdaf6ca84}{bh1750\+\_\+free\+\_\+desc}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Free device descriptor. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga9454150beb508d6050944d04b62c09d5}{bh1750\+\_\+power\+\_\+down}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Power down device. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga64c9131d1c24847d29b323d1e950c8cf}{bh1750\+\_\+power\+\_\+on}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Power on device. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_gaae37df12c2d9a2c1b4ee2760f1374b89}{bh1750\+\_\+setup}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, \mbox{\hyperlink{group__bh1750_ga3bef7cf84fabf6a5e586456ee901628c}{bh1750\+\_\+mode\+\_\+t}} mode, \mbox{\hyperlink{group__bh1750_ga4940ff6723505fe772e1f691d3217b6e}{bh1750\+\_\+resolution\+\_\+t}} resolution)
+\begin{DoxyCompactList}\small\item\em Setup device parameters. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga7f1289284f2522f4001abe997d41ee4c}{bh1750\+\_\+set\+\_\+measurement\+\_\+time}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint8\+\_\+t time)
+\begin{DoxyCompactList}\small\item\em Set measurement time. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga0e2367ff17187836d50638db3e8542cb}{bh1750\+\_\+read}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint16\+\_\+t $\ast$level)
+\begin{DoxyCompactList}\small\item\em Read LUX value from the device. \end{DoxyCompactList}\end{DoxyCompactItemize}

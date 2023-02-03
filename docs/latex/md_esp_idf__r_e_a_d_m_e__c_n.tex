@@ -1,0 +1,102 @@
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{index_md_README}{English Version}}
+\end{DoxyItemize}
+
+ESP-\/\+IDF 是乐鑫官方推出的物联网开发框架，支持 Windows、\+Linux 和 mac\+OS 操作系统。\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md40}{}\doxysection{ESP-\/\+IDF 版本支持期限}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md40}
+
+
+
+\begin{DoxyItemize}
+\item 请参考 \mbox{\hyperlink{md_esp_idf__s_u_p_p_o_r_t__p_o_l_i_c_y__c_n}{ESP-\/\+IDF 支持政策}} 以及 \href{https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/versions.html}{\texttt{ 相关文档}} 了解更多关于 ESP-\/\+IDF 版本的信息。
+\item 请参考 \href{https://www.espressif.com/zh-hans/support/documents/advisories?keys=&field_type_of_advisory_tid\%5B\%5D=817}{\texttt{ ESP-\/\+IDF 版本停止维护 (EOL) 公告}}。
+\end{DoxyItemize}\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md41}{}\doxysection{ESP-\/\+IDF 与乐鑫芯片}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md41}
+下表总结了乐鑫芯片在 ESP-\/\+IDF 各版本中的支持状态，其中  代表已支持， 代表目前处于预览支持状态。预览支持状态通常有时间限制，而且仅适用于测试版芯片。请确保使用与芯片相匹配的 ESP-\/\+IDF 版本。
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{8}{|X[-1]}|}
+\hline
+\cellcolor{\tableheadbgcolor}\textbf{ 芯片   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ v4.\+1   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ v4.\+2   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ v4.\+3   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ v4.\+4   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ v5.\+0   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ v5.\+1   }&\cellcolor{\tableheadbgcolor}\textbf{ }\\\cline{1-8}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\cellcolor{\tableheadbgcolor}\textbf{ 芯片   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ v4.\+1   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ v4.\+2   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ v4.\+3   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ v4.\+4   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ v5.\+0   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ v5.\+1   }&\cellcolor{\tableheadbgcolor}\textbf{ }\\\cline{1-8}
+\endhead
+ESP32   &\PBS\centering    &\PBS\centering    &\PBS\centering    &\PBS\centering    &\PBS\centering    &\PBS\centering    &\\\cline{1-8}
+ESP32-\/\+S2   &\PBS\centering &\PBS\centering    &\PBS\centering    &\PBS\centering    &\PBS\centering    &\PBS\centering    &\\\cline{1-8}
+ESP32-\/\+C3   &\PBS\centering &\PBS\centering &\PBS\centering    &\PBS\centering    &\PBS\centering    &\PBS\centering    &\\\cline{1-8}
+ESP32-\/\+S3   &\PBS\centering &\PBS\centering &\PBS\centering &\PBS\centering    &\PBS\centering    &\PBS\centering    &\href{https://www.espressif.com/zh-hans/news/ESP32_S3}{\texttt{ 芯片发布公告}}    \\\cline{1-8}
+ESP32-\/\+C2   &\PBS\centering &\PBS\centering &\PBS\centering &\PBS\centering &\PBS\centering    &\PBS\centering    &\href{https://www.espressif.com/zh-hans/news/ESP32-C2}{\texttt{ 芯片发布公告}}    \\\cline{1-8}
+ESP32-\/\+C6   &\PBS\centering &\PBS\centering &\PBS\centering &\PBS\centering &\PBS\centering &\PBS\centering    &\href{https://www.espressif.com/zh-hans/news/ESP32_C6}{\texttt{ 芯片发布公告}}    \\\cline{1-8}
+ESP32-\/\+H2 beta1/2   &\PBS\centering &\PBS\centering &\PBS\centering &\PBS\centering    &\PBS\centering    &\PBS\centering    &\href{https://www.espressif.com/zh-hans/news/ESP32_H2}{\texttt{ 芯片发布公告}}   \\\cline{1-8}
+\end{longtabu}
+
+
+对于 2016 年之前发布的乐鑫芯片（包括 ESP8266 和 ESP8285），请参考 \href{https://github.com/espressif/ESP8266_RTOS_SDK}{\texttt{ RTOS SDK}}。\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md42}{}\doxysection{使用 ESP-\/\+IDF 进行开发}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md42}
+\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md43}{}\doxysubsection{搭建 ESP-\/\+IDF 开发环境}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md43}
+关于不同芯片如何搭建 ESP-\/\+IDF 的开发环境，请参考 \href{https://idf.espressif.com/}{\texttt{ https\+://idf.\+espressif.\+com/}} 。
+
+{\bfseries{注意：}} 不同系列芯片和不同 ESP-\/\+IDF 版本都有其对应的文档。请参阅\href{https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/versions.html}{\texttt{ 版本}}部分，获得关于如何查找文档以及如何检出 ESP-\/\+IDF 的特定发行版的详细信息。\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md44}{}\doxysubsubsection{非 Git\+Hub 分叉的 ESP-\/\+IDF 项目}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md44}
+ESP-\/\+IDF 中的子模块采用相对路径（\href{.gitmodules}{\texttt{ 详见 .gitmodules 文件}}），所以它们会指向 Git\+Hub。 如果 ESP-\/\+IDF 被分叉到的仓库不在 Git\+Hub 上，那么你需要在克隆结束后运行该脚本 \href{tools/set-submodules-to-github.sh}{\texttt{ tools/set-\/submodules-\/to-\/github.\+sh}}。
+
+这个脚本会为所有的子模块设置绝对路径，接着可以通过 {\ttfamily git submodule update -\/-\/init -\/-\/recursive} 完成子模块的更新。如果 ESP-\/\+IDF 是从 Git\+Hub 上克隆得到，则不需要此步骤。\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md45}{}\doxysubsection{寻找项目}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md45}
+除了入门指南中提到的 \href{https://github.com/espressif/esp-idf-template}{\texttt{ esp-\/idf 模板项目}}，\+ESP-\/\+IDF 的 \mbox{[}examples\mbox{]}(examples) 目录下还带有很多其它示例项目。
+
+一旦找到了需要的项目，便可以进入该目录，执行配置和构建操作。
+
+如果要基于示例工程开始你自己的项目，请将示例工程复制到 ESP-\/\+IDF 目录之外。\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md46}{}\doxysection{快速参考}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md46}
+详细的使用方法请参考上面入门指南的链接，这里仅仅列举一些 ESP-\/\+IDF 项目开发中常用的命令：\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md47}{}\doxysubsection{设置构建环境}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md47}
+请参考入门指南中列出的详细步骤。
+
+
+\begin{DoxyItemize}
+\item 在主机中安装入门指南中提到的构建所依赖的工具。
+\item 运行安装脚本来设置构建环境。可为 Windows shell 选择 {\ttfamily install.\+bat} 或 {\ttfamily install.\+ps1}，为 Unix shell 选择 {\ttfamily install.\+sh} 和 {\ttfamily install.\+fish}。
+\item 在使用 ESP-\/\+IDF 之前，需要在 shell 中运行导出脚本。\+Windows 下可运行 {\ttfamily export.\+bat}，\+Unix 下可运行 {\ttfamily source export.\+sh}。
+\end{DoxyItemize}\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md48}{}\doxysubsection{配置项目}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md48}
+
+\begin{DoxyItemize}
+\item {\ttfamily idf.\+py set-\/target \texorpdfstring{$<$}{<}chip\+\_\+name\texorpdfstring{$>$}{>}} 可将项目的目标芯片设置为 {\ttfamily \texorpdfstring{$<$}{<}chip\+\_\+name\texorpdfstring{$>$}{>}}。运行 {\ttfamily idf.\+py set-\/target}，不用带任何参数，可查看所有支持的目标芯片列表。
+\item {\ttfamily idf.\+py menuconfig} 可打开一个基于文本的配置菜单，可以用来对项目进行配置。
+\end{DoxyItemize}\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md49}{}\doxysubsection{编译项目}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md49}
+{\ttfamily idf.\+py build}
+
+编译应用程序，引导程序，并根据配置生成分区表。\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md50}{}\doxysubsection{烧写项目}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md50}
+当构建结束，终端会打印出一条命令行，告知如何使用 esptool.\+py 工具烧写项目到芯片中。但你也可以运行下面这条命令来自动烧写：
+
+{\ttfamily idf.\+py -\/p PORT flash}
+
+将其中的 PORT 替换为系统中实际串口的名字（比如 Windows 下的 {\ttfamily COM3}，\+Linux 下的 {\ttfamily /dev/tty\+USB0}，或者 mac\+OS 下的 {\ttfamily /dev/cu.usbserial-\/X}。如果省略 {\ttfamily -\/p} 选项，{\ttfamily idf.\+py flash} 会尝试使用第一个可用的串口进行烧写。
+
+这会烧写整个项目（包括应用程序，引导程序和分区表）到芯片中，此外还可以使用 {\ttfamily idf.\+py menuconfig} 来调整串口烧写相关的配置。
+
+不必先运行 {\ttfamily idf.\+py build} 再运行 {\ttfamily idf.\+py flash}，{\ttfamily idf.\+py flash} 会根据需要自动重新构建项目。\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md51}{}\doxysubsection{观察串口输入}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md51}
+{\ttfamily idf.\+py monitor} 会调用 \href{https://docs.espressif.com/projects/esp-idf/en/latest/get-started/idf-monitor.html}{\texttt{ idf\+\_\+monitor 工具}}来显示乐鑫芯片的串口输出。{\ttfamily idf\+\_\+monitor} 还包含一系列的功能来解析程序崩溃后的输出结果并与设备进行交互。更多详细内容，请参阅\href{https://docs.espressif.com/projects/esp-idf/en/latest/get-started/idf-monitor.html}{\texttt{ 文档}}.
+
+输入 {\ttfamily Ctrl-\/\mbox{]}} 可退出监视器。
+
+想要一次性执行构建、烧写和监视，可以运行如下命令：
+
+{\ttfamily idf.\+py flash monitor}\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md52}{}\doxysubsection{仅编译并烧写应用程序}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md52}
+在第一次烧写过后，你可能只想构建并烧写你的应用程序，不包括引导程序和分区表：
+
+
+\begin{DoxyItemize}
+\item {\ttfamily idf.\+py app} -\/ 仅构建应用程序。
+\item {\ttfamily idf.\+py app-\/flash} -\/ 仅烧写应用程序。
+\end{DoxyItemize}
+
+{\ttfamily idf.\+py app-\/flash} 会自动判断是否有源文件发生了改变然后重新构建应用程序。
+
+（在正常的开发中，即使引导程序和分区表没有发生变化，每次都重新烧写它们并不会带来什么危害。）\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md53}{}\doxysubsection{擦除 Flash}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md53}
+{\ttfamily idf.\+py flash} 并不会擦除 flash 上所有的内容，但是有时候我们需要设备恢复到完全擦除的状态，尤其是分区表发生了变化或者 OTA 应用升级时。要擦除整块 flash 请运行 {\ttfamily idf.\+py erase-\/flash}。
+
+这条命令还可以和其余命令整合在一起，{\ttfamily idf.\+py -\/p PORT erase-\/flash flash} 会擦除一切然后重新烧写新的应用程序、引导程序和分区表。\hypertarget{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md54}{}\doxysection{其它参考资源}\label{md_esp_idf__r_e_a_d_m_e__c_n_autotoc_md54}
+
+\begin{DoxyItemize}
+\item 最新版的文档：https\+://docs.espressif.\+com/projects/esp-\/idf/ ，该文档是由本仓库 \mbox{[}docs 目录\mbox{]}(docs) 构建得到。
+\item 可以前往 \href{https://esp32.com/}{\texttt{ esp32.\+com 论坛}} 提问，挖掘社区资源。
+\item 如果你在使用中发现了错误或者需要新的功能，请先\href{https://github.com/espressif/esp-idf/issues}{\texttt{ 查看 Git\+Hub Issues}}，确保该问题没有重复提交。
+\item 如果你有兴趣为 ESP-\/\+IDF 作贡献，请先阅读\href{https://docs.espressif.com/projects/esp-idf/en/latest/contribute/index.html}{\texttt{ 贡献指南}}。 
+\end{DoxyItemize}

@@ -1,0 +1,61 @@
+\hypertarget{app__priv_8h_source}{}\doxysection{app\+\_\+priv.\+h}
+\label{app__priv_8h_source}\index{main/app\_priv.h@{main/app\_priv.h}}
+\mbox{\hyperlink{app__priv_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{i2cdev_8h}{i2cdev.h}}>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <bmp280.h>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{bh1750_8h}{bh1750.h}}>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <esp\_matter\_core.h>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <app\_reset.h>}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ <driver/gpio.h>}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{using\ namespace\ }esp\_matter;}
+\DoxyCodeLine{00027\ \textcolor{keyword}{using\ namespace\ }esp\_matter::attribute;}
+\DoxyCodeLine{00028\ \textcolor{keyword}{using\ namespace\ }esp\_matter::endpoint;}
+\DoxyCodeLine{00029\ \textcolor{keyword}{using\ namespace\ }esp\_matter::cluster;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#ifndef\ APP\_CPU\_NUM}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ APP\_CPU\_NUM\ PRO\_CPU\_NUM}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ BH1750\_ADDR\ BH1750\_ADDR\_LO}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ TEST\_LED\_GPIO\ GPIO\_NUM\_13}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{void}\ *\ app\_driver\_handle\_t;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00044\ \ \ \ std::string\ \mbox{\hyperlink{structmatter__config__t_afe79ecc429213e624f1c9b4e02a93f3b}{name}};\ }
+\DoxyCodeLine{00045\ \ \ \ endpoint\_t\ *\ \mbox{\hyperlink{structmatter__config__t_a45c02ae500c1a3a84be5f993b58adfc0}{endpoint\_p}};\ }
+\DoxyCodeLine{00046\ \ \ \ uint16\_t\ \mbox{\hyperlink{structmatter__config__t_aab9e0910469d798e5b4f370e188fb3ce}{endpoint\_id}};\ }
+\DoxyCodeLine{00047\ \ \ \ cluster\_t\ *\ \mbox{\hyperlink{structmatter__config__t_a52b4213d601a3a82f367e1de4560f96c}{cluster\_p}};\ }
+\DoxyCodeLine{00048\ \ \ \ uint16\_t\ \mbox{\hyperlink{structmatter__config__t_ad1d77083ec7c059bccb539fdf530f521}{cluster\_id}};\ }
+\DoxyCodeLine{00049\ \ \ \ uint32\_t\ \mbox{\hyperlink{structmatter__config__t_aae94b7f4bc6d514e2be7f29b99800f25}{measured\_attribute\_id}};\ }
+\DoxyCodeLine{00050\ \}\ \mbox{\hyperlink{structmatter__config__t}{matter\_config\_t}};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00067\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00068\ \ \ \ \textcolor{keywordtype}{bool}\ data\_ready;}
+\DoxyCodeLine{00069\ \ \ \ esp\_matter\_attr\_val\_t\ co2\_reading;}
+\DoxyCodeLine{00070\ \ \ \ esp\_matter\_attr\_val\_t\ temperature\_reading;}
+\DoxyCodeLine{00071\ \ \ \ esp\_matter\_attr\_val\_t\ humidity\_reading;}
+\DoxyCodeLine{00072\ \}\ \mbox{\hyperlink{structmatter__attr__val__scd30__reading__t}{matter\_attr\_val\_scd30\_reading\_t}};\ }
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{app__priv_8h_a30c443ce377bfea25321d9818b5ad00f}{bh1750\_sensor\_init}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *\ bh1750\_dev\_descriptor);}
+\DoxyCodeLine{00076\ esp\_matter\_attr\_val\_t\ \mbox{\hyperlink{app__priv_8h_aa715e41faad97b31b791e1ef91e3139e}{bh1750\_sensor\_update}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *\ bh1750\_dev\_descriptor);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{app__priv_8h_aea66f2f1b8c67370649082e4cb6e91ac}{scd30\_sensor\_init}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *\ scd30\_dev\_descriptor);}
+\DoxyCodeLine{00079\ \mbox{\hyperlink{structmatter__attr__val__scd30__reading__t}{matter\_attr\_val\_scd30\_reading\_t}}\ \mbox{\hyperlink{app__priv_8h_a8271ee84c3f5f95e1af24d67a3a3ba28}{scd30\_sensor\_update}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *\ scd30\_dev\_descriptor);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{app__priv_8h_af5e58982b09b23909f1f68e2e4f2282c}{test\_led\_init}}();}
+\DoxyCodeLine{00082\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{app__priv_8h_a48b393e84c83b6630698eb01a4d3fc29}{led\_on}}();}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ esp\_err\_t\ \mbox{\hyperlink{app__priv_8h_acfe8c1648bca820735f3d53ff024a24c}{app\_driver\_attribute\_update}}(app\_driver\_handle\_t\ driver\_handle,\ uint16\_t\ endpoint\_id,\ uint32\_t\ cluster\_id,}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ attribute\_id,\ esp\_matter\_attr\_val\_t\ *val);}
+
+\end{DoxyCode}

@@ -1,0 +1,73 @@
+\hypertarget{structmatter__config__t}{}\doxysection{matter\+\_\+config\+\_\+t Struct Reference}
+\label{structmatter__config__t}\index{matter\_config\_t@{matter\_config\_t}}
+
+
+Holds information related to a particular functionality, such as a sensor or a switch.  
+
+
+
+
+{\ttfamily \#include $<$app\+\_\+priv.\+h$>$}
+
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{structmatter__config__t_afe79ecc429213e624f1c9b4e02a93f3b}{name}}
+\item 
+endpoint\+\_\+t $\ast$ \mbox{\hyperlink{structmatter__config__t_a45c02ae500c1a3a84be5f993b58adfc0}{endpoint\+\_\+p}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structmatter__config__t_aab9e0910469d798e5b4f370e188fb3ce}{endpoint\+\_\+id}}
+\item 
+cluster\+\_\+t $\ast$ \mbox{\hyperlink{structmatter__config__t_a52b4213d601a3a82f367e1de4560f96c}{cluster\+\_\+p}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structmatter__config__t_ad1d77083ec7c059bccb539fdf530f521}{cluster\+\_\+id}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structmatter__config__t_aae94b7f4bc6d514e2be7f29b99800f25}{measured\+\_\+attribute\+\_\+id}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Holds information related to a particular functionality, such as a sensor or a switch. 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structmatter__config__t_ad1d77083ec7c059bccb539fdf530f521}\label{structmatter__config__t_ad1d77083ec7c059bccb539fdf530f521}} 
+\index{matter\_config\_t@{matter\_config\_t}!cluster\_id@{cluster\_id}}
+\index{cluster\_id@{cluster\_id}!matter\_config\_t@{matter\_config\_t}}
+\doxysubsubsection{\texorpdfstring{cluster\_id}{cluster\_id}}
+{\footnotesize\ttfamily uint16\+\_\+t matter\+\_\+config\+\_\+t\+::cluster\+\_\+id}
+
+The id of the cluster, represented as an uint16\+\_\+t \mbox{\Hypertarget{structmatter__config__t_a52b4213d601a3a82f367e1de4560f96c}\label{structmatter__config__t_a52b4213d601a3a82f367e1de4560f96c}} 
+\index{matter\_config\_t@{matter\_config\_t}!cluster\_p@{cluster\_p}}
+\index{cluster\_p@{cluster\_p}!matter\_config\_t@{matter\_config\_t}}
+\doxysubsubsection{\texorpdfstring{cluster\_p}{cluster\_p}}
+{\footnotesize\ttfamily cluster\+\_\+t$\ast$ matter\+\_\+config\+\_\+t\+::cluster\+\_\+p}
+
+A pointer to the cluster\+\_\+t type object \mbox{\Hypertarget{structmatter__config__t_aab9e0910469d798e5b4f370e188fb3ce}\label{structmatter__config__t_aab9e0910469d798e5b4f370e188fb3ce}} 
+\index{matter\_config\_t@{matter\_config\_t}!endpoint\_id@{endpoint\_id}}
+\index{endpoint\_id@{endpoint\_id}!matter\_config\_t@{matter\_config\_t}}
+\doxysubsubsection{\texorpdfstring{endpoint\_id}{endpoint\_id}}
+{\footnotesize\ttfamily uint16\+\_\+t matter\+\_\+config\+\_\+t\+::endpoint\+\_\+id}
+
+The id of the endpoint, represented as an uint16\+\_\+t \mbox{\Hypertarget{structmatter__config__t_a45c02ae500c1a3a84be5f993b58adfc0}\label{structmatter__config__t_a45c02ae500c1a3a84be5f993b58adfc0}} 
+\index{matter\_config\_t@{matter\_config\_t}!endpoint\_p@{endpoint\_p}}
+\index{endpoint\_p@{endpoint\_p}!matter\_config\_t@{matter\_config\_t}}
+\doxysubsubsection{\texorpdfstring{endpoint\_p}{endpoint\_p}}
+{\footnotesize\ttfamily endpoint\+\_\+t$\ast$ matter\+\_\+config\+\_\+t\+::endpoint\+\_\+p}
+
+A pointer to the endpoint\+\_\+t type object \mbox{\Hypertarget{structmatter__config__t_aae94b7f4bc6d514e2be7f29b99800f25}\label{structmatter__config__t_aae94b7f4bc6d514e2be7f29b99800f25}} 
+\index{matter\_config\_t@{matter\_config\_t}!measured\_attribute\_id@{measured\_attribute\_id}}
+\index{measured\_attribute\_id@{measured\_attribute\_id}!matter\_config\_t@{matter\_config\_t}}
+\doxysubsubsection{\texorpdfstring{measured\_attribute\_id}{measured\_attribute\_id}}
+{\footnotesize\ttfamily uint32\+\_\+t matter\+\_\+config\+\_\+t\+::measured\+\_\+attribute\+\_\+id}
+
+The id of the attribute, represented as an uint32\+\_\+t \mbox{\Hypertarget{structmatter__config__t_afe79ecc429213e624f1c9b4e02a93f3b}\label{structmatter__config__t_afe79ecc429213e624f1c9b4e02a93f3b}} 
+\index{matter\_config\_t@{matter\_config\_t}!name@{name}}
+\index{name@{name}!matter\_config\_t@{matter\_config\_t}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily std\+::string matter\+\_\+config\+\_\+t\+::name}
+
+The name of the functionality, represented as a std\+::string 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+main/\mbox{\hyperlink{app__priv_8h}{app\+\_\+priv.\+h}}\end{DoxyCompactItemize}

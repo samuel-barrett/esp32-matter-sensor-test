@@ -1,0 +1,241 @@
+\hypertarget{group__bh1750}{}\doxysection{bh1750}
+\label{group__bh1750}\index{bh1750@{bh1750}}
+\doxysubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file \mbox{\hyperlink{bh1750_8c}{bh1750.\+c}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{group__bh1750_ga85f0ac27b9e5b6a5bd1d6e85e6bcffab}\label{group__bh1750_ga85f0ac27b9e5b6a5bd1d6e85e6bcffab}} 
+\#define {\bfseries BH1750\+\_\+\+ADDR\+\_\+\+LO}~0x23
+\begin{DoxyCompactList}\small\item\em I2C address when ADDR pin floating/low. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{group__bh1750_gafcf292ba1071612300aa0eb609d707b8}\label{group__bh1750_gafcf292ba1071612300aa0eb609d707b8}} 
+\#define {\bfseries BH1750\+\_\+\+ADDR\+\_\+\+HI}~0x5c
+\begin{DoxyCompactList}\small\item\em I2C address when ADDR pin high. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{group__bh1750_ga3bef7cf84fabf6a5e586456ee901628c}{bh1750\+\_\+mode\+\_\+t}} \{ \mbox{\hyperlink{group__bh1750_gga3bef7cf84fabf6a5e586456ee901628cabb301bd6d64905b2748b3d501186173a}{BH1750\+\_\+\+MODE\+\_\+\+ONE\+\_\+\+TIME}} = 0
+, \mbox{\hyperlink{group__bh1750_gga3bef7cf84fabf6a5e586456ee901628ca085a4926d1cfc7ef5a795eafda7eb9a0}{BH1750\+\_\+\+MODE\+\_\+\+CONTINUOUS}}
+ \}
+\item 
+enum \mbox{\hyperlink{group__bh1750_ga4940ff6723505fe772e1f691d3217b6e}{bh1750\+\_\+resolution\+\_\+t}} \{ \mbox{\hyperlink{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea16693ba593ba46782145cfeb12625259}{BH1750\+\_\+\+RES\+\_\+\+LOW}} = 0
+, \mbox{\hyperlink{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea68d515f3f1fe7dca6f73ae6d958d029d}{BH1750\+\_\+\+RES\+\_\+\+HIGH}}
+, \mbox{\hyperlink{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea04a5cea828ef9e31cfeae8ec4f858297}{BH1750\+\_\+\+RES\+\_\+\+HIGH2}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga416ff994f802dae3aff5fd008b510778}{bh1750\+\_\+init\+\_\+desc}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint8\+\_\+t addr, i2c\+\_\+port\+\_\+t port, gpio\+\_\+num\+\_\+t sda\+\_\+gpio, gpio\+\_\+num\+\_\+t scl\+\_\+gpio)
+\begin{DoxyCompactList}\small\item\em Initialize device descriptor. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga9d1711228bd254f70d0284dbdaf6ca84}{bh1750\+\_\+free\+\_\+desc}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Free device descriptor. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga9454150beb508d6050944d04b62c09d5}{bh1750\+\_\+power\+\_\+down}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Power down device. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga64c9131d1c24847d29b323d1e950c8cf}{bh1750\+\_\+power\+\_\+on}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Power on device. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_gaae37df12c2d9a2c1b4ee2760f1374b89}{bh1750\+\_\+setup}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, \mbox{\hyperlink{group__bh1750_ga3bef7cf84fabf6a5e586456ee901628c}{bh1750\+\_\+mode\+\_\+t}} mode, \mbox{\hyperlink{group__bh1750_ga4940ff6723505fe772e1f691d3217b6e}{bh1750\+\_\+resolution\+\_\+t}} resolution)
+\begin{DoxyCompactList}\small\item\em Setup device parameters. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga7f1289284f2522f4001abe997d41ee4c}{bh1750\+\_\+set\+\_\+measurement\+\_\+time}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint8\+\_\+t time)
+\begin{DoxyCompactList}\small\item\em Set measurement time. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga0e2367ff17187836d50638db3e8542cb}{bh1750\+\_\+read}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint16\+\_\+t $\ast$level)
+\begin{DoxyCompactList}\small\item\em Read LUX value from the device. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for BH1750 light sensor
+
+Datasheet\+: ROHM Semiconductor bh1750fvi-\/e.\+pdf
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2017 Andrej Krutak \href{mailto:dev@andree.sk}{\texttt{ dev@andree.\+sk}}~\newline
+Copyright (c) 2018 Ruslan V. Uss \href{mailto:unclerus@gmail.com}{\texttt{ unclerus@gmail.\+com}}
+
+BSD Licensed as described in the file LICENSE 
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{group__bh1750_ga3bef7cf84fabf6a5e586456ee901628c}\label{group__bh1750_ga3bef7cf84fabf6a5e586456ee901628c}} 
+\index{bh1750@{bh1750}!bh1750\_mode\_t@{bh1750\_mode\_t}}
+\index{bh1750\_mode\_t@{bh1750\_mode\_t}!bh1750@{bh1750}}
+\doxysubsubsection{\texorpdfstring{bh1750\_mode\_t}{bh1750\_mode\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{group__bh1750_ga3bef7cf84fabf6a5e586456ee901628c}{bh1750\+\_\+mode\+\_\+t}}}
+
+Measurement mode \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BH1750\_MODE\_ONE\_TIME@{BH1750\_MODE\_ONE\_TIME}!bh1750@{bh1750}}\index{bh1750@{bh1750}!BH1750\_MODE\_ONE\_TIME@{BH1750\_MODE\_ONE\_TIME}}}\mbox{\Hypertarget{group__bh1750_gga3bef7cf84fabf6a5e586456ee901628cabb301bd6d64905b2748b3d501186173a}\label{group__bh1750_gga3bef7cf84fabf6a5e586456ee901628cabb301bd6d64905b2748b3d501186173a}} 
+BH1750\+\_\+\+MODE\+\_\+\+ONE\+\_\+\+TIME&One time measurement. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BH1750\_MODE\_CONTINUOUS@{BH1750\_MODE\_CONTINUOUS}!bh1750@{bh1750}}\index{bh1750@{bh1750}!BH1750\_MODE\_CONTINUOUS@{BH1750\_MODE\_CONTINUOUS}}}\mbox{\Hypertarget{group__bh1750_gga3bef7cf84fabf6a5e586456ee901628ca085a4926d1cfc7ef5a795eafda7eb9a0}\label{group__bh1750_gga3bef7cf84fabf6a5e586456ee901628ca085a4926d1cfc7ef5a795eafda7eb9a0}} 
+BH1750\+\_\+\+MODE\+\_\+\+CONTINUOUS&Continuous measurement. \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{group__bh1750_ga4940ff6723505fe772e1f691d3217b6e}\label{group__bh1750_ga4940ff6723505fe772e1f691d3217b6e}} 
+\index{bh1750@{bh1750}!bh1750\_resolution\_t@{bh1750\_resolution\_t}}
+\index{bh1750\_resolution\_t@{bh1750\_resolution\_t}!bh1750@{bh1750}}
+\doxysubsubsection{\texorpdfstring{bh1750\_resolution\_t}{bh1750\_resolution\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{group__bh1750_ga4940ff6723505fe772e1f691d3217b6e}{bh1750\+\_\+resolution\+\_\+t}}}
+
+Measurement resolution \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BH1750\_RES\_LOW@{BH1750\_RES\_LOW}!bh1750@{bh1750}}\index{bh1750@{bh1750}!BH1750\_RES\_LOW@{BH1750\_RES\_LOW}}}\mbox{\Hypertarget{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea16693ba593ba46782145cfeb12625259}\label{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea16693ba593ba46782145cfeb12625259}} 
+BH1750\+\_\+\+RES\+\_\+\+LOW&4 lx resolution, measurement time is usually 16 ms \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BH1750\_RES\_HIGH@{BH1750\_RES\_HIGH}!bh1750@{bh1750}}\index{bh1750@{bh1750}!BH1750\_RES\_HIGH@{BH1750\_RES\_HIGH}}}\mbox{\Hypertarget{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea68d515f3f1fe7dca6f73ae6d958d029d}\label{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea68d515f3f1fe7dca6f73ae6d958d029d}} 
+BH1750\+\_\+\+RES\+\_\+\+HIGH&1 lx resolution, measurement time is usually 120 ms \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BH1750\_RES\_HIGH2@{BH1750\_RES\_HIGH2}!bh1750@{bh1750}}\index{bh1750@{bh1750}!BH1750\_RES\_HIGH2@{BH1750\_RES\_HIGH2}}}\mbox{\Hypertarget{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea04a5cea828ef9e31cfeae8ec4f858297}\label{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea04a5cea828ef9e31cfeae8ec4f858297}} 
+BH1750\+\_\+\+RES\+\_\+\+HIGH2&0.\+5 lx resolution, measurement time is usually 120 ms \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group__bh1750_ga9d1711228bd254f70d0284dbdaf6ca84}\label{group__bh1750_ga9d1711228bd254f70d0284dbdaf6ca84}} 
+\index{bh1750@{bh1750}!bh1750\_free\_desc@{bh1750\_free\_desc}}
+\index{bh1750\_free\_desc@{bh1750\_free\_desc}!bh1750@{bh1750}}
+\doxysubsubsection{\texorpdfstring{bh1750\_free\_desc()}{bh1750\_free\_desc()}}
+{\footnotesize\ttfamily esp\+\_\+err\+\_\+t bh1750\+\_\+free\+\_\+desc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$}]{dev }\end{DoxyParamCaption})}
+
+
+
+Free device descriptor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dev} & Pointer to device descriptor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily ESP\+\_\+\+OK} on success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{group__bh1750_ga416ff994f802dae3aff5fd008b510778}\label{group__bh1750_ga416ff994f802dae3aff5fd008b510778}} 
+\index{bh1750@{bh1750}!bh1750\_init\_desc@{bh1750\_init\_desc}}
+\index{bh1750\_init\_desc@{bh1750\_init\_desc}!bh1750@{bh1750}}
+\doxysubsubsection{\texorpdfstring{bh1750\_init\_desc()}{bh1750\_init\_desc()}}
+{\footnotesize\ttfamily esp\+\_\+err\+\_\+t bh1750\+\_\+init\+\_\+desc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$}]{dev,  }\item[{uint8\+\_\+t}]{addr,  }\item[{i2c\+\_\+port\+\_\+t}]{port,  }\item[{gpio\+\_\+num\+\_\+t}]{sda\+\_\+gpio,  }\item[{gpio\+\_\+num\+\_\+t}]{scl\+\_\+gpio }\end{DoxyParamCaption})}
+
+
+
+Initialize device descriptor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em dev} & Device descriptor \\
+\hline
+\mbox{\texttt{ in}}  & {\em addr} & I2C address, \mbox{\hyperlink{group__bh1750_ga85f0ac27b9e5b6a5bd1d6e85e6bcffab}{BH1750\+\_\+\+ADDR\+\_\+\+LO}} or \mbox{\hyperlink{group__bh1750_gafcf292ba1071612300aa0eb609d707b8}{BH1750\+\_\+\+ADDR\+\_\+\+HI}} \\
+\hline
+\mbox{\texttt{ in}}  & {\em port} & I2C port number \\
+\hline
+\mbox{\texttt{ in}}  & {\em sda\+\_\+gpio} & GPIO pin number for SDA \\
+\hline
+\mbox{\texttt{ in}}  & {\em scl\+\_\+gpio} & GPIO pin number for SCL \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily ESP\+\_\+\+OK} on success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{group__bh1750_ga9454150beb508d6050944d04b62c09d5}\label{group__bh1750_ga9454150beb508d6050944d04b62c09d5}} 
+\index{bh1750@{bh1750}!bh1750\_power\_down@{bh1750\_power\_down}}
+\index{bh1750\_power\_down@{bh1750\_power\_down}!bh1750@{bh1750}}
+\doxysubsubsection{\texorpdfstring{bh1750\_power\_down()}{bh1750\_power\_down()}}
+{\footnotesize\ttfamily esp\+\_\+err\+\_\+t bh1750\+\_\+power\+\_\+down (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$}]{dev }\end{DoxyParamCaption})}
+
+
+
+Power down device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dev} & Pointer to device descriptor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily ESP\+\_\+\+OK} on success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{group__bh1750_ga64c9131d1c24847d29b323d1e950c8cf}\label{group__bh1750_ga64c9131d1c24847d29b323d1e950c8cf}} 
+\index{bh1750@{bh1750}!bh1750\_power\_on@{bh1750\_power\_on}}
+\index{bh1750\_power\_on@{bh1750\_power\_on}!bh1750@{bh1750}}
+\doxysubsubsection{\texorpdfstring{bh1750\_power\_on()}{bh1750\_power\_on()}}
+{\footnotesize\ttfamily esp\+\_\+err\+\_\+t bh1750\+\_\+power\+\_\+on (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$}]{dev }\end{DoxyParamCaption})}
+
+
+
+Power on device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dev} & Pointer to device descriptor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily ESP\+\_\+\+OK} on success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{group__bh1750_ga0e2367ff17187836d50638db3e8542cb}\label{group__bh1750_ga0e2367ff17187836d50638db3e8542cb}} 
+\index{bh1750@{bh1750}!bh1750\_read@{bh1750\_read}}
+\index{bh1750\_read@{bh1750\_read}!bh1750@{bh1750}}
+\doxysubsubsection{\texorpdfstring{bh1750\_read()}{bh1750\_read()}}
+{\footnotesize\ttfamily esp\+\_\+err\+\_\+t bh1750\+\_\+read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$}]{dev,  }\item[{uint16\+\_\+t $\ast$}]{level }\end{DoxyParamCaption})}
+
+
+
+Read LUX value from the device. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em dev} & Pointer to device descriptor \\
+\hline
+\mbox{\texttt{ out}}  & {\em level} & read value in lux units \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily ESP\+\_\+\+OK} on success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{group__bh1750_ga7f1289284f2522f4001abe997d41ee4c}\label{group__bh1750_ga7f1289284f2522f4001abe997d41ee4c}} 
+\index{bh1750@{bh1750}!bh1750\_set\_measurement\_time@{bh1750\_set\_measurement\_time}}
+\index{bh1750\_set\_measurement\_time@{bh1750\_set\_measurement\_time}!bh1750@{bh1750}}
+\doxysubsubsection{\texorpdfstring{bh1750\_set\_measurement\_time()}{bh1750\_set\_measurement\_time()}}
+{\footnotesize\ttfamily esp\+\_\+err\+\_\+t bh1750\+\_\+set\+\_\+measurement\+\_\+time (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$}]{dev,  }\item[{uint8\+\_\+t}]{time }\end{DoxyParamCaption})}
+
+
+
+Set measurement time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dev} & Pointer to device descriptor \\
+\hline
+{\em time} & Measurement time (see datasheet) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily ESP\+\_\+\+OK} on success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{group__bh1750_gaae37df12c2d9a2c1b4ee2760f1374b89}\label{group__bh1750_gaae37df12c2d9a2c1b4ee2760f1374b89}} 
+\index{bh1750@{bh1750}!bh1750\_setup@{bh1750\_setup}}
+\index{bh1750\_setup@{bh1750\_setup}!bh1750@{bh1750}}
+\doxysubsubsection{\texorpdfstring{bh1750\_setup()}{bh1750\_setup()}}
+{\footnotesize\ttfamily esp\+\_\+err\+\_\+t bh1750\+\_\+setup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$}]{dev,  }\item[{\mbox{\hyperlink{group__bh1750_ga3bef7cf84fabf6a5e586456ee901628c}{bh1750\+\_\+mode\+\_\+t}}}]{mode,  }\item[{\mbox{\hyperlink{group__bh1750_ga4940ff6723505fe772e1f691d3217b6e}{bh1750\+\_\+resolution\+\_\+t}}}]{resolution }\end{DoxyParamCaption})}
+
+
+
+Setup device parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dev} & Pointer to device descriptor \\
+\hline
+{\em mode} & Measurement mode \\
+\hline
+{\em resolution} & Measurement resolution \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily ESP\+\_\+\+OK} on success 
+\end{DoxyReturn}

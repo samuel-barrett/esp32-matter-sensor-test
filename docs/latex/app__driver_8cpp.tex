@@ -1,0 +1,157 @@
+\hypertarget{app__driver_8cpp}{}\doxysection{main/app\+\_\+driver.cpp File Reference}
+\label{app__driver_8cpp}\index{main/app\_driver.cpp@{main/app\_driver.cpp}}
+
+
+Containers for the various sensors used by this application.  
+
+
+{\ttfamily \#include $<$i2cdev.\+h$>$}\newline
+{\ttfamily \#include $<$bh1750.\+h$>$}\newline
+{\ttfamily \#include $<$scd30.\+h$>$}\newline
+{\ttfamily \#include $<$driver/gpio.\+h$>$}\newline
+{\ttfamily \#include $<$app\+\_\+priv.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{app__driver_8cpp_a30c443ce377bfea25321d9818b5ad00f}{bh1750\+\_\+sensor\+\_\+init}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$bh1750\+\_\+dev\+\_\+descriptor)
+\begin{DoxyCompactList}\small\item\em Initializes the bh1850 CO2, pressure, and temperature sensor in continuous mode. \end{DoxyCompactList}\item 
+esp\+\_\+matter\+\_\+attr\+\_\+val\+\_\+t \mbox{\hyperlink{app__driver_8cpp_aa715e41faad97b31b791e1ef91e3139e}{bh1750\+\_\+sensor\+\_\+update}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$bh1750\+\_\+dev\+\_\+descriptor)
+\begin{DoxyCompactList}\small\item\em Reads a value from the BH1750 sensor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{app__driver_8cpp_aea66f2f1b8c67370649082e4cb6e91ac}{scd30\+\_\+sensor\+\_\+init}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$scd30\+\_\+dev\+\_\+descriptor)
+\begin{DoxyCompactList}\small\item\em Initializes the SCD30 CO2, humidity, and temperature sensor in continuous mode. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmatter__attr__val__scd30__reading__t}{matter\+\_\+attr\+\_\+val\+\_\+scd30\+\_\+reading\+\_\+t}} \mbox{\hyperlink{app__driver_8cpp_a8271ee84c3f5f95e1af24d67a3a3ba28}{scd30\+\_\+sensor\+\_\+update}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$scd30\+\_\+dev\+\_\+descriptor)
+\item 
+void \mbox{\hyperlink{app__driver_8cpp_af5e58982b09b23909f1f68e2e4f2282c}{test\+\_\+led\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Initializes TEST\+\_\+\+LED\+\_\+\+GPIO as INPUT + OUTPUT GPIO so that the LED can be turned onn or off. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{app__driver_8cpp_a48b393e84c83b6630698eb01a4d3fc29}{led\+\_\+on}} ()
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{app__driver_8cpp_acfe8c1648bca820735f3d53ff024a24c}{app\+\_\+driver\+\_\+attribute\+\_\+update}} (app\+\_\+driver\+\_\+handle\+\_\+t driver\+\_\+handle, uint16\+\_\+t endpoint\+\_\+id, uint32\+\_\+t cluster\+\_\+id, uint32\+\_\+t attribute\+\_\+id, esp\+\_\+matter\+\_\+attr\+\_\+val\+\_\+t $\ast$val)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{app__driver_8cpp_aba4b84d9a06456f9b8e1cb182c69c8af}\label{app__driver_8cpp_aba4b84d9a06456f9b8e1cb182c69c8af}} 
+uint16\+\_\+t {\bfseries light\+\_\+endpoint\+\_\+id}
+\begin{DoxyCompactList}\small\item\em On off light endpoint identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Containers for the various sensors used by this application. 
+
+\begin{DoxyAuthor}{Author}
+Samuel Barrett (samarbarrett) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2023-\/02-\/03
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+This example code is in the Public Domain (or CC0 licensed, at your option.) Unless required by applicable law or agreed to in writing, this software is distributed on an \char`\"{}\+AS IS\char`\"{} BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{app__driver_8cpp_acfe8c1648bca820735f3d53ff024a24c}\label{app__driver_8cpp_acfe8c1648bca820735f3d53ff024a24c}} 
+\index{app\_driver.cpp@{app\_driver.cpp}!app\_driver\_attribute\_update@{app\_driver\_attribute\_update}}
+\index{app\_driver\_attribute\_update@{app\_driver\_attribute\_update}!app\_driver.cpp@{app\_driver.cpp}}
+\doxysubsubsection{\texorpdfstring{app\_driver\_attribute\_update()}{app\_driver\_attribute\_update()}}
+{\footnotesize\ttfamily esp\+\_\+err\+\_\+t app\+\_\+driver\+\_\+attribute\+\_\+update (\begin{DoxyParamCaption}\item[{app\+\_\+driver\+\_\+handle\+\_\+t}]{driver\+\_\+handle,  }\item[{uint16\+\_\+t}]{endpoint\+\_\+id,  }\item[{uint32\+\_\+t}]{cluster\+\_\+id,  }\item[{uint32\+\_\+t}]{attribute\+\_\+id,  }\item[{esp\+\_\+matter\+\_\+attr\+\_\+val\+\_\+t $\ast$}]{val }\end{DoxyParamCaption})}
+
+Driver Update
+
+This API should be called to update the driver for the attribute being updated. This is usually called from the common {\ttfamily app\+\_\+attribute\+\_\+update\+\_\+cb()}.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em endpoint\+\_\+id} & Endpoint ID of the attribute. \\
+\hline
+\mbox{\texttt{ in}}  & {\em cluster\+\_\+id} & Cluster ID of the attribute. \\
+\hline
+\mbox{\texttt{ in}}  & {\em attribute\+\_\+id} & Attribute ID of the attribute. \\
+\hline
+\mbox{\texttt{ in}}  & {\em val} & Pointer to {\ttfamily esp\+\_\+matter\+\_\+attr\+\_\+val\+\_\+t}. Use appropriate elements as per the value type.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ESP\+\_\+\+OK on success. 
+
+error in case of failure. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{app__driver_8cpp_a30c443ce377bfea25321d9818b5ad00f}\label{app__driver_8cpp_a30c443ce377bfea25321d9818b5ad00f}} 
+\index{app\_driver.cpp@{app\_driver.cpp}!bh1750\_sensor\_init@{bh1750\_sensor\_init}}
+\index{bh1750\_sensor\_init@{bh1750\_sensor\_init}!app\_driver.cpp@{app\_driver.cpp}}
+\doxysubsubsection{\texorpdfstring{bh1750\_sensor\_init()}{bh1750\_sensor\_init()}}
+{\footnotesize\ttfamily void bh1750\+\_\+sensor\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$}]{bh1750\+\_\+dev\+\_\+descriptor }\end{DoxyParamCaption})}
+
+
+
+Initializes the bh1850 CO2, pressure, and temperature sensor in continuous mode. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em bh1750\+\_\+dev\+\_\+descriptor} & The i2c device descriptor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{app__driver_8cpp_aa715e41faad97b31b791e1ef91e3139e}\label{app__driver_8cpp_aa715e41faad97b31b791e1ef91e3139e}} 
+\index{app\_driver.cpp@{app\_driver.cpp}!bh1750\_sensor\_update@{bh1750\_sensor\_update}}
+\index{bh1750\_sensor\_update@{bh1750\_sensor\_update}!app\_driver.cpp@{app\_driver.cpp}}
+\doxysubsubsection{\texorpdfstring{bh1750\_sensor\_update()}{bh1750\_sensor\_update()}}
+{\footnotesize\ttfamily esp\+\_\+matter\+\_\+attr\+\_\+val\+\_\+t bh1750\+\_\+sensor\+\_\+update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$}]{bh1750\+\_\+dev\+\_\+descriptor }\end{DoxyParamCaption})}
+
+
+
+Reads a value from the BH1750 sensor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em bh1750\+\_\+dev\+\_\+descriptor} & The i2c device descriptor\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A nullable$<$int16\+\_\+t$>$ containing the lux 
+\end{DoxyReturn}
+\mbox{\Hypertarget{app__driver_8cpp_a48b393e84c83b6630698eb01a4d3fc29}\label{app__driver_8cpp_a48b393e84c83b6630698eb01a4d3fc29}} 
+\index{app\_driver.cpp@{app\_driver.cpp}!led\_on@{led\_on}}
+\index{led\_on@{led\_on}!app\_driver.cpp@{app\_driver.cpp}}
+\doxysubsubsection{\texorpdfstring{led\_on()}{led\_on()}}
+{\footnotesize\ttfamily bool led\+\_\+on (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Get LED state
+
+\begin{DoxyReturn}{Returns}
+returns true if the indicator LED is on, otherwise false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{app__driver_8cpp_aea66f2f1b8c67370649082e4cb6e91ac}\label{app__driver_8cpp_aea66f2f1b8c67370649082e4cb6e91ac}} 
+\index{app\_driver.cpp@{app\_driver.cpp}!scd30\_sensor\_init@{scd30\_sensor\_init}}
+\index{scd30\_sensor\_init@{scd30\_sensor\_init}!app\_driver.cpp@{app\_driver.cpp}}
+\doxysubsubsection{\texorpdfstring{scd30\_sensor\_init()}{scd30\_sensor\_init()}}
+{\footnotesize\ttfamily void scd30\+\_\+sensor\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$}]{scd30\+\_\+dev\+\_\+descriptor }\end{DoxyParamCaption})}
+
+
+
+Initializes the SCD30 CO2, humidity, and temperature sensor in continuous mode. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em scd30\+\_\+dev\+\_\+descriptor} & I2C device descriptor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{app__driver_8cpp_a8271ee84c3f5f95e1af24d67a3a3ba28}\label{app__driver_8cpp_a8271ee84c3f5f95e1af24d67a3a3ba28}} 
+\index{app\_driver.cpp@{app\_driver.cpp}!scd30\_sensor\_update@{scd30\_sensor\_update}}
+\index{scd30\_sensor\_update@{scd30\_sensor\_update}!app\_driver.cpp@{app\_driver.cpp}}
+\doxysubsubsection{\texorpdfstring{scd30\_sensor\_update()}{scd30\_sensor\_update()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmatter__attr__val__scd30__reading__t}{matter\+\_\+attr\+\_\+val\+\_\+scd30\+\_\+reading\+\_\+t}} scd30\+\_\+sensor\+\_\+update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$}]{scd30\+\_\+dev\+\_\+descriptor }\end{DoxyParamCaption})}
+
+Updates the SCD30 CO2, humidity\+: \mbox{\Hypertarget{app__driver_8cpp_af5e58982b09b23909f1f68e2e4f2282c}\label{app__driver_8cpp_af5e58982b09b23909f1f68e2e4f2282c}} 
+\index{app\_driver.cpp@{app\_driver.cpp}!test\_led\_init@{test\_led\_init}}
+\index{test\_led\_init@{test\_led\_init}!app\_driver.cpp@{app\_driver.cpp}}
+\doxysubsubsection{\texorpdfstring{test\_led\_init()}{test\_led\_init()}}
+{\footnotesize\ttfamily void test\+\_\+led\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes TEST\+\_\+\+LED\+\_\+\+GPIO as INPUT + OUTPUT GPIO so that the LED can be turned onn or off. 
+
+Test Light 

@@ -1,10 +1,16 @@
-/*
-   This example code is in the Public Domain (or CC0 licensed, at your option.)
+/**
+ * @file app_driver.cpp
+ * @author Samuel Barrett (samarbarrett)
+ * @brief Containers for the various sensors used by this application
+ * @version 0.1
+ * @date 2023-02-03
+ * 
+ * @copyright This example code is in the Public Domain (or CC0 licensed, at your option.)
+ * Unless required by applicable law or agreed to in writing, this
+ * software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+ * CONDITIONS OF ANY KIND, either express or implied.
+ */
 
-   Unless required by applicable law or agreed to in writing, this
-   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-   CONDITIONS OF ANY KIND, either express or implied.
-*/
 
 #include <i2cdev.h>
 #include <bh1750.h>
@@ -15,13 +21,17 @@
 #include <app_priv.h>
 
 static const char *TAG = "app_driver";
+
+/**
+ * @brief On off light endpoint identifier
+ */
 extern uint16_t light_endpoint_id;
 
 
 /**
  * @brief Initializes the bh1850 CO2, pressure, and temperature sensor in continuous mode
  * 
- * @param[out] bh1750_dev_descriptor (i2c_dev_t) The i2c device descriptor
+ * @param[out] bh1750_dev_descriptor  The i2c device descriptor
 */
 void bh1750_sensor_init(i2c_dev_t * bh1750_dev_descriptor) {
     memset(bh1750_dev_descriptor, 0, sizeof(i2c_dev_t)); // Zero descriptor
@@ -33,9 +43,9 @@ void bh1750_sensor_init(i2c_dev_t * bh1750_dev_descriptor) {
 /**
  * @brief Reads a value from the BH1750 sensor
  * 
- * @param[in] bh1750_dev_descriptor (i2c_dev_t) The i2c device descriptor
+ * @param[in] bh1750_dev_descriptor  The i2c device descriptor
  * 
- * @return (esp_matter_attr_val_t) A nullable<int16_t> containing the lux
+ * @return  A nullable<int16_t> containing the lux
 */
 esp_matter_attr_val_t bh1750_sensor_update(i2c_dev_t * bh1750_dev_descriptor) {
     esp_err_t err = ESP_OK;
@@ -54,7 +64,7 @@ esp_matter_attr_val_t bh1750_sensor_update(i2c_dev_t * bh1750_dev_descriptor) {
 /**
  * @brief  Initializes the SCD30 CO2, humidity, and temperature sensor in continuous mode
  * 
- * @param[out] scd30_dev_descriptor (i2c_dev_t) I2C device descriptor
+ * @param[out] scd30_dev_descriptor  I2C device descriptor
 */
 void scd30_sensor_init(i2c_dev_t * scd30_dev_descriptor) {
 

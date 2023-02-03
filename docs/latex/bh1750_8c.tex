@@ -1,0 +1,76 @@
+\hypertarget{bh1750_8c}{}\doxysection{main/bh1750/bh1750.c File Reference}
+\label{bh1750_8c}\index{main/bh1750/bh1750.c@{main/bh1750/bh1750.c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+idf\+\_\+lib\+\_\+helpers.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}bh1750.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{bh1750_8c_aff07539e6546b83a7c328cc3b57704a4}\label{bh1750_8c_aff07539e6546b83a7c328cc3b57704a4}} 
+\#define {\bfseries OPCODE\+\_\+\+HIGH}~0x0
+\item 
+\mbox{\Hypertarget{bh1750_8c_ad35c08663a149f041b6cbaecd07d78ca}\label{bh1750_8c_ad35c08663a149f041b6cbaecd07d78ca}} 
+\#define {\bfseries OPCODE\+\_\+\+HIGH2}~0x1
+\item 
+\mbox{\Hypertarget{bh1750_8c_a45e9eedeaa5797552b7bef43f5b090ed}\label{bh1750_8c_a45e9eedeaa5797552b7bef43f5b090ed}} 
+\#define {\bfseries OPCODE\+\_\+\+LOW}~0x3
+\item 
+\mbox{\Hypertarget{bh1750_8c_ae7a582b3ff3c6c9055439be1db4ab06d}\label{bh1750_8c_ae7a582b3ff3c6c9055439be1db4ab06d}} 
+\#define {\bfseries OPCODE\+\_\+\+CONT}~0x10
+\item 
+\mbox{\Hypertarget{bh1750_8c_a51e13eb618cb78eb9e3eb9597561369f}\label{bh1750_8c_a51e13eb618cb78eb9e3eb9597561369f}} 
+\#define {\bfseries OPCODE\+\_\+\+OT}~0x20
+\item 
+\mbox{\Hypertarget{bh1750_8c_afef284a5a17de5b9ab192a754401b550}\label{bh1750_8c_afef284a5a17de5b9ab192a754401b550}} 
+\#define {\bfseries OPCODE\+\_\+\+POWER\+\_\+\+DOWN}~0x00
+\item 
+\mbox{\Hypertarget{bh1750_8c_aa5f98b4aa20025e616763d85a9218d95}\label{bh1750_8c_aa5f98b4aa20025e616763d85a9218d95}} 
+\#define {\bfseries OPCODE\+\_\+\+POWER\+\_\+\+ON}~0x01
+\item 
+\mbox{\Hypertarget{bh1750_8c_a608ad8b08a3fe07bb445b620e4aed7bb}\label{bh1750_8c_a608ad8b08a3fe07bb445b620e4aed7bb}} 
+\#define {\bfseries OPCODE\+\_\+\+MT\+\_\+\+HI}~0x40
+\item 
+\mbox{\Hypertarget{bh1750_8c_a6279a0be1b02bcdfd76ffa642f2a1d60}\label{bh1750_8c_a6279a0be1b02bcdfd76ffa642f2a1d60}} 
+\#define {\bfseries OPCODE\+\_\+\+MT\+\_\+\+LO}~0x60
+\item 
+\mbox{\Hypertarget{bh1750_8c_a0d8bea689bb240eefaa35ca71cc1ed9f}\label{bh1750_8c_a0d8bea689bb240eefaa35ca71cc1ed9f}} 
+\#define {\bfseries I2\+C\+\_\+\+FREQ\+\_\+\+HZ}~400000
+\item 
+\mbox{\Hypertarget{bh1750_8c_a763ffd798508592c5092ac77daa5a659}\label{bh1750_8c_a763ffd798508592c5092ac77daa5a659}} 
+\#define {\bfseries CHECK}(x)~do \{ esp\+\_\+err\+\_\+t \+\_\+\+\_\+; if ((\+\_\+\+\_\+ = x) != ESP\+\_\+\+OK) return \+\_\+\+\_\+; \} while (0)
+\item 
+\mbox{\Hypertarget{bh1750_8c_a3f333c635536e9be4186cceecb7510bc}\label{bh1750_8c_a3f333c635536e9be4186cceecb7510bc}} 
+\#define {\bfseries CHECK\+\_\+\+ARG}(VAL)~do \{ if (!(VAL)) return ESP\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+ARG; \} while (0)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga416ff994f802dae3aff5fd008b510778}{bh1750\+\_\+init\+\_\+desc}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint8\+\_\+t addr, i2c\+\_\+port\+\_\+t port, gpio\+\_\+num\+\_\+t sda\+\_\+gpio, gpio\+\_\+num\+\_\+t scl\+\_\+gpio)
+\begin{DoxyCompactList}\small\item\em Initialize device descriptor. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga9d1711228bd254f70d0284dbdaf6ca84}{bh1750\+\_\+free\+\_\+desc}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Free device descriptor. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga9454150beb508d6050944d04b62c09d5}{bh1750\+\_\+power\+\_\+down}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Power down device. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga64c9131d1c24847d29b323d1e950c8cf}{bh1750\+\_\+power\+\_\+on}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Power on device. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_gaae37df12c2d9a2c1b4ee2760f1374b89}{bh1750\+\_\+setup}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, \mbox{\hyperlink{group__bh1750_ga3bef7cf84fabf6a5e586456ee901628c}{bh1750\+\_\+mode\+\_\+t}} mode, \mbox{\hyperlink{group__bh1750_ga4940ff6723505fe772e1f691d3217b6e}{bh1750\+\_\+resolution\+\_\+t}} resolution)
+\begin{DoxyCompactList}\small\item\em Setup device parameters. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga7f1289284f2522f4001abe997d41ee4c}{bh1750\+\_\+set\+\_\+measurement\+\_\+time}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint8\+\_\+t time)
+\begin{DoxyCompactList}\small\item\em Set measurement time. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__bh1750_ga0e2367ff17187836d50638db3e8542cb}{bh1750\+\_\+read}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint16\+\_\+t $\ast$level)
+\begin{DoxyCompactList}\small\item\em Read LUX value from the device. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for BH1750 light sensor
+
+Datasheet\+: ROHM Semiconductor bh1750fvi-\/e.\+pdf
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2017 Andrej Krutak \href{mailto:dev@andree.sk}{\texttt{ dev@andree.\+sk}}~\newline
+Copyright (c) 2018 Ruslan V. Uss \href{mailto:unclerus@gmail.com}{\texttt{ unclerus@gmail.\+com}}
+
+BSD Licensed as described in the file LICENSE 

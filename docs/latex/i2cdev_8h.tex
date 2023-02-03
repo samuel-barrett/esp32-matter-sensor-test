@@ -1,0 +1,60 @@
+\hypertarget{i2cdev_8h}{}\doxysection{main/i2cdev/i2cdev.h File Reference}
+\label{i2cdev_8h}\index{main/i2cdev/i2cdev.h@{main/i2cdev/i2cdev.h}}
+{\ttfamily \#include $<$driver/i2c.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/semphr.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+err.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+idf\+\_\+lib\+\_\+helpers.\+h$>$}\newline
+{\ttfamily \#include $<$soc/i2c\+\_\+reg.\+h$>$}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries I2\+CDEV\+\_\+\+MAX\+\_\+\+STRETCH\+\_\+\+TIME}~0x00ffffff
+\item 
+\#define {\bfseries CONFIG\+\_\+\+I2\+CDEV\+\_\+\+TIMEOUT}~1000
+\item 
+\#define \mbox{\hyperlink{group__i2cdev_ga097ee23eb474674923704d81d376e646}{I2\+C\+\_\+\+DEV\+\_\+\+TAKE\+\_\+\+MUTEX}}(dev)
+\item 
+\#define \mbox{\hyperlink{group__i2cdev_ga9d3fa5a5f0df1ad3e45350da5d647a22}{I2\+C\+\_\+\+DEV\+\_\+\+GIVE\+\_\+\+MUTEX}}(dev)
+\item 
+\#define \mbox{\hyperlink{group__i2cdev_gaeb71e2a5bb188971fa26aa14da35fad7}{I2\+C\+\_\+\+DEV\+\_\+\+CHECK}}(dev,  X)
+\item 
+\#define \mbox{\hyperlink{group__i2cdev_ga3522d16d02065700aaa099fc1b5aa9cd}{I2\+C\+\_\+\+DEV\+\_\+\+CHECK\+\_\+\+LOGE}}(dev,  X,  msg, ...)
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{group__i2cdev_ga4ce8352d119fb1c8a4f6e61d7a1f94ad}{i2c\+\_\+dev\+\_\+type\+\_\+t}} \{ \mbox{\hyperlink{group__i2cdev_gga4ce8352d119fb1c8a4f6e61d7a1f94ada6d72ed6999ed0666c9119118f4febce2}{I2\+C\+\_\+\+DEV\+\_\+\+WRITE}} = 0
+, \mbox{\hyperlink{group__i2cdev_gga4ce8352d119fb1c8a4f6e61d7a1f94ada4fb6aad7884796673e5769379da58a63}{I2\+C\+\_\+\+DEV\+\_\+\+READ}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_ga8a96ea2cf13f4b50a9f5d5e17f40e01b}{i2cdev\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Init library. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_ga320d9f51aab144397f75448801aa85e4}{i2cdev\+\_\+done}} ()
+\begin{DoxyCompactList}\small\item\em Finish work with library. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_ga1c3a8d47ff8f1c985d6e1d98d668eb3d}{i2c\+\_\+dev\+\_\+create\+\_\+mutex}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Create mutex for device descriptor. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_ga1e9101fef8e50349d63157e0e01ced0f}{i2c\+\_\+dev\+\_\+delete\+\_\+mutex}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Delete mutex for device descriptor. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_gab0a314a2a3c6a8c7f9e59cf3b69466da}{i2c\+\_\+dev\+\_\+take\+\_\+mutex}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Take device mutex. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_ga51961c290ebed5993c50e30009c40e75}{i2c\+\_\+dev\+\_\+give\+\_\+mutex}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Give device mutex. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_gafd6bbe89f50ff620c1081d3617b469f8}{i2c\+\_\+dev\+\_\+probe}} (const \mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, \mbox{\hyperlink{group__i2cdev_ga4ce8352d119fb1c8a4f6e61d7a1f94ad}{i2c\+\_\+dev\+\_\+type\+\_\+t}} operation\+\_\+type)
+\begin{DoxyCompactList}\small\item\em Check the availability of the device. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_ga9785ee992dab84bea0d7be83bb6e17fc}{i2c\+\_\+dev\+\_\+read}} (const \mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, const void $\ast$out\+\_\+data, size\+\_\+t out\+\_\+size, void $\ast$in\+\_\+data, size\+\_\+t in\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Read from slave device. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_ga22856483acc1f539d29e07876fc0418a}{i2c\+\_\+dev\+\_\+write}} (const \mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, const void $\ast$out\+\_\+reg, size\+\_\+t out\+\_\+reg\+\_\+size, const void $\ast$out\+\_\+data, size\+\_\+t out\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Write to slave device. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_gae8b4a6110cdc2d2e47b2214285ce59fc}{i2c\+\_\+dev\+\_\+read\+\_\+reg}} (const \mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint8\+\_\+t reg, void $\ast$in\+\_\+data, size\+\_\+t in\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Read from register with an 8-\/bit address. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_gad9827abf64603201a084148c0de097ec}{i2c\+\_\+dev\+\_\+write\+\_\+reg}} (const \mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint8\+\_\+t reg, const void $\ast$out\+\_\+data, size\+\_\+t out\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Write to register with an 8-\/bit address. \end{DoxyCompactList}\end{DoxyCompactItemize}

@@ -1,0 +1,91 @@
+\label{index_md_README}%
+\Hypertarget{index_md_README}%
+ \hypertarget{index_autotoc_md1}{}\doxysection{Introduction}\label{index_autotoc_md1}
+This code demonstrates an IoT sensor setup for measuring temperature and illumination (lux) using the \mbox{\hyperlink{struct_matter}{Matter}} standard. It uses the \mbox{\hyperlink{struct_matter}{Matter}} protocol,\hypertarget{index_autotoc_md2}{}\doxysection{Tested Hardware}\label{index_autotoc_md2}
+
+\begin{DoxyItemize}
+\item Adafruit ESP32 Feather microcontroller
+\item BMP280 Temperature and Pressure Sensor (connected using the I2C protocol)
+\item BH1750 Light Sensor (connected using the I2C protocol)
+\item \mbox{\hyperlink{struct_matter}{Matter}} hub (Apple TV 4k 3rd Gen with Ethernet)
+\item i\+Phone with the Apple Home App installed
+\end{DoxyItemize}\hypertarget{index_autotoc_md3}{}\doxysection{Software}\label{index_autotoc_md3}
+
+\begin{DoxyItemize}
+\item ESP-\/\+IDF\+: Espressif\textquotesingle{}s official IoT Development Framework
+\begin{DoxyItemize}
+\item See \href{https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html}{\texttt{ https\+://docs.\+espressif.\+com/projects/esp-\/idf/en/latest/esp32/get-\/started/index.\+html}}
+\end{DoxyItemize}
+\item ESP-\/\+MATTER\+: Espressif\textquotesingle{}s official SDK for \mbox{\hyperlink{struct_matter}{Matter}} applications
+\begin{DoxyItemize}
+\item Uses a modified repository which includes functions for light and pressure readings
+\item See \href{https://github.com/samuel-barrett/esp-matter}{\texttt{ https\+://github.\+com/samuel-\/barrett/esp-\/matter}}
+\end{DoxyItemize}
+\item ESP-\/\+IDF-\/\+LIB\+:
+\begin{DoxyItemize}
+\item See \href{https://esp-idf-lib.readthedocs.io/en/latest}{\texttt{ https\+://esp-\/idf-\/lib.\+readthedocs.\+io/en/latest}}
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{index_autotoc_md4}{}\doxysection{Purpose}\label{index_autotoc_md4}
+The purpose of this code is to provide a sample implementation of a temperature and illumination IoT sensor setup using the \mbox{\hyperlink{struct_matter}{Matter}} standard. The code can be used as a starting point for building similar IoT sensor applications.\hypertarget{index_autotoc_md5}{}\doxysection{Installation (on M1 Mac)}\label{index_autotoc_md5}
+\hypertarget{index_autotoc_md6}{}\doxysubsection{Step 1\+: Clone repository}\label{index_autotoc_md6}
+
+\begin{DoxyItemize}
+\item Install git lf \begin{DoxyVerb}brew install git-lfs 
+\end{DoxyVerb}
+
+\item Clone the ESP-\/\+MATTER repository, using the following command\+: \begin{DoxyVerb}$ git clone --recursive https://github.com/samuel-barrett/esp-matter.git
+\end{DoxyVerb}
+
+\begin{DoxyItemize}
+\item If you alerady have ESP-\/\+MATTER installed, you can do a shallow clone
+\item If you want to preserve your current esp-\/matter repository, you can copy the contents first \begin{DoxyVerb}$ cp -rH [PATH TO ESP-MATTER]/esp-matter [SOME PATH]/esp-matter-fork
+\end{DoxyVerb}
+
+\item Then do a shallow clone \begin{DoxyVerb}$ cd [ESP-MATTER Repository to modify]
+$ git clone https://github.com/samuel-barrett/esp32_matter_sensor_test.git
+\end{DoxyVerb}
+
+\item Then change directories to the repository you want to change to fork it to \href{https://github.com/samuel-barrett/esp-matter.git}{\texttt{ https\+://github.\+com/samuel-\/barrett/esp-\/matter.\+git}} \begin{DoxyVerb}$ git remote set-url origin https://github.com/samuel-barrett/esp-matter.git
+$ git pull
+\end{DoxyVerb}
+
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{index_autotoc_md7}{}\doxysubsection{Step 3\+: Install and Configure the ESP-\/\+IDF and VSCode Extension}\label{index_autotoc_md7}
+
+\begin{DoxyItemize}
+\item Install Visual Studio Code if not installed
+\item Install and configure the etension named \char`\"{}\+Espressif IDF\char`\"{} by following the instructions provided \href{https://github.com/espressif/vscode-esp-idf-extension/blob/master/docs/tutorial/install.md}{\texttt{ here}}
+\begin{DoxyItemize}
+\item Note\+: If you have done a recursive clone then, the esp-\/idf repository is already downloaded, and you can select it during setup
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{index_autotoc_md8}{}\doxysubsection{Step 4\+: Configure VS Extension to for project repository}\label{index_autotoc_md8}
+
+\begin{DoxyItemize}
+\item Open the esp32-\/matter-\/sensor-\/test folder in visual studio code
+\item Type \mbox{[}CMD\mbox{]}+\mbox{[}SHIFT\mbox{]}+\mbox{[}P\mbox{]}, then type \begin{DoxyVerb}>ESP-IDF: Install ESP-Matter
+\end{DoxyVerb}
+
+\item Select \char`\"{}\+Yes, download all submodules\char`\"{} -\/\texorpdfstring{$>$}{>} \char`\"{}\+Use existing repository\char`\"{}
+\begin{DoxyItemize}
+\item Select the forked repository from the previous step
+\end{DoxyItemize}
+\item Type \mbox{[}CMD\mbox{]}+\mbox{[}SHIFT\mbox{]}+\mbox{[}P\mbox{]}, then type \begin{DoxyVerb}>ESP-IDF: Build your project
+\end{DoxyVerb}
+ 
+\end{DoxyItemize}\hypertarget{index_autotoc_md9}{}\doxysubsection{Step 5\+: Configure hardware}\label{index_autotoc_md9}
+
+\begin{DoxyItemize}
+\item Connect the BMP280, and BH1750 sensors to the microcontroller according to the i2C protocol
+\end{DoxyItemize}\hypertarget{index_autotoc_md10}{}\doxysubsection{Step 6\+: Build flash and monitor}\label{index_autotoc_md10}
+
+\begin{DoxyItemize}
+\item Build and flash the code to the ESP32 microcontroller using the ESP-\/\+IDF tools. Type \mbox{[}CMD\mbox{]}+\mbox{[}SHIFT\mbox{]}+\mbox{[}P\mbox{]}, then \begin{DoxyVerb}>ESP-IDF: Build, Flash and start a monitor on your device
+\end{DoxyVerb}
+ 
+\end{DoxyItemize}\hypertarget{index_autotoc_md11}{}\doxysubsection{Step 7\+: Connect device via QR code}\label{index_autotoc_md11}
+TODO\+: Find out how to get QR code\hypertarget{index_autotoc_md12}{}\doxysection{Limitations}\label{index_autotoc_md12}
+The code has been tested with the specified hardware and software, and is known to work correctly. However, it is possible that there may be some limitations or compatibility issues with other hardware or software.\hypertarget{index_autotoc_md13}{}\doxysection{Future Work}\label{index_autotoc_md13}
+The code is currently a basic implementation of the temperature and illumination sensor setup, and there is potential for future updates and improvements, such as\+:
+
+Adding more sensors or endpoints Improving the logging and data storage functionality Adding support for remote management and control\hypertarget{index_autotoc_md14}{}\doxysection{Conclusion}\label{index_autotoc_md14}
+The ESP32 \mbox{\hyperlink{struct_matter}{Matter}} Temperature and Illumination Sensor code provides a simple and effective way to set up an IoT sensor for measuring temperature and illumination. It is a great starting point for building similar IoT applications, and has the potential for future updates and improvements. 

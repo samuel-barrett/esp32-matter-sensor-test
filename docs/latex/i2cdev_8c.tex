@@ -1,0 +1,89 @@
+\hypertarget{i2cdev_8c}{}\doxysection{main/i2cdev/i2cdev.c File Reference}
+\label{i2cdev_8c}\index{main/i2cdev/i2cdev.c@{main/i2cdev/i2cdev.c}}
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$inttypes.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}i2cdev.\+h\char`\"{}}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structi2c__port__state__t}{i2c\+\_\+port\+\_\+state\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{i2cdev_8c_a423c4afe004688f73eebf7426cbfb9eb}{SEMAPHORE\+\_\+\+TAKE}}(port)
+\item 
+\#define \mbox{\hyperlink{i2cdev_8c_a28a94ff9b7ccdbfec8e18e66ba103c16}{SEMAPHORE\+\_\+\+GIVE}}(port)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_ga8a96ea2cf13f4b50a9f5d5e17f40e01b}{i2cdev\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Init library. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_ga320d9f51aab144397f75448801aa85e4}{i2cdev\+\_\+done}} ()
+\begin{DoxyCompactList}\small\item\em Finish work with library. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_ga1c3a8d47ff8f1c985d6e1d98d668eb3d}{i2c\+\_\+dev\+\_\+create\+\_\+mutex}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Create mutex for device descriptor. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_ga1e9101fef8e50349d63157e0e01ced0f}{i2c\+\_\+dev\+\_\+delete\+\_\+mutex}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Delete mutex for device descriptor. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_gab0a314a2a3c6a8c7f9e59cf3b69466da}{i2c\+\_\+dev\+\_\+take\+\_\+mutex}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Take device mutex. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_ga51961c290ebed5993c50e30009c40e75}{i2c\+\_\+dev\+\_\+give\+\_\+mutex}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Give device mutex. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_gafd6bbe89f50ff620c1081d3617b469f8}{i2c\+\_\+dev\+\_\+probe}} (const \mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, \mbox{\hyperlink{group__i2cdev_ga4ce8352d119fb1c8a4f6e61d7a1f94ad}{i2c\+\_\+dev\+\_\+type\+\_\+t}} operation\+\_\+type)
+\begin{DoxyCompactList}\small\item\em Check the availability of the device. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_ga9785ee992dab84bea0d7be83bb6e17fc}{i2c\+\_\+dev\+\_\+read}} (const \mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, const void $\ast$out\+\_\+data, size\+\_\+t out\+\_\+size, void $\ast$in\+\_\+data, size\+\_\+t in\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Read from slave device. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_ga22856483acc1f539d29e07876fc0418a}{i2c\+\_\+dev\+\_\+write}} (const \mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, const void $\ast$out\+\_\+reg, size\+\_\+t out\+\_\+reg\+\_\+size, const void $\ast$out\+\_\+data, size\+\_\+t out\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Write to slave device. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_gae8b4a6110cdc2d2e47b2214285ce59fc}{i2c\+\_\+dev\+\_\+read\+\_\+reg}} (const \mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint8\+\_\+t reg, void $\ast$in\+\_\+data, size\+\_\+t in\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Read from register with an 8-\/bit address. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__i2cdev_gad9827abf64603201a084148c0de097ec}{i2c\+\_\+dev\+\_\+write\+\_\+reg}} (const \mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint8\+\_\+t reg, const void $\ast$out\+\_\+data, size\+\_\+t out\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Write to register with an 8-\/bit address. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF I2C master thread-\/safe functions for communication with I2C slave
+
+Copyright (c) 2018 Ruslan V. Uss \href{mailto:unclerus@gmail.com}{\texttt{ unclerus@gmail.\+com}}
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{i2cdev_8c_a28a94ff9b7ccdbfec8e18e66ba103c16}\label{i2cdev_8c_a28a94ff9b7ccdbfec8e18e66ba103c16}} 
+\index{i2cdev.c@{i2cdev.c}!SEMAPHORE\_GIVE@{SEMAPHORE\_GIVE}}
+\index{SEMAPHORE\_GIVE@{SEMAPHORE\_GIVE}!i2cdev.c@{i2cdev.c}}
+\doxysubsubsection{\texorpdfstring{SEMAPHORE\_GIVE}{SEMAPHORE\_GIVE}}
+{\footnotesize\ttfamily \#define SEMAPHORE\+\_\+\+GIVE(\begin{DoxyParamCaption}\item[{}]{port }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ (!xSemaphoreGive(states[port].lock))\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGE(TAG,\ \textcolor{stringliteral}{"{}Could\ not\ give\ port\ mutex\ \%d"{}},\ port);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_FAIL;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{i2cdev_8c_a423c4afe004688f73eebf7426cbfb9eb}\label{i2cdev_8c_a423c4afe004688f73eebf7426cbfb9eb}} 
+\index{i2cdev.c@{i2cdev.c}!SEMAPHORE\_TAKE@{SEMAPHORE\_TAKE}}
+\index{SEMAPHORE\_TAKE@{SEMAPHORE\_TAKE}!i2cdev.c@{i2cdev.c}}
+\doxysubsubsection{\texorpdfstring{SEMAPHORE\_TAKE}{SEMAPHORE\_TAKE}}
+{\footnotesize\ttfamily \#define SEMAPHORE\+\_\+\+TAKE(\begin{DoxyParamCaption}\item[{}]{port }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ (!xSemaphoreTake(states[port].lock,\ pdMS\_TO\_TICKS(CONFIG\_I2CDEV\_TIMEOUT)))\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGE(TAG,\ \textcolor{stringliteral}{"{}Could\ not\ take\ port\ mutex\ \%d"{}},\ port);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_ERR\_TIMEOUT;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}

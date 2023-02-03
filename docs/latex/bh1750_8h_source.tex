@@ -1,0 +1,80 @@
+\hypertarget{bh1750_8h_source}{}\doxysection{bh1750.\+h}
+\label{bh1750_8h_source}\index{main/bh1750/bh1750.h@{main/bh1750/bh1750.h}}
+\mbox{\hyperlink{bh1750_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2017\ Andrej\ Krutak\ <dev@andree.sk>}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2018\ Ruslan\ V.\ Uss\ <unclerus@gmail.com>}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ 1.\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright\ notice,}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ \ \ \ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ 2.\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright\ notice,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ \ \ \ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the\ documentation}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ \ \ \ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ 3.\ Neither\ the\ name\ of\ the\ copyright\ holder\ nor\ the\ names\ of\ itscontributors}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ \ \ \ may\ be\ used\ to\ endorse\ or\ promote\ products\ derived\ from\ this\ software\ without}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ \ \ \ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AND\ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ IMPLIED\ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ THE\ COPYRIGHT\ HOLDER\ OR\ CONTRIBUTORS\ BE\ LIABLE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ FOR\ ANY\ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ DAMAGES\ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ SERVICES;\ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *\ CAUSED\ AND\ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ *\ OR\ TORT\ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ *\ OF\ THIS\ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#ifndef\ \_\_BH1750\_H\_\_}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ \_\_BH1750\_H\_\_}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{i2cdev_8h}{i2cdev.h}}>}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#include\ <esp\_err.h>}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00054\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ BH1750\_ADDR\_LO\ 0x23\ }}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ BH1750\_ADDR\_HI\ 0x5c\ }}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00063\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00064\ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \mbox{\hyperlink{group__bh1750_gga3bef7cf84fabf6a5e586456ee901628cabb301bd6d64905b2748b3d501186173a}{BH1750\_MODE\_ONE\_TIME}}\ =\ 0,\ }
+\DoxyCodeLine{00066\ \ \ \ \ \mbox{\hyperlink{group__bh1750_gga3bef7cf84fabf6a5e586456ee901628ca085a4926d1cfc7ef5a795eafda7eb9a0}{BH1750\_MODE\_CONTINUOUS}}\ \ \ \ }
+\DoxyCodeLine{00067\ \}\ \mbox{\hyperlink{group__bh1750_ga3bef7cf84fabf6a5e586456ee901628c}{bh1750\_mode\_t}};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00072\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00073\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \mbox{\hyperlink{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea16693ba593ba46782145cfeb12625259}{BH1750\_RES\_LOW}}\ =\ 0,\ \ }
+\DoxyCodeLine{00075\ \ \ \ \ \mbox{\hyperlink{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea68d515f3f1fe7dca6f73ae6d958d029d}{BH1750\_RES\_HIGH}},\ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \mbox{\hyperlink{group__bh1750_gga4940ff6723505fe772e1f691d3217b6ea04a5cea828ef9e31cfeae8ec4f858297}{BH1750\_RES\_HIGH2}}\ \ \ \ \ }
+\DoxyCodeLine{00077\ \}\ \mbox{\hyperlink{group__bh1750_ga4940ff6723505fe772e1f691d3217b6e}{bh1750\_resolution\_t}};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00089\ esp\_err\_t\ \mbox{\hyperlink{group__bh1750_ga416ff994f802dae3aff5fd008b510778}{bh1750\_init\_desc}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ uint8\_t\ addr,\ i2c\_port\_t\ port,\ gpio\_num\_t\ sda\_gpio,\ gpio\_num\_t\ scl\_gpio);}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00097\ esp\_err\_t\ \mbox{\hyperlink{group__bh1750_ga9d1711228bd254f70d0284dbdaf6ca84}{bh1750\_free\_desc}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev);}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00105\ esp\_err\_t\ \mbox{\hyperlink{group__bh1750_ga9454150beb508d6050944d04b62c09d5}{bh1750\_power\_down}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev);}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00113\ esp\_err\_t\ \mbox{\hyperlink{group__bh1750_ga64c9131d1c24847d29b323d1e950c8cf}{bh1750\_power\_on}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev);}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00123\ esp\_err\_t\ \mbox{\hyperlink{group__bh1750_gaae37df12c2d9a2c1b4ee2760f1374b89}{bh1750\_setup}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ \mbox{\hyperlink{group__bh1750_ga3bef7cf84fabf6a5e586456ee901628c}{bh1750\_mode\_t}}\ mode,\ \mbox{\hyperlink{group__bh1750_ga4940ff6723505fe772e1f691d3217b6e}{bh1750\_resolution\_t}}\ resolution);}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00132\ esp\_err\_t\ \mbox{\hyperlink{group__bh1750_ga7f1289284f2522f4001abe997d41ee4c}{bh1750\_set\_measurement\_time}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ uint8\_t\ time);}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00141\ esp\_err\_t\ \mbox{\hyperlink{group__bh1750_ga0e2367ff17187836d50638db3e8542cb}{bh1750\_read}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ uint16\_t\ *level);}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00144\ \}}
+\DoxyCodeLine{00145\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00149\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \_\_BH1750\_H\_\_\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

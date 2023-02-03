@@ -2,9 +2,9 @@
 
 ## Introduction
 
-This code demonstrates an IoT sensor setup for measuring temperature and illumination (lux) using the Matter standard. It uses the Matter protocol, 
+This code demonstrates a proof of concept for an IoT sensor setup to measure temperature, humidity, illumination (lux), and even co2, using the Matter standard.
 
-## Tested Hardware
+## Required Hardware
 
 * Adafruit ESP32 Feather microcontroller
 * BMP280 Temperature and Pressure Sensor (connected using the I2C protocol)
@@ -12,68 +12,107 @@ This code demonstrates an IoT sensor setup for measuring temperature and illumin
 * Matter hub (Apple TV 4k 3rd Gen with Ethernet)
 * iPhone with the Apple Home App installed
 
-## Software
+## Resources
 
-* ESP-IDF: Espressif's official IoT Development Framework
-  * See https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html
+* [ESP-IDF: Espressif's official IoT Development Framework](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html)
 
-* ESP-MATTER: Espressif's official SDK for Matter applications
-  * Uses a modified repository which includes functions for light and pressure readings
+* [ESP-MATTER: Espressif's official SDK for Matter applications](https://github.com/samuel-barrett/esp-matter)
+  * Link to a forked repository which includes functions for light and pressure readings
 
-  * See https://github.com/samuel-barrett/esp-matter
+* [ESP-IDF-LIB: Library containing drivers for sensor readings](https://esp-idf-lib.readthedocs.io/en/latest)
 
-* ESP-IDF-LIB:
-  * See https://esp-idf-lib.readthedocs.io/en/latest
+* [Documentation for setting up Matter](https://github.com/espressif/connectedhomeip/blob/4088a77f557e8571a39338fad51a1d8eb0131d79/docs/guides/BUILDING.md)
+
 
 ## Purpose
 
 The purpose of this code is to provide a sample implementation of a temperature and illumination IoT sensor setup using the Matter standard. The code can be used as a starting point for building similar IoT sensor applications.
 
-## Installation (on M1 Mac)
+## Setup Procedure (Apple Silicon Mac)
 
-### Clone repository
+This setup procedure was test with an Apple Silicon Mac, but could likely be modified to work for Intel Macs, Linux machines, and potentially Windows.
 
-1 Install git lf
+### Step 1: Clone repository
 
-      brew install git-lfs  
+* Install git lf
 
-* 
+      brew install git-lfs 
 
-* Clone this repository, using the following command: 
+* Clone the repository, using the following command:
 
-* Install the ESP-IDF framework, following the instructions provided at https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html
+      git clone --recursive https://github.com/samuel-barrett/esp32-matter-sensor-test.git
+* If you have cloned the repository, but need to add the submodules, use:
 
-* Clone the ESP-MATTER repository, using the following command:
+      git submodule update --init --recursive
+* If you alerady have ESP-MATTER installed, you can do a shallow clone, and then fork that repository to use the samuel-barrett/esp-matter.git remote fork
 
-        $ git clone --recursive https://github.com/samuel-barrett/esp-matter.git
-  * If any submodules are not fully cloned, to update them, use:
-        
-        git submodule update --init --recursive
+    * To preserve your current esp-matter repository, you can copy the contents first
 
-* Connect the BMP280, and BH1750 sensors to the microcontroller according to the i2C protocol (See photo below).
+          cp -rH [PATH TO ESP-MATTER]/esp-matter [SOME PATH]/esp-matter-fork
+    * To do a shallow clone:
 
-* Install ESP-IDF VSCode extension
+          git clone https://github.com/samuel-barrett/esp32-matter-sensor-test.git
+    * Then change directories to the esp-matter repository you want to modify, and change the remote to point to this fork: [samuel-barrett/esp-matter](https://github.com/samuel-barrett/esp-matter.git)
 
-* Build and flash the code to the ESP32 microcontroller using the ESP-IDF tools.
+          cd [ESP-MATTER Repository to modify]
+          git remote set-url origin https://github.com/samuel-barrett/esp-matter.git
+          git pull
 
-* Open the serial console to see the temperature and illumination readings.
 
-## Configuration
+### Step 3: Install and Configure the ESP-IDF and VSCode Extension
 
-The code includes default settings for the temperature and illumination readings, but these can be adjusted by modifying the relevant parameters in the code.
+* Install Visual Studio Code if not installed
+
+* Install and configure the extension named "Espressif IDF" by following the instructions provided [here](https://github.com/espressif/vscode-esp-idf-extension/blob/master/docs/tutorial/install.md)
+
+  * Note: If you have done a recursive clone then, the esp-idf repository is already downloaded, and you can select it during setup
+
+
+### Step 4: Configure VS Extension to for project repository
+
+* Open the esp32-matter-sensor-test folder in visual studio code
+
+* Type [CMD]+[SHIFT]+[P], then type 
+    
+      >ESP-IDF: Install ESP-Matter
+
+* Select "Yes, download all submodules" -> "Use existing repository"
+
+  * Select the forked repository from the previous step
+
+* Type [CMD]+[SHIFT]+[P], then type 
+    
+      >ESP-IDF: Build your project
+
+### Step 5: Configure hardware
+
+* Connect the BMP280, and BH1750 sensors to the microcontroller using the i2C protocol
+
+* To ensure, that the devices are connected properly, you can use the [Arduino I2C scanner sketch](https://playground.arduino.cc/Main/I2cScanner/)
+
+  * First install the [Arduino ID ESP32 addon](https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/)
+
+### Step 6: Build flash and monitor
+
+* Build and flash the code to the ESP32 microcontroller using the ESP-IDF tools. Type [CMD]+[SHIFT]+[P], then
+
+      >ESP-IDF: Build, Flash and start a monitor on your device
+
+### Step 7: Connect device via QR code
+
+    TODO: Find out how to get QR code
 
 ## Limitations
 
-The code has been tested with the specified hardware and software, and is known to work correctly. However, it is possible that there may be some limitations or compatibility issues with other hardware or software.
+The code has been tested with a very specific set of devices, and is not designed to be portable. It can however, be modified to fit 
 
 ## Future Work
 
 The code is currently a basic implementation of the temperature and illumination sensor setup, and there is potential for future updates and improvements, such as:
 
-Adding more sensors or endpoints
-Improving the logging and data storage functionality
-Adding support for remote management and control
+- Adding more sensors or endpoints
+- Adding support for different kinds of ESP32 development boards
+- Improving the logging and data storage functionality
+- Adding support for remote management and control
 
 ## Conclusion
-
-The ESP32 Matter Temperature and Illumination Sensor code provides a simple and effective way to set up an IoT sensor for measuring temperature and illumination. It is a great starting point for building similar IoT applications, and has the potential for future updates and improvements.

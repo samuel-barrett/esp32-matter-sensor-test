@@ -1,0 +1,136 @@
+\hypertarget{scd30_8c}{}\doxysection{main/scd30/scd30.c File Reference}
+\label{scd30_8c}\index{main/scd30/scd30.c@{main/scd30/scd30.c}}
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+idf\+\_\+lib\+\_\+helpers.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}scd30.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{scd30_8c_a0d8bea689bb240eefaa35ca71cc1ed9f}\label{scd30_8c_a0d8bea689bb240eefaa35ca71cc1ed9f}} 
+\#define {\bfseries I2\+C\+\_\+\+FREQ\+\_\+\+HZ}~100000
+\item 
+\mbox{\Hypertarget{scd30_8c_a1ef6ab7a0896bb6d0783758f81cd7be4}\label{scd30_8c_a1ef6ab7a0896bb6d0783758f81cd7be4}} 
+\#define {\bfseries CMD\+\_\+\+TRIGGER\+\_\+\+CONTINUOUS\+\_\+\+MEASUREMENT}~(0x0010)
+\item 
+\mbox{\Hypertarget{scd30_8c_acdad1d1dae01f811709bbcd01f6f3edf}\label{scd30_8c_acdad1d1dae01f811709bbcd01f6f3edf}} 
+\#define {\bfseries CMD\+\_\+\+STOP\+\_\+\+CONTINUOUS\+\_\+\+MEASUREMENT}~(0x0104)
+\item 
+\mbox{\Hypertarget{scd30_8c_a3f651877f06a41a074dcd8c048defd35}\label{scd30_8c_a3f651877f06a41a074dcd8c048defd35}} 
+\#define {\bfseries CMD\+\_\+\+SET\+\_\+\+MEASUREMENT\+\_\+\+INTERVAL}~(0x4600)
+\item 
+\mbox{\Hypertarget{scd30_8c_ab27f867aa90019401665eab2c5a25615}\label{scd30_8c_ab27f867aa90019401665eab2c5a25615}} 
+\#define {\bfseries CMD\+\_\+\+GET\+\_\+\+DATA\+\_\+\+READY\+\_\+\+STATUS}~(0x0202)
+\item 
+\mbox{\Hypertarget{scd30_8c_a407000be8cd567daeb6a874253516ad9}\label{scd30_8c_a407000be8cd567daeb6a874253516ad9}} 
+\#define {\bfseries CMD\+\_\+\+READ\+\_\+\+MEASUREMENT}~(0x0300)
+\item 
+\mbox{\Hypertarget{scd30_8c_a63e352497e7cfa2049b3242af454f165}\label{scd30_8c_a63e352497e7cfa2049b3242af454f165}} 
+\#define {\bfseries CMD\+\_\+\+ACTIVATE\+\_\+\+AUTOMATIC\+\_\+\+SELF\+\_\+\+CALIBRATION}~(0x5306)
+\item 
+\mbox{\Hypertarget{scd30_8c_a04afa10709cbf3886dc7f8cef74af6c0}\label{scd30_8c_a04afa10709cbf3886dc7f8cef74af6c0}} 
+\#define {\bfseries CMD\+\_\+\+SET\+\_\+\+FORCED\+\_\+\+RECALIBRATION\+\_\+\+VALUE}~(0x5204)
+\item 
+\mbox{\Hypertarget{scd30_8c_a2f18e65ffb57c695746dca09945b062c}\label{scd30_8c_a2f18e65ffb57c695746dca09945b062c}} 
+\#define {\bfseries CMD\+\_\+\+SET\+\_\+\+TEMPERATURE\+\_\+\+OFFSET}~(0x5403)
+\item 
+\mbox{\Hypertarget{scd30_8c_a4c410183634d67fd863bf896a17ace0a}\label{scd30_8c_a4c410183634d67fd863bf896a17ace0a}} 
+\#define {\bfseries CMD\+\_\+\+ALTITUDE\+\_\+\+COMPENSATION}~(0x5102)
+\item 
+\mbox{\Hypertarget{scd30_8c_aa54b0f60b4ab425d72c21f41282c1e78}\label{scd30_8c_aa54b0f60b4ab425d72c21f41282c1e78}} 
+\#define {\bfseries CMD\+\_\+\+READ\+\_\+\+FIRMWARE\+\_\+\+VERSION}~(0x\+D100)
+\item 
+\mbox{\Hypertarget{scd30_8c_a55ad5f0011b3bd15dca8d20377ad0196}\label{scd30_8c_a55ad5f0011b3bd15dca8d20377ad0196}} 
+\#define {\bfseries CMD\+\_\+\+SOFT\+\_\+\+RESET}~(0\+XD304)
+\item 
+\#define \mbox{\hyperlink{scd30_8c_a763ffd798508592c5092ac77daa5a659}{CHECK}}(x)
+\item 
+\#define \mbox{\hyperlink{scd30_8c_a3f333c635536e9be4186cceecb7510bc}{CHECK\+\_\+\+ARG}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_ga7e74e8958097c5d8c4eff114f38514e4}{scd30\+\_\+init\+\_\+desc}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, i2c\+\_\+port\+\_\+t port, gpio\+\_\+num\+\_\+t sda\+\_\+gpio, gpio\+\_\+num\+\_\+t scl\+\_\+gpio)
+\begin{DoxyCompactList}\small\item\em Initialize device descriptor. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_ga326d30ace5c07899d06278f19e701e4b}{scd30\+\_\+free\+\_\+desc}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Free device descriptor. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_ga8dc0267ebc4d1f55dd37c232f170de0a}{scd30\+\_\+trigger\+\_\+continuous\+\_\+measurement}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint16\+\_\+t p\+\_\+comp)
+\begin{DoxyCompactList}\small\item\em Trigger continuous measurement. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_ga0efd2e8ffc8a36be40537f4df0ba03d2}{scd30\+\_\+stop\+\_\+continuous\+\_\+measurement}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Stop continuous measurement. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_gab0515da11e6538d46030636ba33d626f}{scd30\+\_\+get\+\_\+measurement\+\_\+interval}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint16\+\_\+t $\ast$interval\+\_\+seconds)
+\begin{DoxyCompactList}\small\item\em Get measurement interval. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_ga3edcabb472bf826cd939abad3ffa731e}{scd30\+\_\+set\+\_\+measurement\+\_\+interval}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint16\+\_\+t interval\+\_\+seconds)
+\begin{DoxyCompactList}\small\item\em Set measurement interval. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_ga660c48982230fa802ba1cbedea060ec8}{scd30\+\_\+get\+\_\+data\+\_\+ready\+\_\+status}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, bool $\ast$data\+\_\+ready)
+\begin{DoxyCompactList}\small\item\em Check whether new measurement data is available for read-\/out. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_gacce78315e77d0f0b51c2463a40672c46}{scd30\+\_\+read\+\_\+measurement}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, float $\ast$co2, float $\ast$temperature, float $\ast$humidity)
+\begin{DoxyCompactList}\small\item\em Read sensor output and convert. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_ga99cb1dad34db5be75cb02ff6e625bee9}{scd30\+\_\+get\+\_\+automatic\+\_\+self\+\_\+calibration}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, bool $\ast$enabled)
+\begin{DoxyCompactList}\small\item\em Get automatic self calibration (ASC) state. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_ga9cba9ed715438982fb1a0a043f19e3fd}{scd30\+\_\+set\+\_\+automatic\+\_\+self\+\_\+calibration}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, bool enabled)
+\begin{DoxyCompactList}\small\item\em Enable or disable automatic self calibration (ASC). \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_gaf8d759c7efb52e6afc6b5d5fbe461573}{scd30\+\_\+get\+\_\+forced\+\_\+recalibration\+\_\+value}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint16\+\_\+t $\ast$correction\+\_\+value)
+\begin{DoxyCompactList}\small\item\em Get Forced Recalibration Value. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_ga3d2663d0760e200c895e694b901ca500}{scd30\+\_\+set\+\_\+forced\+\_\+recalibration\+\_\+value}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint16\+\_\+t target\+\_\+co2\+\_\+concentration)
+\begin{DoxyCompactList}\small\item\em Set Forced Recalibration Value. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_gae1d045b0f71d924a8c7dda88ed9a5850}{scd30\+\_\+get\+\_\+temperature\+\_\+offset\+\_\+ticks}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint16\+\_\+t $\ast$t\+\_\+offset)
+\begin{DoxyCompactList}\small\item\em Get temperature offset in ticks. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_gab4d4017195cf51e8329f575a5e16445c}{scd30\+\_\+get\+\_\+temperature\+\_\+offset}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, float $\ast$t\+\_\+offset)
+\begin{DoxyCompactList}\small\item\em Get temperature offset in °C. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_ga22c1b1d7a9b0af1c5beac4c05c4e0030}{scd30\+\_\+set\+\_\+temperature\+\_\+offset\+\_\+ticks}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint16\+\_\+t t\+\_\+offset)
+\begin{DoxyCompactList}\small\item\em Set temperature offset in ticks. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_ga2071edec92279dd1c5d2321c156803b9}{scd30\+\_\+set\+\_\+temperature\+\_\+offset}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, float t\+\_\+offset)
+\begin{DoxyCompactList}\small\item\em Set temperature offset in °C. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_ga0e97471618bf4d3cf4f52f12f68bad9e}{scd30\+\_\+get\+\_\+sensor\+\_\+altitude}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint16\+\_\+t $\ast$altitude)
+\begin{DoxyCompactList}\small\item\em Get configured sensor altitude. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_ga5fa41208b3ce68efc8d1c21f872ca7c1}{scd30\+\_\+set\+\_\+sensor\+\_\+altitude}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint16\+\_\+t altitude)
+\begin{DoxyCompactList}\small\item\em Set sensor altitude in meters above sea level. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_gaf2758bbf909dfd593f4d93ac6e514a06}{scd30\+\_\+read\+\_\+firmware\+\_\+version}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev, uint16\+\_\+t $\ast$firmware\+\_\+version)
+\begin{DoxyCompactList}\small\item\em Get firmware version. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__scd30_gaa3fc071ef49233b614b35da1f2e169a8}{scd30\+\_\+soft\+\_\+reset}} (\mbox{\hyperlink{structi2c__dev__t}{i2c\+\_\+dev\+\_\+t}} $\ast$dev)
+\begin{DoxyCompactList}\small\item\em Reset the sensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for Sensirion SCD30 CO2 sensor.
+
+Adapted from \href{https://github.com/UncleRus/esp-idf-lib/tree/master/components/scd4x}{\texttt{ https\+://github.\+com/\+Uncle\+Rus/esp-\/idf-\/lib/tree/master/components/scd4x}}
+
+Copyright (c) 2021, Sensirion AG Copyright (c) 2021 Ruslan V. Uss \href{mailto:unclerus@gmail.com}{\texttt{ unclerus@gmail.\+com}} Copyright (c) 2021 Nate Usher \href{mailto:n.usher87@gmail.com}{\texttt{ n.\+usher87@gmail.\+com}}
+
+BSD Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{scd30_8c_a763ffd798508592c5092ac77daa5a659}\label{scd30_8c_a763ffd798508592c5092ac77daa5a659}} 
+\index{scd30.c@{scd30.c}!CHECK@{CHECK}}
+\index{CHECK@{CHECK}!scd30.c@{scd30.c}}
+\doxysubsubsection{\texorpdfstring{CHECK}{CHECK}}
+{\footnotesize\ttfamily \#define CHECK(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ esp\_err\_t\ \_\_;\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ ((\_\_\ =\ x)\ !=\ ESP\_OK)\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_\_;\ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{scd30_8c_a3f333c635536e9be4186cceecb7510bc}\label{scd30_8c_a3f333c635536e9be4186cceecb7510bc}} 
+\index{scd30.c@{scd30.c}!CHECK\_ARG@{CHECK\_ARG}}
+\index{CHECK\_ARG@{CHECK\_ARG}!scd30.c@{scd30.c}}
+\doxysubsubsection{\texorpdfstring{CHECK\_ARG}{CHECK\_ARG}}
+{\footnotesize\ttfamily \#define CHECK\+\_\+\+ARG(\begin{DoxyParamCaption}\item[{}]{VAL }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ (!(VAL))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}

@@ -1,0 +1,151 @@
+\hypertarget{app__main_8cpp}{}\doxysection{main/app\+\_\+main.cpp File Reference}
+\label{app__main_8cpp}\index{main/app\_main.cpp@{main/app\_main.cpp}}
+
+
+Main application file for the ESP32 \mbox{\hyperlink{struct_matter}{Matter}} Sensor Test.  
+
+
+{\ttfamily \#include $<$nvs\+\_\+flash.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+matter.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+matter\+\_\+core.\+h$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$i2cdev.\+h$>$}\newline
+{\ttfamily \#include $<$bh1750.\+h$>$}\newline
+{\ttfamily \#include $<$scd30.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+err.\+h$>$}\newline
+{\ttfamily \#include $<$app\+\_\+priv.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} \mbox{\hyperlink{app__main_8cpp_a22615ae4b32f10e2c6b188223d880d0c}{create\+\_\+temp\+\_\+sensor}} (node\+\_\+t $\ast$node)
+\begin{DoxyCompactList}\small\item\em This function creates a temperature sensor endpoint and associated cluster. The created endpoint and cluster are stored in the returned \mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} structure. The function also sets the name and measured\+\_\+attribute\+\_\+id fields of the \mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} structure. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} \mbox{\hyperlink{app__main_8cpp_ae1883678bcd623aaf8d923e266d7dd39}{create\+\_\+illumination\+\_\+sensor}} (node\+\_\+t $\ast$node)
+\begin{DoxyCompactList}\small\item\em Creates an illumination sensor endpoint and cluster. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} \mbox{\hyperlink{app__main_8cpp_a59328e999067142facc069005a4e7e95}{create\+\_\+humidity\+\_\+sensor}} (node\+\_\+t $\ast$node)
+\begin{DoxyCompactList}\small\item\em This function creates an endpoint and a cluster for the humidity sensor. The created endpoint is of type {\ttfamily relative\+\_\+humidity\+\_\+sensor} and the created cluster is of type {\ttfamily relative\+\_\+humidity\+\_\+measurement}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} \mbox{\hyperlink{app__main_8cpp_a984836eec947badc6e3377b93c3e04b8}{create\+\_\+on\+\_\+off\+\_\+light}} (node\+\_\+t $\ast$node)
+\begin{DoxyCompactList}\small\item\em This function creates an endpoint and a cluster for an on off light. The created endpoint is of type {\ttfamily on\+\_\+off\+\_\+light} and the created cluster is of type {\ttfamily on\+\_\+off}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{app__main_8cpp_afeb6e4acb063e18a3d1a8bcdb75cfaa4}{update\+\_\+matter\+\_\+sensor}} (\mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} matter\+\_\+config, esp\+\_\+matter\+\_\+attr\+\_\+val\+\_\+t $\ast$val)
+\begin{DoxyCompactList}\small\item\em Updates the matter sensor with new values. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{app__main_8cpp_abce06be17fc37d675118a678a8100a36}\label{app__main_8cpp_abce06be17fc37d675118a678a8100a36}} 
+void {\bfseries app\+\_\+main} ()
+\begin{DoxyCompactList}\small\item\em Application entrypoint. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{app__main_8cpp_aba4b84d9a06456f9b8e1cb182c69c8af}\label{app__main_8cpp_aba4b84d9a06456f9b8e1cb182c69c8af}} 
+uint16\+\_\+t {\bfseries light\+\_\+endpoint\+\_\+id} = 0
+\begin{DoxyCompactList}\small\item\em On off light endpoint identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main application file for the ESP32 \mbox{\hyperlink{struct_matter}{Matter}} Sensor Test. 
+
+\begin{DoxyAuthor}{Author}
+Samuel Barrett (samarbarrett) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2023-\/02-\/03
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+This example code is in the Public Domain (or CC0 licensed, at your option.) Unless required by applicable law or agreed to in writing, this software is distributed on an \char`\"{}\+AS IS\char`\"{} BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{app__main_8cpp_a59328e999067142facc069005a4e7e95}\label{app__main_8cpp_a59328e999067142facc069005a4e7e95}} 
+\index{app\_main.cpp@{app\_main.cpp}!create\_humidity\_sensor@{create\_humidity\_sensor}}
+\index{create\_humidity\_sensor@{create\_humidity\_sensor}!app\_main.cpp@{app\_main.cpp}}
+\doxysubsubsection{\texorpdfstring{create\_humidity\_sensor()}{create\_humidity\_sensor()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} create\+\_\+humidity\+\_\+sensor (\begin{DoxyParamCaption}\item[{node\+\_\+t $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+This function creates an endpoint and a cluster for the humidity sensor. The created endpoint is of type {\ttfamily relative\+\_\+humidity\+\_\+sensor} and the created cluster is of type {\ttfamily relative\+\_\+humidity\+\_\+measurement}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & Pointer to the node that the endpoint and cluster belong to.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} structure containing the created endpoint and cluster information. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{app__main_8cpp_ae1883678bcd623aaf8d923e266d7dd39}\label{app__main_8cpp_ae1883678bcd623aaf8d923e266d7dd39}} 
+\index{app\_main.cpp@{app\_main.cpp}!create\_illumination\_sensor@{create\_illumination\_sensor}}
+\index{create\_illumination\_sensor@{create\_illumination\_sensor}!app\_main.cpp@{app\_main.cpp}}
+\doxysubsubsection{\texorpdfstring{create\_illumination\_sensor()}{create\_illumination\_sensor()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} create\+\_\+illumination\+\_\+sensor (\begin{DoxyParamCaption}\item[{node\+\_\+t $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+Creates an illumination sensor endpoint and cluster. 
+
+This function creates an endpoint and a cluster for the illumination sensor. The created endpoint is of type {\ttfamily illuminance\+\_\+sensor} and the created cluster is of type {\ttfamily illuminance\+\_\+measurement}. The created endpoint and cluster are stored in a {\ttfamily \mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}}} structure and returned as the result of the function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & Pointer to the node that the endpoint and cluster belong to.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Structure containing the created endpoint and cluster information. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{app__main_8cpp_a984836eec947badc6e3377b93c3e04b8}\label{app__main_8cpp_a984836eec947badc6e3377b93c3e04b8}} 
+\index{app\_main.cpp@{app\_main.cpp}!create\_on\_off\_light@{create\_on\_off\_light}}
+\index{create\_on\_off\_light@{create\_on\_off\_light}!app\_main.cpp@{app\_main.cpp}}
+\doxysubsubsection{\texorpdfstring{create\_on\_off\_light()}{create\_on\_off\_light()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} create\+\_\+on\+\_\+off\+\_\+light (\begin{DoxyParamCaption}\item[{node\+\_\+t $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+This function creates an endpoint and a cluster for an on off light. The created endpoint is of type {\ttfamily on\+\_\+off\+\_\+light} and the created cluster is of type {\ttfamily on\+\_\+off}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & Pointer to the node that the endpoint and cluster belong to.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} structure containing the created endpoint and cluster information. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{app__main_8cpp_a22615ae4b32f10e2c6b188223d880d0c}\label{app__main_8cpp_a22615ae4b32f10e2c6b188223d880d0c}} 
+\index{app\_main.cpp@{app\_main.cpp}!create\_temp\_sensor@{create\_temp\_sensor}}
+\index{create\_temp\_sensor@{create\_temp\_sensor}!app\_main.cpp@{app\_main.cpp}}
+\doxysubsubsection{\texorpdfstring{create\_temp\_sensor()}{create\_temp\_sensor()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} create\+\_\+temp\+\_\+sensor (\begin{DoxyParamCaption}\item[{node\+\_\+t $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+This function creates a temperature sensor endpoint and associated cluster. The created endpoint and cluster are stored in the returned \mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} structure. The function also sets the name and measured\+\_\+attribute\+\_\+id fields of the \mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}} structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & A pointer to the node\+\_\+t structure\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A structure that contains information about the created temperature sensor endpoint and cluster 
+\end{DoxyReturn}
+\mbox{\Hypertarget{app__main_8cpp_afeb6e4acb063e18a3d1a8bcdb75cfaa4}\label{app__main_8cpp_afeb6e4acb063e18a3d1a8bcdb75cfaa4}} 
+\index{app\_main.cpp@{app\_main.cpp}!update\_matter\_sensor@{update\_matter\_sensor}}
+\index{update\_matter\_sensor@{update\_matter\_sensor}!app\_main.cpp@{app\_main.cpp}}
+\doxysubsubsection{\texorpdfstring{update\_matter\_sensor()}{update\_matter\_sensor()}}
+{\footnotesize\ttfamily void update\+\_\+matter\+\_\+sensor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmatter__config__t}{matter\+\_\+config\+\_\+t}}}]{matter\+\_\+config,  }\item[{esp\+\_\+matter\+\_\+attr\+\_\+val\+\_\+t $\ast$}]{val }\end{DoxyParamCaption})}
+
+
+
+Updates the matter sensor with new values. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em matter\+\_\+config} & Configuration structure for matter sensor \\
+\hline
+{\em val} & Pointer to the new attribute value to be set \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,95 @@
+\hypertarget{scd30_8h_source}{}\doxysection{scd30.\+h}
+\label{scd30_8h_source}\index{main/scd30/scd30.h@{main/scd30/scd30.h}}
+\mbox{\hyperlink{scd30_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2021,\ Sensirion\ AG}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2021\ Ruslan\ V.\ Uss\ <unclerus@gmail.com>}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2021\ Nate\ Usher\ <n.usher87@gmail.com>}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ 1.\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright\ notice,}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ \ \ \ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ 2.\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright\ notice,}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ \ \ \ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the\ documentation}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ \ \ \ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ 3.\ Neither\ the\ name\ of\ the\ copyright\ holder\ nor\ the\ names\ of\ itscontributors}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ \ \ \ may\ be\ used\ to\ endorse\ or\ promote\ products\ derived\ from\ this\ software\ without}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ \ \ \ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ AND\ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ IMPLIED\ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ THE\ COPYRIGHT\ HOLDER\ OR\ CONTRIBUTORS\ BE\ LIABLE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ FOR\ ANY\ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ DAMAGES\ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *\ SERVICES;\ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ *\ CAUSED\ AND\ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ *\ OR\ TORT\ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ *\ OF\ THIS\ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#ifndef\ \_\_SCD30\_H\_\_}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ \_\_SCD30\_H\_\_}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{i2cdev_8h}{i2cdev.h}}>}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#include\ <esp\_err.h>}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00053\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ SCD30\_I2C\_ADDR\ 0x61}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00067\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_ga7e74e8958097c5d8c4eff114f38514e4}{scd30\_init\_desc}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ i2c\_port\_t\ port,\ gpio\_num\_t\ sda\_gpio,\ gpio\_num\_t\ scl\_gpio);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00075\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_ga326d30ace5c07899d06278f19e701e4b}{scd30\_free\_desc}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00086\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_ga8dc0267ebc4d1f55dd37c232f170de0a}{scd30\_trigger\_continuous\_measurement}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ uint16\_t\ p\_comp);}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00096\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_ga0efd2e8ffc8a36be40537f4df0ba03d2}{scd30\_stop\_continuous\_measurement}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00109\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_gab0515da11e6538d46030636ba33d626f}{scd30\_get\_measurement\_interval}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ uint16\_t\ *interval\_seconds);}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00122\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_ga3edcabb472bf826cd939abad3ffa731e}{scd30\_set\_measurement\_interval}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ uint16\_t\ interval\_seconds);}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00131\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_ga660c48982230fa802ba1cbedea060ec8}{scd30\_get\_data\_ready\_status}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ \textcolor{keywordtype}{bool}\ *data\_ready);}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00145\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_gacce78315e77d0f0b51c2463a40672c46}{scd30\_read\_measurement}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ \textcolor{keywordtype}{float}\ *co2,\ \textcolor{keywordtype}{float}\ *temperature,\ \textcolor{keywordtype}{float}\ *humidity);}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00156\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_ga99cb1dad34db5be75cb02ff6e625bee9}{scd30\_get\_automatic\_self\_calibration}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ \textcolor{keywordtype}{bool}\ *enabled);}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00167\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_ga9cba9ed715438982fb1a0a043f19e3fd}{scd30\_set\_automatic\_self\_calibration}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ \textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00183\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_gaf8d759c7efb52e6afc6b5d5fbe461573}{scd30\_get\_forced\_recalibration\_value}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ uint16\_t\ *correction\_value);}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00203\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_ga3d2663d0760e200c895e694b901ca500}{scd30\_set\_forced\_recalibration\_value}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ uint16\_t\ target\_co2\_concentration);}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00218\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_gae1d045b0f71d924a8c7dda88ed9a5850}{scd30\_get\_temperature\_offset\_ticks}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ uint16\_t\ *t\_offset);}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00229\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_gab4d4017195cf51e8329f575a5e16445c}{scd30\_get\_temperature\_offset}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ \textcolor{keywordtype}{float}\ *t\_offset);}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00242\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_ga22c1b1d7a9b0af1c5beac4c05c4e0030}{scd30\_set\_temperature\_offset\_ticks}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ uint16\_t\ t\_offset);}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00253\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_ga2071edec92279dd1c5d2321c156803b9}{scd30\_set\_temperature\_offset}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ \textcolor{keywordtype}{float}\ t\_offset);}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00267\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_ga0e97471618bf4d3cf4f52f12f68bad9e}{scd30\_get\_sensor\_altitude}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ uint16\_t\ *altitude);}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00279\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_ga5fa41208b3ce68efc8d1c21f872ca7c1}{scd30\_set\_sensor\_altitude}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ uint16\_t\ altitude);}
+\DoxyCodeLine{00280\ }
+\DoxyCodeLine{00291\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_gaf2758bbf909dfd593f4d93ac6e514a06}{scd30\_read\_firmware\_version}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev,\ uint16\_t\ *firmware\_version);}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00302\ esp\_err\_t\ \mbox{\hyperlink{group__scd30_gaa3fc071ef49233b614b35da1f2e169a8}{scd30\_soft\_reset}}(\mbox{\hyperlink{structi2c__dev__t}{i2c\_dev\_t}}\ *dev);}
+\DoxyCodeLine{00303\ }
+\DoxyCodeLine{00304\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00305\ \}}
+\DoxyCodeLine{00306\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00307\ }
+\DoxyCodeLine{00310\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \_\_SCD3O\_H\_\_\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

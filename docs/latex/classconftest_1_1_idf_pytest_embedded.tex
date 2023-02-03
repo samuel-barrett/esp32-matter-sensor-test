@@ -1,0 +1,74 @@
+\hypertarget{classconftest_1_1_idf_pytest_embedded}{}\doxysection{conftest.\+Idf\+Pytest\+Embedded Class Reference}
+\label{classconftest_1_1_idf_pytest_embedded}\index{conftest.IdfPytestEmbedded@{conftest.IdfPytestEmbedded}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_a4d3aef8c10f06b43fb60c5b505181828}\label{classconftest_1_1_idf_pytest_embedded_a4d3aef8c10f06b43fb60c5b505181828}} 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, str target, Optional\mbox{[}str\mbox{]} sdkconfig=None, Optional\mbox{[}str\mbox{]} known\+\_\+failure\+\_\+cases\+\_\+file=None)
+\item 
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_a74ee4f1a30f721ae3d04757bfce85e05}\label{classconftest_1_1_idf_pytest_embedded_a74ee4f1a30f721ae3d04757bfce85e05}} 
+List\mbox{[}str\mbox{]} {\bfseries failed\+\_\+cases} (self)
+\item 
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_aad1690e217eefb6ebd7732b27effa2f1}\label{classconftest_1_1_idf_pytest_embedded_aad1690e217eefb6ebd7732b27effa2f1}} 
+List\mbox{[}str\mbox{]} {\bfseries known\+\_\+failure\+\_\+cases} (self)
+\item 
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_a9f93f71d1e8ae9d039c4713aa2358371}\label{classconftest_1_1_idf_pytest_embedded_a9f93f71d1e8ae9d039c4713aa2358371}} 
+List\mbox{[}str\mbox{]} {\bfseries xfail\+\_\+cases} (self)
+\item 
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_a80b27ca3b9bd195ffb978f68ec0dcc1d}\label{classconftest_1_1_idf_pytest_embedded_a80b27ca3b9bd195ffb978f68ec0dcc1d}} 
+None {\bfseries pytest\+\_\+sessionstart} (self, Session session)
+\item 
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_a754b76c0f673bd638ce4d61e675d353d}\label{classconftest_1_1_idf_pytest_embedded_a754b76c0f673bd638ce4d61e675d353d}} 
+None {\bfseries pytest\+\_\+collection\+\_\+modifyitems} (self, List\mbox{[}Function\mbox{]} items)
+\item 
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_a22d73f60d06afe7eba9e3140e69a6cbf}\label{classconftest_1_1_idf_pytest_embedded_a22d73f60d06afe7eba9e3140e69a6cbf}} 
+Optional\mbox{[}Test\+Report\mbox{]} {\bfseries pytest\+\_\+runtest\+\_\+makereport} (self, Function item, Call\+Info\mbox{[}None\mbox{]} call)
+\item 
+None \mbox{\hyperlink{classconftest_1_1_idf_pytest_embedded_ae9b77b852f643f53f8df5c6e88481ad8}{pytest\+\_\+runtest\+\_\+teardown}} (self, Function item)
+\item 
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_a7f304cce11cf76712e44bb8b5f2c38af}\label{classconftest_1_1_idf_pytest_embedded_a7f304cce11cf76712e44bb8b5f2c38af}} 
+None {\bfseries pytest\+\_\+sessionfinish} (self, Session session, int exitstatus)
+\item 
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_a4e976fae6766a4be573192c9f536a34e}\label{classconftest_1_1_idf_pytest_embedded_a4e976fae6766a4be573192c9f536a34e}} 
+None {\bfseries pytest\+\_\+terminal\+\_\+summary} (self, Terminal\+Reporter terminalreporter)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_ae28234feb08c576226a3a2f7b647e74a}\label{classconftest_1_1_idf_pytest_embedded_ae28234feb08c576226a3a2f7b647e74a}} 
+{\bfseries target}
+\item 
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_a3581790eb437b266fe550d1d72506c7e}\label{classconftest_1_1_idf_pytest_embedded_a3581790eb437b266fe550d1d72506c7e}} 
+{\bfseries sdkconfig}
+\item 
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_a420cf8a3b57e7c08c0b8fa45634e0713}\label{classconftest_1_1_idf_pytest_embedded_a420cf8a3b57e7c08c0b8fa45634e0713}} 
+{\bfseries known\+\_\+failure\+\_\+patterns}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_a8c5681dde5193136a2ec6f3ec2e33348}\label{classconftest_1_1_idf_pytest_embedded_a8c5681dde5193136a2ec6f3ec2e33348}} 
+bool {\bfseries \+\_\+is\+\_\+known\+\_\+failure} (self, str case\+\_\+id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_aec9b939124e681297f7041756f2202f2}\label{classconftest_1_1_idf_pytest_embedded_aec9b939124e681297f7041756f2202f2}} 
+List\mbox{[}str\mbox{]} {\bfseries \+\_\+parse\+\_\+known\+\_\+failure\+\_\+cases\+\_\+file} (Optional\mbox{[}str\mbox{]} known\+\_\+failure\+\_\+cases\+\_\+file=None)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classconftest_1_1_idf_pytest_embedded_ae9b77b852f643f53f8df5c6e88481ad8}\label{classconftest_1_1_idf_pytest_embedded_ae9b77b852f643f53f8df5c6e88481ad8}} 
+\index{conftest.IdfPytestEmbedded@{conftest.IdfPytestEmbedded}!pytest\_runtest\_teardown@{pytest\_runtest\_teardown}}
+\index{pytest\_runtest\_teardown@{pytest\_runtest\_teardown}!conftest.IdfPytestEmbedded@{conftest.IdfPytestEmbedded}}
+\doxysubsubsection{\texorpdfstring{pytest\_runtest\_teardown()}{pytest\_runtest\_teardown()}}
+{\footnotesize\ttfamily  None conftest.\+Idf\+Pytest\+Embedded.\+pytest\+\_\+runtest\+\_\+teardown (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{Function}]{item }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Format the test case generated junit reports
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+esp-\/idf/conftest.\+py\end{DoxyCompactItemize}
