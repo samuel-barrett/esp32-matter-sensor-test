@@ -70,6 +70,10 @@ This setup procedure was test with an Apple Silicon Mac, but could likely be mod
       brew install cmake cmake-docs ninja dfu-util ccache
       xcode-select --install
 
+      # Clone version 4.4.3 of the ESP-IDF repo
+      git clone --recursive https://github.com/espressif/esp-idf.git
+      cd esp-idf; git checkout v4.4.3; git submodule update --init --recursive;
+
       # Install esp32
       cd ~/esp32-matter-sensor-test/esp-idf
       ./install.sh esp32
@@ -102,7 +106,9 @@ This setup procedure was test with an Apple Silicon Mac, but could likely be mod
 * Install Prerequisite software (See: [here](https://github.com/espressif/connectedhomeip/blob/4088a77f557e8571a39338fad51a1d8eb0131d79/docs/guides/BUILDING.md))
 
       brew install openssl pkg-config
-      export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"/opt/homebrew/opt/openssl@3/lib/pkgconfig"
+
+      echo 'export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"' >> ~/.zshrc
+      echo "export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:\"/opt/homebrew/opt/openssl@3/lib/pkgconfig\"" >> ~/.zshrc
 
       echo "export LDFLAGS=\"-L/opt/homebrew/opt/openssl@3/lib\"" >> ~/.zshrc
       echo "export CPPFLAGS=\"-I/opt/homebrew/opt/openssl@3/include\"" >> ~/.zshrc
