@@ -72,7 +72,9 @@ This setup procedure was test with an Apple Silicon Mac, but could likely be mod
 
       # Clone version 4.4.3 of the ESP-IDF repo
       git clone --recursive https://github.com/espressif/esp-idf.git
-      cd esp-idf; git checkout v4.4.3; git submodule update --init --recursive;
+      cd esp-idf
+      git checkout v4.4.3
+      git submodule update --init --recursive
 
       # Install esp32
       cd ~/esp32-matter-sensor-test/esp-idf

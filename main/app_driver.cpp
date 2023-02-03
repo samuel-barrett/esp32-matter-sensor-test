@@ -16,6 +16,9 @@
 #include <bh1750.h>
 #include <scd30.h>
 
+#include <esp_log.h>
+#include <esp_err.h>
+
 #include "driver/gpio.h"
 
 #include <app_priv.h>

@@ -16,7 +16,6 @@
 
 #include <string>
 #include <i2cdev.h>
-#include <bmp280.h>
 #include <bh1750.h>
 #include <esp_matter_core.h>
 #include <app_reset.h>
@@ -34,6 +33,9 @@ using namespace esp_matter::cluster;
 
 #define BH1750_ADDR BH1750_ADDR_LO
 #define TEST_LED_GPIO GPIO_NUM_13
+
+#define CONFIG_EXAMPLE_I2C_MASTER_SDA 23
+#define CONFIG_EXAMPLE_I2C_MASTER_SCL 22
 
 typedef void * app_driver_handle_t;
 
