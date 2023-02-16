@@ -132,7 +132,7 @@ static esp_err_t app_attribute_update_cb(callback_type_t type, uint16_t endpoint
 
 /**
  * @brief This function creates a temperature sensor endpoint and associated cluster. The created endpoint and cluster are 
- * stored in the returned matter_config_t structure. The function also sets the name and measured_attribute_id fields of 
+ * stored in the returned matter_config_t structure. The function also sets the name and attribute_id fields of 
  * the matter_config_t structure. 
  * 
  * @param node  A pointer to the node_t structure
@@ -145,7 +145,7 @@ matter_config_t create_temp_sensor(node_t * node) {
     temperature_measurement::config_t cluster_config;
 
     matter_sensor.name = "Temperature Sensor";
-    matter_sensor.measured_attribute_id = chip::app::Clusters::TemperatureMeasurement::Attributes::MeasuredValue::Id;
+    matter_sensor.attribute_id = chip::app::Clusters::TemperatureMeasurement::Attributes::MeasuredValue::Id;
 
     //Create a temperature sensor endpoint
     matter_sensor.endpoint_p = temperature_sensor::create(node, &endpoint_config, CLUSTER_FLAG_SERVER, NULL);
@@ -180,7 +180,7 @@ matter_config_t create_illumination_sensor(node_t * node) {
     illuminance_measurement::config_t cluster_config;
 
     matter_sensor.name = "Illumination Sensor";
-    matter_sensor.measured_attribute_id = chip::app::Clusters::IlluminanceMeasurement::Attributes::MeasuredValue::Id;
+    matter_sensor.attribute_id = chip::app::Clusters::IlluminanceMeasurement::Attributes::MeasuredValue::Id;
 
     //Create an illumination sensor endpoint
     matter_sensor.endpoint_p = illuminance_sensor::create(node, &endpoint_config, CLUSTER_FLAG_SERVER, NULL);
@@ -214,7 +214,7 @@ matter_config_t create_humidity_sensor(node_t * node) {
     relative_humidity_measurement::config_t cluster_config;
 
     matter_sensor.name = "Humidity Sensor";
-    matter_sensor.measured_attribute_id = chip::app::Clusters::RelativeHumidityMeasurement::Attributes::MeasuredValue::Id;
+    matter_sensor.attribute_id = chip::app::Clusters::RelativeHumidityMeasurement::Attributes::MeasuredValue::Id;
 
     //Create an humidity sensor endpoint
     matter_sensor.endpoint_p = relative_humidity_sensor::create(node, &endpoint_config, CLUSTER_FLAG_SERVER, NULL);
@@ -247,7 +247,7 @@ matter_config_t create_on_off_light(node_t * node) {
     on_off::config_t cluster_config;
 
     matter_on_off_light.name = "On OFF Light";
-    matter_on_off_light.measured_attribute_id = 0; //NA
+    matter_on_off_light.attribute_id = 0; //NA
 
     //Create an humidity sensor endpoint
     matter_on_off_light.endpoint_p = on_off_light::create(node, &endpoint_config, CLUSTER_FLAG_SERVER, NULL);
@@ -273,10 +273,10 @@ matter_config_t create_on_off_light(node_t * node) {
  * @param val Pointer to the new attribute value to be set
  */
 void update_matter_sensor(matter_config_t matter_config, esp_matter_attr_val_t * val) {
-    update(matter_config.endpoint_id, matter_config.cluster_id, matter_config.measured_attribute_id, val);
+    update(matter_config.endpoint_id, matter_config.cluster_id, matter_config.attribute_id, val);
     
     if (val->type == ESP_MATTER_VAL_TYPE_BOOLEAN) {
-        ESP_LOGI(TAG, "%s updated with value: %d", matter_config.name.c_str(), val->val.b);
+        ESP_LOGI(TAG, "%s updated with value: %d | attribute id: %u", matter_config.name.c_str(), val->val.b, matter_config.attribute_id);
     } else if (val->type == ESP_MATTER_VAL_TYPE_NULLABLE_INT16) {
         ESP_LOGI(TAG, "%s updated with value: %d", matter_config.name.c_str(), val->val.i16);
     }

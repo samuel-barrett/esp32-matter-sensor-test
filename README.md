@@ -37,29 +37,38 @@ This setup procedure was test with an Apple Silicon Mac, but could likely be mod
 
 ### Step 1: Clone repository
 
+      git clone --recursive https://github.com/samuel-barrett/esp32-matter-sensor-test.git
+
+### Step 2: Get ESP-Matter Fork
+
 * Install git lf
 
       brew install git-lfs 
 
 * Clone the repository, using the following command:
 
-      git clone --recursive https://github.com/samuel-barrett/esp32-matter-sensor-test.git
+      git clone --recursive https://github.com/samuel-barrett/esp-matter.git
+
 * If you have cloned the repository, but need to add the submodules, use:
 
       git submodule update --init --recursive
+
 * If you alerady have ESP-MATTER installed, you can do a shallow clone, and then fork that repository to use the samuel-barrett/esp-matter.git remote fork
 
     * To preserve your current esp-matter repository, you can copy the contents first
 
           cp -rH [PATH TO ESP-MATTER]/esp-matter [SOME PATH]/esp-matter-fork
-    * To do a shallow clone:
 
-          git clone https://github.com/samuel-barrett/esp32-matter-sensor-test.git
     * Then change directories to the esp-matter repository you want to modify, and change the remote to point to this fork: [samuel-barrett/esp-matter](https://github.com/samuel-barrett/esp-matter.git)
 
           cd [ESP-MATTER Repository to modify]
           git remote set-url origin https://github.com/samuel-barrett/esp-matter.git
           git pull
+
+* Enable IDF_CCACHE
+
+      echo "export IDF_CCACHE_ENABLE=1" >> ~/.zshrc
+      source ~/.zshrc
 
 
 ### Step 3: Install and Configure the ESP-IDF and VSCode Extension
@@ -76,25 +85,13 @@ This setup procedure was test with an Apple Silicon Mac, but could likely be mod
       git checkout v4.4.3
       git submodule update --init --recursive
 
+      source ~/.zshrc
+      source ~/.zprofile
+
       # Install esp32
       cd ~/esp32-matter-sensor-test/esp-idf
       ./install.sh esp32
       . ./export.sh
-
-      # Set target 
-      idf.py set-target esp32
-
-      # Add mdns dependency
-      idf.py add-dependency "espressif/mdns^1.0.7"
-
-      # Make sure you are using a python version from .espressif
-      which python
-      or
-      
-      # Install lark
-      python -m pip install lark stringcase
-      # or
-      python3 -m pip install lark
 
 * Install Visual Studio Code if not installed
 
@@ -117,10 +114,41 @@ This setup procedure was test with an Apple Silicon Mac, but could likely be mod
 
 * You may need to install [ZAP](https://github.com/project-chip/zap/releases)
 
-* Setup
+* Activate
       
       cd esp-matter/connectedhomeip/connectedhomeip/
       source scripts/activate.sh
+
+
+### Step 5: 
+
+* CD to esp32-matter-sensor-test
+      
+      cd [PATH]/esp32-matter-sensor-test
+
+* Set ESP_MATTER_PATH
+      
+      export ESP_MATTER_PATH="[# PATH to esp matter (e.g. /Users/esp-user/esp-matter)]"
+
+* Set target 
+      
+      idf.py set-target esp32
+
+* Add mdns dependency
+      
+      idf.py add-dependency "espressif/mdns^1.0.7"
+
+* Make sure you are using a python version from .espressif
+      
+      which python
+      or
+      which python3
+      
+* Install lark
+      
+      python -m pip install lark stringcase
+      or
+      python3 -m pip install lark stringcase
 
 * Open the esp32-matter-sensor-test folder in visual studio code
 
@@ -132,9 +160,14 @@ This setup procedure was test with an Apple Silicon Mac, but could likely be mod
 
   * Select the forked repository from the previous step
 
+* Select the port to use
+
+      >ESP-IDF: Select port to use (COM,tty, usbserial)
+
 * Type [CMD]+[SHIFT]+[P], then type 
     
       >ESP-IDF: Build your project
+
 
 ### Step 5: Configure hardware
 

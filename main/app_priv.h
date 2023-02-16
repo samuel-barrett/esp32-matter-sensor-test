@@ -48,7 +48,7 @@ typedef struct {
    uint16_t endpoint_id; /**< The id of the endpoint, represented as an uint16_t*/
    cluster_t * cluster_p; /**< A pointer to the cluster_t type object*/
    uint16_t cluster_id; /**< The id of the cluster, represented as an uint16_t*/
-   uint32_t measured_attribute_id; /**< The id of the attribute, represented as an uint32_t*/
+   uint32_t attribute_id; /**< The id of the attribute, represented as an uint32_t*/
 } matter_config_t;
 
 
