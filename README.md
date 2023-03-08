@@ -89,7 +89,7 @@ This setup procedure was test with an Apple Silicon Mac, but could likely be mod
       source ~/.zprofile
 
       # Install esp32
-      cd ~/esp32-matter-sensor-test/esp-idf
+      cd ~/esp-idf
       ./install.sh esp32
       . ./export.sh
 
